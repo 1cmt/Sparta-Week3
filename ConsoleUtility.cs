@@ -8,6 +8,23 @@ namespace Sparta_week3
 {
     internal class ConsoleUtility
     {
+        public static void PrintHead()
+        {
+
+            Console.WriteLine("            ██████╗  ██╗ █████╗ ██╗  ██╗                       ");
+            Console.WriteLine("            ██╔══██╗███║██╔══██╗██║  ██║                       ");
+            Console.WriteLine("            ██████╔╝╚██║███████║███████║                       ");
+            Console.WriteLine("            ██╔══██╗ ██║██╔══██║╚════██║                       ");
+            Console.WriteLine("            ██████╔╝ ██║██║  ██║     ██║                       ");
+            Console.WriteLine("            ╚═════╝  ╚═╝╚═╝  ╚═╝     ╚═╝                       ");
+            Console.WriteLine("                                                               ");
+            Console.WriteLine("██████╗ ██╗   ██╗███╗   ██╗ ██████╗ ███████╗ ██████╗ ███╗   ██╗");
+            Console.WriteLine("██╔══██╗██║   ██║████╗  ██║██╔════╝ ██╔════╝██╔═══██╗████╗  ██║");
+            Console.WriteLine("██║  ██║██║   ██║██╔██╗ ██║██║  ███╗█████╗  ██║   ██║██╔██╗ ██║");
+            Console.WriteLine("██║  ██║██║   ██║██║╚██╗██║██║   ██║██╔══╝  ██║   ██║██║╚██╗██║");
+            Console.WriteLine("██████╔╝╚██████╔╝██║ ╚████║╚██████╔╝███████╗╚██████╔╝██║ ╚████║");
+            Console.WriteLine("╚═════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝");
+        }
         public static int PromptMenuChoice(int min, int max)
         {
             while (true)
