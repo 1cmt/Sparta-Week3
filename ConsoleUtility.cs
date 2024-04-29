@@ -30,7 +30,7 @@ namespace Sparta_week3
         {
             Console.Write(s1);
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(s2);
+            Console.Write(s2);
             Console.ResetColor();
             Console.WriteLine(s3);
         }
@@ -38,7 +38,7 @@ namespace Sparta_week3
         {
             Console.Write(s1);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine(s2);
+            Console.Write(s2);
             Console.ResetColor();
             Console.WriteLine(s3);
         }
@@ -68,6 +68,15 @@ namespace Sparta_week3
             int padding = totalLength - currentLength;
             return str.PadRight(str.Length + padding);
         }
+
+        private static void PrintLine(char ch,int i = 110)
+        {
+            for (i = 0; i < 110; i++)
+            {
+                Console.Write(ch);
+            }
+            Console.Write("\n");
+        }
     }
 }
-}
+
