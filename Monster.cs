@@ -13,6 +13,9 @@ namespace TextGame
         public int Atk { get; }
         public int Hp { get; set; }
 
+        public int HpMax { get; private set;}
+
+
         public bool IsLife { get; private set; }
 
         public Monster(string name, int level, int atk, int hp)
@@ -21,6 +24,8 @@ namespace TextGame
             Level = level;
             Atk = atk;       
             Hp = hp;
+            HpMax = hp;
+            IsLife = true;
         }
 
         public void Dead()
@@ -35,6 +40,13 @@ namespace TextGame
         {
                 
         
+        }
+
+        public void Respawn(Monster monster)
+        {
+            monster.IsLife = true;
+            monster.Hp = HpMax;
+
         }
 
 
