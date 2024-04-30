@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 
 
 
+
 //<><><><>퀘스트 완료 보상 함수를 쓰기 위해 람다 표현식을 쓰느라 아직 Player가 정의되지 않았어요. 에러가 있으니 주의!<><><><>
 
 //1번째 퀘스트 : 5마리 잡기 + 5마리 중 몇 마리 잡았는지 체크
@@ -81,7 +82,7 @@ internal class Quest
                     else //못잡았으면
                     {   
                         //미니언 (n/5) (진행중)
-                        //Console.Write($"미니언 ( {player.KillCount[MonsterType.Minion]} / 5 ) (진행중)")
+                        //Console.Write($"미니언 ( {player.KillCount[MonsterType.Minion]} / 5 ) (진행중)") //변수를 이렇게 쓸지는 미정
                     }
                 },
                 player => //보상
@@ -121,18 +122,18 @@ internal class Quest
             new Quest(
                 "강해지기",
                 "강한 모험가들도 처음에는 볼품없는 풋내기였지!\n당장 위험한 던전부터 들어갈 생각하지 말고 실력을 키워야만 해.\n자네의 성장을 보여주게!",
-                "레벨 2 달성",
+                "레벨 3 달성",
                 "쓸만한 방패 x 1\n5G",
                 player => //클리어 조건: 미니언 5마리 잡기
                 {
 
                     if(player.Level >= 3)    //레벨이 3 이상이면
                     {
-
+                        Console.WriteLine("3레벨 달성 (완료)");
                     }
                     else //레벨이 3 미만이면
                     {
-
+                        Console.WriteLine("3레벨 달성 (진행중)");
                     }
                 },
                 player => //보상
