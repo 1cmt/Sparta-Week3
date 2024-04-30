@@ -211,7 +211,7 @@ internal class Quest
         switch (KeyInput)
         {
             case 0:
-                MainMenu(); //메인메뉴 이동
+                //MainMenu(); //메인메뉴 이동
                 break;
             default:
                 SelectQuest(KeyInput - 1);
