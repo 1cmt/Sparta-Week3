@@ -49,7 +49,7 @@ namespace Sparta_week3
             Console.ForegroundColor = color ;
             Console.Write(s2);
             Console.ResetColor();
-            Console.WriteLine(s3);
+            Console.Write(s3);
         }
         public static int GetPrintableLength(string str)
         {
