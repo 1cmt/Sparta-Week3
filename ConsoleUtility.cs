@@ -10,7 +10,7 @@ namespace Sparta_week3
     {
         public static void PrintHead()
         {
-
+            Console.WriteLine("===============================================================");
             Console.WriteLine("            ██████╗  ██╗ █████╗ ██╗  ██╗                       ");
             Console.WriteLine("            ██╔══██╗███║██╔══██╗██║  ██║                       ");
             Console.WriteLine("            ██████╔╝╚██║███████║███████║                       ");
@@ -24,6 +24,10 @@ namespace Sparta_week3
             Console.WriteLine("██║  ██║██║   ██║██║╚██╗██║██║   ██║██╔══╝  ██║   ██║██║╚██╗██║");
             Console.WriteLine("██████╔╝╚██████╔╝██║ ╚████║╚██████╔╝███████╗╚██████╔╝██║ ╚████║");
             Console.WriteLine("╚═════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝");
+            Console.WriteLine("===============================================================");
+            Console.WriteLine("                    press any key to start                     ");
+            Console.WriteLine("===============================================================");
+            Console.ReadKey();
         }
         public static int PromptMenuChoice(int min, int max)
         {
@@ -43,21 +47,13 @@ namespace Sparta_week3
             Console.WriteLine(title);
             Console.ResetColor();
         }
-        public static void PrintTextHighlightsRed(string s1, string s2, string s3 = "")
+        public static void PrintTextHighlightsColor(ConsoleColor color, string s1, string s2, string s3 = "")
         {
             Console.Write(s1);
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = color ;
             Console.Write(s2);
             Console.ResetColor();
-            Console.WriteLine(s3);
-        }
-        public static void PrintTextHighlightsDarkYellow(string s1, string s2, string s3 = "")
-        {
-            Console.Write(s1);
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write(s2);
-            Console.ResetColor();
-            Console.WriteLine(s3);
+            Console.Write(s3);
         }
         public static int GetPrintableLength(string str)
         {
