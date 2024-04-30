@@ -6,13 +6,17 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Sparta_week3
 {
     internal class Player
     {
+        [JsonProperty("privateField")]
         private string _name;
+        public string Name { get { return _name; } }
         private string _job;
+        public string Job { get { return _job; } }
         public int Level;
         public float Atk;
         public int Def;
@@ -20,7 +24,7 @@ namespace Sparta_week3
         //마나 public int Mana;
         public int Hp;
         public int Gold;
-        public int Exp=10;
+        public int Exp = 10;
         public string JobChange
         {
             set => _job = value;
@@ -46,5 +50,6 @@ namespace Sparta_week3
             Atk += 0.5f;
             Def += 1;
         }
+
     }
 }
