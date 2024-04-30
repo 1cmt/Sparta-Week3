@@ -32,9 +32,21 @@ public enum MonsterType
     Monster6
 }
 //퀘스트 상태여부
+
+internal static class QuestManager //Program.cs 파일에 넣을 예정 (static 남발 방지용)
+{
+    public static List<Quest> quests = Quest.GetInitialQuests(); //Program 객체 가져오는 부분으로 이동시킬 예정
+
+    //먼저 퀘스트 진행상태 저장리스트를 초기화
+    //public static List<int> loadedStatuses = LoadQuestStatusFromFile();
+
+
+}
+
+
 public enum QuestStatus
 {
-    Prograssable,       //0.진행 가능
+    Startable,          //0.진행 가능
     InPrograss,         //1.진행 중
     Finished            //2.완료
 }
@@ -49,7 +61,7 @@ internal class Quest
     public Action<Player> CheckCondition;   //클리어 조건을 체크하는 함수. 조건에 따라 ClearConditionText의 텍스트 뒤에 어떻게 추가할지 직접 정의해야 함. (ex "\t미니언 (3 / 5)")
     public Action<Player> Reward;           //클리어 보상 함수
 
-    public bool isCleared = false;
+    public int ProgressStatus = (int)QuestStatus.Startable;          //클리어 여부를 저장하는 변수. 기본 진행 가능 상태
 
     public Quest(string title, string description, string clearConditionText, string rewardText, Action<Player> checkCondition, Action<Player> reward)
     {
@@ -61,7 +73,7 @@ internal class Quest
         Reward = reward;
     }
 
-    public List<Quest> GetInitialQuests()       //모든 퀘스트를 정의하는 함수
+    internal static List<Quest> GetInitialQuests()       //모든 퀘스트를 정의하는 함수
     {
         
         List<Quest> quests = new List<Quest>
@@ -95,7 +107,7 @@ internal class Quest
 
             //2.장비 장착하기
             new Quest(
-                "장비 장착하기",
+                "장비를 장착해보자",
                 "모험을 떠나기 전에 적절한 장비를 갖추는 건 중요하네.\n자네의 인벤토리에 방패를 장착해보게!",
                 "쓸만한 방패 장착",
                 "100G",
@@ -118,10 +130,10 @@ internal class Quest
                     //5골드 지급
                     player.Gold += 5;
                 }),
-            //"장비를 장착해보자",
+            //3.강해지기
             new Quest(
                 "강해지기",
-                "강한 모험가들도 처음에는 볼품없는 풋내기였지!\n당장 위험한 던전부터 들어갈 생각하지 말고 실력을 키워야만 해.\n자네의 성장을 보여주게!",
+                "강한 모험가들도 처음에는 볼품없는 풋내기였지!\n당장 위험한 던전부터 들어갈 생각하지 말고 실력을 키워야만 하네.\n자네의 성장을 보여주게!",
                 "레벨 3 달성",
                 "쓸만한 방패 x 1\n5G",
                 player => //클리어 조건: 미니언 5마리 잡기
@@ -143,36 +155,60 @@ internal class Quest
                     //5골드 지급
                     player.Gold += 5;
                 }),
-
-            //3.강해지기
-            //new Quest("더욱 더 강해지기!",1,2,3),
-
-
         };
         return quests;
     }
 
 
-    public void QuestMenu()     //퀘스트 메뉴
+
+    internal static void QuestMenu()     //마을 -> 퀘스트 메뉴
     {
+        
         Console.Clear();
-        ConsoleUtility.PrintTitle("■ 퀘스트 보기 ■");
-        Console.WriteLine("현재 퀘스트들의 진행상태를 볼 수 있습니다.");
+        ConsoleUtility.PrintTitle("■ 퀘스트 메뉴 ■");
+        Console.WriteLine("진행 가능한 퀘스트들을 볼 수 있습니다.");
         Console.WriteLine("");
         Console.WriteLine("[퀘스트 목록]");
 
         //quests 리스트 안에 담긴 퀘스트 수만큼 리스트를 보여주고, 선택지 생성
         //퀘스트마다 각각 완료했는지
-        //for (int i = 0, i < quests.Count; i++) {}
+        for (int i = 0; i < QuestManager.quests.Count; i++) //QuestManager는 나중에 없애고 프로그램 클래스에서 quests를 가져갈 예정
+        {
+            Console.Write($"{i + 1}. ");
+            Console.WriteLine(QuestManager.quests[i].Title + "${}");
+            break;
+        }
+        ConsoleUtility.PrintTitle("");
+        Console.WriteLine("0.나가기");
+
+        int KeyInput = ConsoleUtility.PromptMenuChoice(0, QuestManager.quests.Count);
+
+        switch (KeyInput)
+        {
+            case 0:
+                MainMenu(); //메인메뉴 이동
+                break;
+            default:
+                SelectQuest(KeyInput - 1);
+                break;
+        }
+
     }
 
-    public void SelectQuest(int num)   //퀘스트 선택하기
+    internal static void SelectQuest(int index)   //퀘스트 선택하기
     {
+        Console.Clear();
         //1.클리어했으면 "이미 완료한 퀘스트입니다." 출력하고 재입력받기
         //2.클리어를 안했으면 -> 퀘스트를 받았는지 체크
         //2-1.퀘스트를 받았으면 퀘스트 제목,내용,조건,보상 출력 + (진행중) 상태 표시
-        //2-2.퀘스트를 안 받았으면 퀘스트 제목,내용,조건,보상 출력
+        //2-2.퀘스트를 안 받았으면 퀘스트 제목,내용,조건,보상 출력&보상 지급
+
+        //private Quest quest = quests[index];
+
     }
+
+    
+
 }
 
 
