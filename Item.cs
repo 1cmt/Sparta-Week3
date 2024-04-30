@@ -47,7 +47,7 @@ internal class Item
                 PrintExcludeEquipInfo(menuType);
                 break;
             case MenuType.PurchaseMenu:
-                PrintExcludeEquipInfo(menuType);
+                PrintExcludeEquipInfo(menuType, true, idx);
                 break;
             case MenuType.SellMenu:
                 PrintIncludeEquipInfo(true, idx, true);
@@ -62,15 +62,15 @@ internal class Item
         if (IsEquipped)
         {
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Cyan, "[", "E", "]");
-            Console.Write(ConsoleUtility.PadRightForMixedText(Name, 9));
+            Console.Write(ConsoleUtility.PadRightForMixedText(Name, 12));
         }
-        else Console.Write(ConsoleUtility.PadRightForMixedText(Name, 12));
+        else Console.Write(ConsoleUtility.PadRightForMixedText(Name, 15));
 
         PrintStat();
 
         if (hasPriceInfo)
         {
-            Console.Write(ConsoleUtility.PadRightForMixedText(Desc, 12));
+            Console.Write(ConsoleUtility.PadRightForMixedText(Desc, 30));
             Console.Write(" | ");
 
             PrintPrice(MenuType.SellMenu); //착용 정보까지 보여주는 것중에 가격을 보여주는 것은 판매메뉴 밖에 없음
@@ -87,12 +87,12 @@ internal class Item
         if (withNumber)
         {
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.DarkMagenta, "", $"{idx} ");
-            Console.Write(ConsoleUtility.PadRightForMixedText(Name, 10));
+            Console.Write(ConsoleUtility.PadRightForMixedText(Name, 13));
         }
-        else Console.Write(ConsoleUtility.PadRightForMixedText(Name, 12));
+        else Console.Write(ConsoleUtility.PadRightForMixedText(Name, 15));
 
         PrintStat();
-        Console.Write(ConsoleUtility.PadRightForMixedText(Desc, 12));
+        Console.Write(ConsoleUtility.PadRightForMixedText(Desc, 30));
         Console.Write(" | ");
         PrintPrice(menuType);
         Console.WriteLine("");
