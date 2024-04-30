@@ -10,7 +10,7 @@ namespace Sparta_week3
     {
         public static void PrintHead()
         {
-
+            Console.WriteLine("===============================================================");
             Console.WriteLine("            ██████╗  ██╗ █████╗ ██╗  ██╗                       ");
             Console.WriteLine("            ██╔══██╗███║██╔══██╗██║  ██║                       ");
             Console.WriteLine("            ██████╔╝╚██║███████║███████║                       ");
@@ -24,6 +24,9 @@ namespace Sparta_week3
             Console.WriteLine("██║  ██║██║   ██║██║╚██╗██║██║   ██║██╔══╝  ██║   ██║██║╚██╗██║");
             Console.WriteLine("██████╔╝╚██████╔╝██║ ╚████║╚██████╔╝███████╗╚██████╔╝██║ ╚████║");
             Console.WriteLine("╚═════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝");
+            Console.WriteLine("===============================================================");
+            Console.WriteLine("                    press any key to start                     ");
+            Console.WriteLine("===============================================================");
             Console.ReadKey();
         }
         public static int PromptMenuChoice(int min, int max)
