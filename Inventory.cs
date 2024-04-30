@@ -15,6 +15,16 @@ namespace Sparta_week3
             return ItemList.Count;
         }
 
+        public void AddItem(Item item)
+        {
+            ItemList.Add(item);
+        }
+
+        public void RemoveItem(int idx)
+        {
+            ItemList.RemoveAt(idx);
+        }
+
         public bool IsEquipped(int idx)
         {
             return ItemList[idx].IsEquipped;
@@ -30,17 +40,6 @@ namespace Sparta_week3
             return ItemList[idx].SellPrice;
         }
 
-
-        public void AddItem(Item item)
-        {
-            ItemList.Add(item);
-        }
-
-        public void RemoveItem(int idx)
-        {
-            ItemList.RemoveAt(idx);
-        }
-
         public void InventoryMenu(Player player)
         {
             Console.Clear();
@@ -48,6 +47,7 @@ namespace Sparta_week3
             ConsoleUtility.PrintTitle("■ 인벤토리 ■");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다");
             Console.WriteLine("");
+            Console.WriteLine("[아이템 목록]");
             PrintMyItemList(MenuType.InventoryMenu);
             Console.WriteLine("1. 장착관리");
             Console.WriteLine("0. 나가기");
@@ -58,6 +58,7 @@ namespace Sparta_week3
                 case 0:
                     return;
                 case 1:
+                    
                     EquipMenu(player);
                     break;
             }
@@ -70,6 +71,7 @@ namespace Sparta_week3
             ConsoleUtility.PrintTitle("■ 인벤토리 - 장착 관리 ■");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다");
             Console.WriteLine("");
+            Console.WriteLine("[아이템 목록]");
             PrintMyItemList(MenuType.EquipMenu);
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
@@ -82,6 +84,7 @@ namespace Sparta_week3
                     InventoryMenu(player);
                     break;
                 case 1:
+                    ToggleEquipStatus(KeyInput - 1);
                     EquipMenu(player);
                     break;
             }
@@ -89,8 +92,6 @@ namespace Sparta_week3
 
         public void PrintMyItemList(MenuType menuType)
         {
-            Console.WriteLine("[아이템 목록]");
-
             for (int i = 0; i < ItemList.Count; i++)
             {
                 ItemList[i].PrintController(menuType, i + 1);

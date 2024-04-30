@@ -62,7 +62,7 @@ internal class Item
         if (IsEquipped)
         {
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Cyan, "[", "E", "]");
-            Console.Write(ConsoleUtility.PadRightForMixedText(Name, 12));
+            Console.Write(ConsoleUtility.PadRightForMixedText(Name, 15));
         }
         else Console.Write(ConsoleUtility.PadRightForMixedText(Name, 15));
 
@@ -70,7 +70,7 @@ internal class Item
 
         if (hasPriceInfo)
         {
-            Console.Write(ConsoleUtility.PadRightForMixedText(Desc, 30));
+            Console.Write(ConsoleUtility.PadRightForMixedText(Desc, 55));
             Console.Write(" | ");
 
             PrintPrice(MenuType.SellMenu); //착용 정보까지 보여주는 것중에 가격을 보여주는 것은 판매메뉴 밖에 없음
@@ -87,12 +87,12 @@ internal class Item
         if (withNumber)
         {
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.DarkMagenta, "", $"{idx} ");
-            Console.Write(ConsoleUtility.PadRightForMixedText(Name, 13));
+            Console.Write(ConsoleUtility.PadRightForMixedText(Name, 15));
         }
         else Console.Write(ConsoleUtility.PadRightForMixedText(Name, 15));
 
         PrintStat();
-        Console.Write(ConsoleUtility.PadRightForMixedText(Desc, 30));
+        Console.Write(ConsoleUtility.PadRightForMixedText(Desc, 55));
         Console.Write(" | ");
         PrintPrice(menuType);
         Console.WriteLine("");
@@ -142,7 +142,8 @@ internal class AtkItem : Item
 
     public override void PrintStat()
     {
-        Console.Write($" | 공격력 +{Atk}  | ");
+        if(Atk >= 10) Console.Write($" | 공격력 +{Atk} | ");
+        else Console.Write($" | 공격력 +{Atk}  | ");
     }
 }
 
@@ -157,7 +158,8 @@ internal class DefItem : Item
 
     public override void PrintStat()
     {
-        Console.Write($" | 공격력 +{Def}  | ");
+        if(Def >= 10) Console.Write($" | 방어력 +{Def} | ");
+        else Console.Write($" | 방어력 +{Def}  | ");
     }
 }
 
