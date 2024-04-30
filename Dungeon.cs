@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Sparta_week3;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace TextGame
 {
@@ -33,13 +35,13 @@ namespace TextGame
         }
 
 
-        public void Battle()
+        public void EnterDungeon()
         {
             // 구성
             // 0. 화면 정리
             Console.Clear();
             // 1. 전투 선택 멘트를 줌
-            Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+            //Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
             Console.WriteLine("Battle!\n");
             Console.WriteLine($"{monsters.Length}마리의 몬스터가 등장 했다!\n");
 
@@ -47,16 +49,16 @@ namespace TextGame
             {
                 Console.WriteLine($"Lv.{monster.Level} {monster.Name} Hp {monster.Hp}");
             }
-            Console.WriteLine(
-                "\n\n" +
-                "");
+            Console.WriteLine("\n\n");
             //플레이어 정보 불러오기
 
             Console.WriteLine(
                 "1. 공격\n" +
-                "원하시는 행동을 입력해주세요.\n" +
-                ">>");
-            Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+                "0. 도망친다\n"
+                );
+            int choice = ConsoleUtility.PromptMenuChoice(0, 1);
+            //Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+
 
 
 
