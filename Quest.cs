@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.IO;
+using System.Text.Json;
 using Newtonsoft.Json;
 using Sparta_week3;
 using System.Security.Cryptography.X509Certificates;
@@ -40,8 +41,33 @@ internal static class QuestManager //Program.cs 파일에 넣을 예정 (static 
     //먼저 퀘스트 진행상태 저장리스트를 초기화
     //public static List<int> loadedStatuses = LoadQuestStatusFromFile();
 
-
 }
+
+//public static class QuestService
+//{
+//    // 퀘스트 리스트를 JSON 파일로 저장하는 메서드
+//    public static void SaveQuestsToFile(List<Quest> quests, string filePath)
+//    {
+//        string json = JsonConvert.SerializeObject(quests, Formatting.Indented);
+//        File.WriteAllText(filePath, json);
+//        Console.WriteLine("Quests have been saved to file.");
+//    }
+
+//    // JSON 파일에서 퀘스트 리스트를 불러오는 메서드
+//    public static List<Quest> LoadQuestsFromFile(string filePath)
+//    {
+//        if (!File.Exists(filePath))
+//        {
+//            Console.WriteLine("File does not exist.");
+//            return new List<Quest>(); // 파일이 존재하지 않으면 빈 리스트 반환
+//        }
+
+//        string json = File.ReadAllText(filePath);
+//        List<Quest> quests = JsonConvert.DeserializeObject<List<Quest>>(json);
+//        Console.WriteLine("Quests have been loaded from file.");
+//        return quests;
+//    }
+//}
 
 
 public enum QuestStatus
@@ -163,7 +189,6 @@ internal class Quest
 
     internal static void QuestMenu()     //마을 -> 퀘스트 메뉴
     {
-        
         Console.Clear();
         ConsoleUtility.PrintTitle("■ 퀘스트 메뉴 ■");
         Console.WriteLine("진행 가능한 퀘스트들을 볼 수 있습니다.");
