@@ -20,7 +20,7 @@ namespace Sparta_week3
         public int Level;
         public float Atk;
         public int Def;
-        public int Ctl;
+        public int Ctl=15;
         public int Mana;
         public int Hp;
         public int Gold;
