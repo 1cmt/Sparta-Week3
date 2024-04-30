@@ -20,8 +20,8 @@ namespace Sparta_week3
         public int Level;
         public float Atk;
         public int Def;
-        //크리티컬 public int Ctl;
-        //마나 public int Mana;
+        public int Ctl;
+        public int Mana;
         public int Hp;
         public int Gold;
         public int Exp = 10;
@@ -36,12 +36,12 @@ namespace Sparta_week3
             _job = job;
             Level = level;
             Gold = gold;
+            Hp = hp;
             if(job == "Archer") Atk = (int)(atk * 1.2f); 
             else Atk = atk;
             Def = job == "Warrior" ? (int)(def * 1.2f) : def;
-            //Ctl = job = "assassin" ? ctl * 1.2f : ctl;
-            Hp = hp;
-            //Mana = job == "Wizard" ? (int)(mana * 1.2f) : mana;
+            Ctl = job == "assassin" ? (int)(Ctl * 1.2f) : Ctl;
+            Mana = job == "Wizard" ? (int)(Mana * 1.2f) : Mana;
         }
         public void Levelup(int level,int exp)
         {
