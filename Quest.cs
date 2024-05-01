@@ -21,7 +21,32 @@ namespace TextGame
     //퀘스트 진행상태 저장기능 (1.진행 가능 2.진행 중{+진행 중인 세부 내용} 3.완료)
     //퀘스트 저장 목록에 몬스터 킬카운트 필요합니다 <<<<<<퀘스트 조건체크용이라서 진행상태에 몇마리 잡았는지 기록 가능하면 불필요해요
 
-    //처음 보는 변수들은 넣을지 말지 미정
+    //public static class QuestService
+    //{
+    //    // 퀘스트 리스트를 JSON 파일로 저장하는 메서드
+    //    public static void SaveQuestsToFile(List<Quest> quests, string filePath)
+    //    {
+    //        string json = JsonConvert.SerializeObject(quests, Formatting.Indented);
+    //        File.WriteAllText(filePath, json);
+    //        Console.WriteLine("Quests have been saved to file.");
+    //    }
+
+    //    // JSON 파일에서 퀘스트 리스트를 불러오는 메서드
+    //    public static List<Quest> LoadQuestsFromFile(string filePath)
+    //    {
+    //        if (!File.Exists(filePath))
+    //        {
+    //            Console.WriteLine("File does not exist.");
+    //            return new List<Quest>(); // 파일이 존재하지 않으면 빈 리스트 반환
+    //        }
+
+    //        string json = File.ReadAllText(filePath);
+    //        List<Quest> quests = JsonConvert.DeserializeObject<List<Quest>>(json);
+    //        Console.WriteLine("Quests have been loaded from file.");
+    //        return quests;
+    //    }
+    //}
+
 
     //몬스터타입
     public enum MonsterType
@@ -168,33 +193,6 @@ namespace TextGame
         //public static List<int> loadedStatuses = LoadQuestStatusFromFile();
 
     }
-
-    //public static class QuestService
-    //{
-    //    // 퀘스트 리스트를 JSON 파일로 저장하는 메서드
-    //    public static void SaveQuestsToFile(List<Quest> quests, string filePath)
-    //    {
-    //        string json = JsonConvert.SerializeObject(quests, Formatting.Indented);
-    //        File.WriteAllText(filePath, json);
-    //        Console.WriteLine("Quests have been saved to file.");
-    //    }
-
-    //    // JSON 파일에서 퀘스트 리스트를 불러오는 메서드
-    //    public static List<Quest> LoadQuestsFromFile(string filePath)
-    //    {
-    //        if (!File.Exists(filePath))
-    //        {
-    //            Console.WriteLine("File does not exist.");
-    //            return new List<Quest>(); // 파일이 존재하지 않으면 빈 리스트 반환
-    //        }
-
-    //        string json = File.ReadAllText(filePath);
-    //        List<Quest> quests = JsonConvert.DeserializeObject<List<Quest>>(json);
-    //        Console.WriteLine("Quests have been loaded from file.");
-    //        return quests;
-    //    }
-    //}
-
 
     public enum QuestStatus
     {

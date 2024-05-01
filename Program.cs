@@ -7,22 +7,19 @@ namespace TextGame // Note: actual namespace depends on the project name.
 {
     public class GameManager
     {
-        List<Quest> quests;
+        QuestManager questManager;
         Inventory inventory;
         Store store;
         Player player;
         public GameManager()
         {
             InitializeGame();
-         }
+        }
         public void InitializeGame()
         {
-
-            quests = Quest.GetInitialQuests();
             inventory = new Inventory();
             store     = new Store();
-
-
+            questManager = new QuestManager();
             //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
