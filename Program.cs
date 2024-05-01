@@ -19,6 +19,9 @@ namespace TextGame // Note: actual namespace depends on the project name.
         {
             Console.Clear();
             ConsoleUtility.PrintHead();
+            string name = Player.InputName();
+            string job = Player.InputJob();
+            Player player = new Player(name, job);
             MainMenu();
         }
 

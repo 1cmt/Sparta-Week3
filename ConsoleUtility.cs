@@ -10,7 +10,7 @@ namespace Sparta_week3
     {
         public static void PrintHead()
         {
-
+            Console.WriteLine("===============================================================");
             Console.WriteLine("            ██████╗  ██╗ █████╗ ██╗  ██╗                       ");
             Console.WriteLine("            ██╔══██╗███║██╔══██╗██║  ██║                       ");
             Console.WriteLine("            ██████╔╝╚██║███████║███████║                       ");
@@ -24,6 +24,9 @@ namespace Sparta_week3
             Console.WriteLine("██║  ██║██║   ██║██║╚██╗██║██║   ██║██╔══╝  ██║   ██║██║╚██╗██║");
             Console.WriteLine("██████╔╝╚██████╔╝██║ ╚████║╚██████╔╝███████╗╚██████╔╝██║ ╚████║");
             Console.WriteLine("╚═════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝");
+            Console.WriteLine("===============================================================");
+            Console.WriteLine("                    press any key to start                     ");
+            Console.WriteLine("===============================================================");
             Console.ReadKey();
         }
         public static int PromptMenuChoice(int min, int max)
@@ -79,7 +82,7 @@ namespace Sparta_week3
             return str.PadRight(str.Length + padding);
         }
 
-        private static void PrintLine(char ch,int i = 110)
+        public static void PrintLine(char ch,int i = 110)
         {
             for (i = 0; i < 110; i++)
             {
