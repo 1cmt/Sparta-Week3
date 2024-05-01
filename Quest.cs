@@ -142,7 +142,6 @@ namespace TextGame
                     player.Gold += 5;
                 }),
             };
-            QuestMenu();
         }
 
         public void SelectQuest(int index)   //퀘스트 선택하기
