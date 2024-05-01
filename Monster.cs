@@ -39,8 +39,8 @@ namespace TextGame
 
         public void Attack(Player player)
         {
-            player.Hp -= Atk;
-        
+            player.Hp -= (Atk - player.Def);
+            if(player.Hp < 0) player.Hp = 0;        
         }
 
         public void Respawn(Monster monster)
