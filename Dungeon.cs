@@ -115,44 +115,22 @@ namespace TextGame
                 Console.Clear();
                 Console.WriteLine($"{_player.Name} 은(는) 아무것도 하지 않고 턴을 종료 했다.\n");
 
-                //몬스터 공격
-                for (int i = 0; i<_monsters.Length; i++)
-                {
-                    Console.WriteLine(
-                        $"Lv.{_monsters[i].Level} {_monsters[i].Name} 의 공격!\n" +
-                        $"{_player.Name} 을(를) 맞췄습니다.    [데미지 : {_monsters[i].Atk}]\n");
-
-                    Console.Write(
-                        $"Lv.{_player.Level} {_player.Name}\n" +
-                        $"Hp {_player.Hp} -> ");
-                    
-                    _monsters[i].Attack(_player);
-
-                    Console.WriteLine($"{_player.Hp}\n");
-
-                }
-
-                Console.WriteLine("0. 다음");
-                int choice2 = ConsoleUtility.PromptMenuChoice(0, 0);
-                if(choice2 == 0) Battle();
+                MonsterTurn();
 
             }
             else 
             {
                 Console.Clear();
-                Console.WriteLine($"{_monsters[choice - 1].Name}을/를 공격했다!");
                 //플레이어의 공격
+                Console.WriteLine($"{_monsters[choice - 1].Name}을/를 공격했다!");
+
 
 
 
                 //몬스터 공격
+                MonsterTurn();
 
             }
-
-
-
-
-
         }
 
 
@@ -179,6 +157,80 @@ namespace TextGame
 
                 }
             }                      
+        }
+
+        public void MonsterTurn()
+        {
+            //몬스터 공격
+            for (int i = 0; i < _monsters.Length; i++)
+            {
+                Console.WriteLine(
+                    $"Lv.{_monsters[i].Level} {_monsters[i].Name} 의 공격!\n" +
+                    $"{_player.Name} 을(를) 맞췄습니다.    [데미지 : {_monsters[i].Atk}]\n");
+
+                Console.Write(
+                    $"Lv.{_player.Level} {_player.Name}\n" +
+                    $"Hp {_player.Hp} -> ");
+
+                _monsters[i].Attack(_player);
+
+                Console.WriteLine($"{_player.Hp}\n");
+
+                //플레이어 체력이 0이 되면 패매 메인메뉴로 돌아간다
+                if (_player.Hp == 0)
+                {
+                    Console.WriteLine(
+                        "플레이어의 체력이 0이되어 전투를 종료합니다.\n" +
+                        "0. 다음");
+                    NextButton();
+
+                    BattleResult();
+                    return;
+                }
+
+            }
+            Console.WriteLine("0. 다음");
+            NextButton();
+        }
+
+        public void BattleResult()
+        {
+            Console.Clear();
+            // 1. 전투 선택 멘트를 줌            
+            Console.WriteLine("Battle! - Result\n");
+
+            //패배
+            if (_player.Hp == 0)
+            {
+                Console.WriteLine("You Lose\n");
+                Console.WriteLine("당신은 던전에서 패배했습니다.");
+            }
+            else 
+            {
+                Console.WriteLine("Victory\n");
+                Console.WriteLine($"던전에서 몬스터 {_monsters.Length}마리를 잡았습니다.");
+            }
+
+
+
+            //플레이어 정보 불러오기
+            Console.WriteLine(
+                $"Lv.{_player.Level}  {_player.Name} ({_player.Job})\n" +
+                $"HP {_player.Hp}/{_player.MaxHp}" +
+                $"\n");
+
+            Console.WriteLine("0. 다음");
+            NextButton();
+        }
+
+
+
+
+
+        public void NextButton()
+        {
+            int choice0 = ConsoleUtility.PromptMenuChoice(0, 0);
+            if (choice0 == 0) Battle();
         }
 
 
