@@ -39,11 +39,12 @@ namespace Sparta_week3
             Gold = gold;
             Hp = hp;
             Texp = exp;
-            if (job == "Archer") Atk = (int)(atk * 1.2f);
+            if (job == "archer") Atk = (int)(atk * 1.2f);
             else Atk = atk;
-            Def = job == "Warrior" ? (int)(def * 1.2f) : def;
-            Ctl = job == "assassin" ? (int)(Ctl * 1.2f) : Ctl;
-            Mana = job == "Wizard" ? (int)(Mana * 1.2f) : Mana;
+            Def = job == "warrior" ? (int)(def * 1.2f)  : def;
+            Hp  = job == "warrior" ? (int)(hp * 1.2f)   : hp;
+            Ctl = job == "assassin"? (int)(Ctl * 1.2f)  : Ctl;
+            Mana= job == "wizard"  ? (int)(Mana * 1.2f) : Mana;
         }
         public void Levelup(ref int level, ref int cexp)
         {
@@ -56,7 +57,7 @@ namespace Sparta_week3
                 cexp = 0;
             }
         }
-        public string InputName()
+        public static string InputName()
         {
             Console.Clear();
             ConsoleUtility.PrintLine('=');
@@ -68,8 +69,20 @@ namespace Sparta_week3
             Thread.Sleep(1000);
             ConsoleUtility.PrintLine('=');
             Console.Write("B1A4던전에 오신 것을 환영합니다 이름을 적어주세요 : ");
-            string Name = Console.ReadLine();
+            string? Name = Console.ReadLine();
             return Name;
+        }
+
+        internal static string InputJob()
+        {
+            Console.WriteLine("직업을 선택해주세요");
+            ConsoleUtility.PrintLine('=');
+            string @as = "Assassin"; string wa = "Warrior"; string wi = "Wizard"; string ar = "Archer";
+            Console.Write("       "+@as.PadRight(27)+ wa.PadRight(27)+wi.PadRight(27)+ ar.PadRight(22)+"\n");
+            Console.Write("상대의 급소를 노려         "+"강인한 육체의 소유자로     "+"강력한 스킬을 사용합니다   "+"강력한 팔힘으로            "+"\n");
+            Console.Write("치명적인 일격을 가합니다   "+"생존능력이 높습니다        "+"                           "+"높은 데미지를 입힙니다     "+"\n");
+            string? job = Console.ReadLine();
+            return job.ToLower();
         }
     }
 }

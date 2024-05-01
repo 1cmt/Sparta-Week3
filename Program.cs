@@ -12,14 +12,19 @@ namespace TextGame // Note: actual namespace depends on the project name.
          }
         public void InitializeGame()
         {
+
             List<Quest> quests = new List<Quest>();
             quests = Quest.GetInitialQuests();
+
             //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
         {
             Console.Clear();
             ConsoleUtility.PrintHead();
+            string name = Player.InputName();
+            string job = Player.InputJob();
+            Player player = new Player(name, job);
             MainMenu();
         }
 
