@@ -9,10 +9,14 @@ namespace TextGame
 {
     public class Monster
     {
-        public string Name { get; }
+        public string Name { get; set; }
         public int Level { get; }
         public int Atk { get; }
         public int Hp { get; set; }
+
+        public string Type { get; }
+
+
 
         public int MaxHp { get; private set;}
 
@@ -27,6 +31,7 @@ namespace TextGame
             Hp = hp;
             MaxHp = hp;
             IsLife = true;
+            Type = name;
         }
 
         public void Dead()
@@ -39,14 +44,18 @@ namespace TextGame
 
         public void Attack(Player player)
         {
+
+            if (Atk <= player.Def) return;            
+
             player.Hp -= (Atk - player.Def);
+
             if(player.Hp < 0) player.Hp = 0;        
         }
 
-        public void Respawn(Monster monster)
+        public void Respawn()
         {
-            monster.IsLife = true;
-            monster.Hp = MaxHp;
+            IsLife = true;
+            Hp = MaxHp;
 
         }
 
