@@ -80,14 +80,20 @@ namespace Sparta_week3
         {
             Console.WriteLine("직업을 선택해주세요");
             ConsoleUtility.PrintLine('=');
-            string @as = "Assassin"; string wa = "Warrior"; string wi = "Wizard"; string ar = "Archer";
+            string @as = "ASSASSIN"; string wa = "WARRIOR"; string wi = "WIZARD"; string ar = "ARCHER";
             Console.Write("       "+@as.PadRight(27)+ wa.PadRight(27)+wi.PadRight(27)+ ar.PadRight(22)+"\n");
             Console.Write("상대의 급소를 노려         "+"강인한 육체의 소유자로     "+"강력한 스킬을 사용합니다   "+"강력한 팔힘으로            "+"\n");
             Console.Write("치명적인 일격을 가합니다   "+"생존능력이 높습니다        "+"                           "+"높은 데미지를 입힙니다     "+"\n");
             string? job = Console.ReadLine();
-#pragma warning disable CS8602 // null 가능 참조에 대한 역참조입니다.
-            return job.ToLower();
-#pragma warning restore CS8602 // null 가능 참조에 대한 역참조입니다.
+            job = job.ToUpper();
+            while(job != @as& job!= wa& job != wi & job != ar) 
+            {
+                Console.WriteLine("올바른 직업을 선택해주세요");
+                job = Console.ReadLine();
+                job = job.ToUpper();
+            }
+            return job;
+
         }
     }
 }
