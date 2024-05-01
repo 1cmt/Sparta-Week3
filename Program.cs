@@ -5,13 +5,14 @@ namespace TextGame // Note: actual namespace depends on the project name.
 {
     internal class GameManager
     {
+        public List<Quest> quests;
         public GameManager()
         {
             InitializeGame();
          }
         public void InitializeGame()
         {
-            
+            quests = Quest.GetInitialQuests();
             //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
