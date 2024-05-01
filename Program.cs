@@ -14,7 +14,6 @@ namespace TextGame // Note: actual namespace depends on the project name.
         public void InitializeGame()
         {
             questManager = new QuestManager();
-            //quests = Quest.GetInitialQuests(); //quest 리스트 가져오기
             //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
@@ -32,14 +31,12 @@ namespace TextGame // Note: actual namespace depends on the project name.
             //프로그램 진행과정
             questManager.QuestMenu();
 
-
         }
 
         public static void Main()
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
-            //GameManager gamemanager = GameManager
-            //gamemanager.StartGame();
+            Console.OutputEncoding = System.Text.Encoding.UTF8; //콘솔 출력텍스트 깨짐 방지
+            instance.StartGame();
         }
     }
 }

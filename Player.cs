@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Sparta_week3
+namespace TextGame
 {
     public class Player
     {

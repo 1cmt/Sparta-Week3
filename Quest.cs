@@ -5,13 +5,12 @@ using System.Runtime.CompilerServices;
 using System.IO;
 using System.Text.Json;
 using Newtonsoft.Json;
-//using Sparta_week3;
 using System.Security.Cryptography.X509Certificates;
 using TextGame;
 
 
 
-namespace Sparta_week3
+namespace TextGame
 {
     //<><><><>퀘스트 완료 보상 함수를 쓰기 위해 람다 표현식을 쓰느라 아직 Player가 정의되지 않았어요. 에러가 있으니 주의!<><><><>
 
