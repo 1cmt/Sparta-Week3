@@ -70,9 +70,7 @@ namespace TextGame
         {
             Console.Write("B1A4던전에 오신 것을 환영합니다 이름을 적어주세요 : ");
             string? Name = Console.ReadLine();
-#pragma warning disable CS8603 // 가능한 null 참조 반환입니다.
             return Name;
-#pragma warning restore CS8603 // 가능한 null 참조 반환입니다.
         }
 
         internal static string InputJob()
