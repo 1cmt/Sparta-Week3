@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sparta_week3
+namespace TextGame
 {
-    internal class ConsoleUtility
+    public class ConsoleUtility
     {
         public static void PrintHead()
         {
@@ -28,6 +28,15 @@ namespace Sparta_week3
             Console.WriteLine("                    press any key to start                     ");
             Console.WriteLine("===============================================================");
             Console.ReadKey();
+            Console.Clear();
+            ConsoleUtility.PrintLine('=');
+            Console.WriteLine("스파르타 던전 생성중...");
+            Thread.Sleep(1000);
+            Console.WriteLine("몬스터 생성중...");
+            Thread.Sleep(1000);
+            Console.WriteLine("장비 제작중...");
+            Thread.Sleep(1000);
+            ConsoleUtility.PrintLine('=');
         }
         public static int PromptMenuChoice(int min, int max)
         {
@@ -82,7 +91,7 @@ namespace Sparta_week3
             return str.PadRight(str.Length + padding);
         }
 
-        private static void PrintLine(char ch,int i = 110)
+        public static void PrintLine(char ch,int i = 110)
         {
             for (i = 0; i < 110; i++)
             {
