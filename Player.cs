@@ -55,25 +55,16 @@ namespace TextGame
                 cexp = 0;
             }
         }
-        public void Changejob(ref int gold, string job)
+        public static string CheckJob()
         {
-            if (gold >= 32747)
-            { 
-                gold -= 32747;
-                Console.Write("변경하실 직업을 입력해주세요: ");
-                string TempJob = Console.ReadLine();
-                if(job == TempJob) { Console.Write("똑같은 직업입니다."); }
-                else { 
-                        job = TempJob.ToUpper();
-                         
-                     }
-                Console.Read();
-            }
-            else
+            string @as = "ASSASSIN"; string wa = "WARRIOR"; string wi = "WIZARD"; string ar = "ARCHER";
+            string? job = Console.ReadLine().ToUpper();
+            while (job != @as & job != wa & job != wi & job != ar)
             {
-                Console.WriteLine($"골드가 {32747-gold}만큼 부족합니다");
-                Console.ReadKey();
+                Console.WriteLine("올바른 직업을 선택해주세요");
+                job = Console.ReadLine().ToUpper();
             }
+            return job;
         }
         public static string InputName()
         {
@@ -95,16 +86,29 @@ namespace TextGame
             Console.Write("치명적인 일격을 가합니다   "+"생존능력이 높습니다        "+"                           "+"높은 데미지를 입힙니다     "+"\n");
             ConsoleUtility.PrintLine('=');
 
-            string? job = Console.ReadLine();
-            job = job.ToUpper();
-            while(job != @as& job!= wa& job != wi & job != ar) 
-            {
-                Console.WriteLine("올바른 직업을 선택해주세요");
-                job = Console.ReadLine();
-                job = job.ToUpper();
-            }
-            return job;
+            string Tempjob = CheckJob();
+            return Tempjob ;
 
+        }
+        public void Changejob(ref int gold, ref string job)
+        {
+            if (gold >= 32747)
+            {
+                Console.Write("변경하실 직업을 입력해주세요: ");
+                string? TempJob = CheckJob();
+                if (job == TempJob) { Console.WriteLine("똑같은 직업입니다."); }
+                else
+                {
+                    job = TempJob;
+                    gold -= 32747;
+                    Console.WriteLine(TempJob + "직업으로 변경완료");
+                }
+            }
+            else { Console.WriteLine($"골드가 {32747 - gold}만큼 부족합니다"); }
+
+            ConsoleUtility.PrintLine('=');
+            Console.WriteLine("아무 키나 눌러서 진행");
+            Console.ReadKey();
         }
         internal void StatusMenu(Player player,Inventory inventory)
         {
@@ -116,16 +120,16 @@ namespace TextGame
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "공격력 : ",player.Atk.ToString(),"\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "방어력 : ", player.Def.ToString(),"\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "체력 : ", player.Hp.ToString(),"\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "Gold : ", player.Gold.ToString(),"\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "Gold : ", player.Gold.ToString(),"\n\n");
 
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "0", ". 메뉴로 나가기\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "1", ". 직업변경 : 32767 G");
-
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "1", ". 직업변경 : 32767 G\n");
+            ConsoleUtility.PrintLine('=');
             int choice = ConsoleUtility.PromptMenuChoice(0, 1);
             if (choice == 0) return;
             else
             {
-                Changejob(ref player.Gold, player.Job);
+                Changejob(ref player.Gold, ref player._job);
                 StatusMenu(player,inventory);
             }
         }
