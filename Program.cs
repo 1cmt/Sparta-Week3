@@ -3,16 +3,18 @@ using System;
 
 namespace TextGame // Note: actual namespace depends on the project name.
 {
-    internal class GameManager
+    public class GameManager
     {
-        public List<Quest> quests;
+        public static GameManager instance = new GameManager();
+        public QuestManager questManager;
         public GameManager()
         {
             InitializeGame();
-         }
+        }
         public void InitializeGame()
         {
-            quests = Quest.GetInitialQuests(); //quest 리스트 가져오기
+            questManager = new QuestManager();
+            //quests = Quest.GetInitialQuests(); //quest 리스트 가져오기
             //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
@@ -27,15 +29,17 @@ namespace TextGame // Note: actual namespace depends on the project name.
 
         private void MainMenu()
         {
-            //프로그램 진행과정 
-            
+            //프로그램 진행과정
+            questManager.QuestMenu();
+
+
         }
 
         public static void Main()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            GameManager gamemanager = new GameManager();
-            gamemanager.StartGame();
+            //GameManager gamemanager = GameManager
+            //gamemanager.StartGame();
         }
     }
 }

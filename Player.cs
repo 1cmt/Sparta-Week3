@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace Sparta_week3
 {
-    internal class Player
+    public class Player
     {
         [JsonProperty("privateField")]
         private string _name;
