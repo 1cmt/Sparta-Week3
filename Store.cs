@@ -1,7 +1,6 @@
 using System.Runtime.InteropServices.Marshalling;
-using Sparta_week3;
 
-namespace Sparta_week3
+namespace TextGame
 {
     internal class Store
     {
@@ -10,14 +9,14 @@ namespace Sparta_week3
         public Store()
         {
             StoreInventory = new Item[8];
-            StoreInventory[0] = new DefItem("수련자 갑옷", "수련에 도움을 주는 갑옷입니다.", 1000, 5);
-            StoreInventory[1] = new DefItem("무쇠 갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", 2000, 9);
-            StoreInventory[2] = new DefItem("스파르타의 갑옷", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500, 15);
-            StoreInventory[3] = new DefItem("부실한 갑옷", "천으로 만들어진 부실한 갑옷입니다.", 300, 2);
-            StoreInventory[4] = new AtkItem("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", 600, 2);
-            StoreInventory[5] = new AtkItem("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 1500, 5);
-            StoreInventory[6] = new AtkItem("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 2000, 7);
-            StoreInventory[7] = new AtkItem("부실한 창", "낡아보이는 부실한 창입니다.", 200, 1);
+            StoreInventory[0] = new Item("수련자 갑옷", "수련에 도움을 주는 갑옷입니다.", ItemType.Armor, 1000, 0, 5, 0);
+            StoreInventory[1] = new Item("무쇠 갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", ItemType.Armor, 2000, 0, 9, 0);
+            StoreInventory[2] = new Item("스파르타의 갑옷", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", ItemType.Armor, 3500, 0, 15, 0);
+            StoreInventory[3] = new Item("부실한 갑옷", "천으로 만들어진 부실한 갑옷입니다.", ItemType.Armor, 300, 0, 2, 0);
+            StoreInventory[4] = new Item("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", ItemType.Weapon, 600, 2, 0, 0);
+            StoreInventory[5] = new Item("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", ItemType.Weapon, 1500, 5, 0, 0);
+            StoreInventory[6] = new Item("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", ItemType.Weapon, 2000, 7, 0, 0);
+            StoreInventory[7] = new Item("부실한 창", "낡아보이는 부실한 창입니다.", ItemType.Weapon, 200, 1, 0, 0);
         }
 
         public void StoreMenu(Player player, Inventory inventory)
@@ -126,7 +125,7 @@ namespace Sparta_week3
                     if (inventory.IsEquipped(keyInput - 1))
                     {
                         Console.WriteLine("장착 중인 아이템입니다. 그래도 판매하시겠습니까? [0: 아니요, 1: 네]");
-                        Console.Write(">> ");
+                        Console.Write("");
                         switch (ConsoleUtility.PromptMenuChoice(0, 1))
                         {
                             case 0:

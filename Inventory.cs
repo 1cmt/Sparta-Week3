@@ -1,5 +1,5 @@
 
-namespace Sparta_week3
+namespace TextGame
 {
     internal class Inventory
     {
