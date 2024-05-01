@@ -22,6 +22,7 @@ namespace Sparta_week3
         public int Def;
         public float Ctl = 0.15f;
         public int Mana=50;
+        public int MaxHp;
         public int Hp;
         public int Gold;
         public int Cexp=0;
@@ -37,12 +38,12 @@ namespace Sparta_week3
             _job = job;
             Level = level;
             Gold = gold;
-            Hp = hp;
+            (MaxHp,Hp) = (hp,hp);
             Texp = exp;
             if (job == "archer") Atk = (int)(atk * 1.2f);
             else Atk = atk;
             Def = job == "warrior" ? (int)(def * 1.2f)  : def;
-            Hp  = job == "warrior" ? (int)(hp * 1.2f)   : hp;
+            (Hp,MaxHp)  = job == "warrior" ? ((int)(hp * 1.2f), (int)(hp * 1.2f)) : (hp,hp);
             Ctl = job == "assassin"? (int)(Ctl * 1.2f)  : Ctl;
             Mana= job == "wizard"  ? (int)(Mana * 1.2f) : Mana;
         }
@@ -70,7 +71,9 @@ namespace Sparta_week3
             ConsoleUtility.PrintLine('=');
             Console.Write("B1A4던전에 오신 것을 환영합니다 이름을 적어주세요 : ");
             string? Name = Console.ReadLine();
+#pragma warning disable CS8603 // 가능한 null 참조 반환입니다.
             return Name;
+#pragma warning restore CS8603 // 가능한 null 참조 반환입니다.
         }
 
         internal static string InputJob()
@@ -82,7 +85,9 @@ namespace Sparta_week3
             Console.Write("상대의 급소를 노려         "+"강인한 육체의 소유자로     "+"강력한 스킬을 사용합니다   "+"강력한 팔힘으로            "+"\n");
             Console.Write("치명적인 일격을 가합니다   "+"생존능력이 높습니다        "+"                           "+"높은 데미지를 입힙니다     "+"\n");
             string? job = Console.ReadLine();
+#pragma warning disable CS8602 // null 가능 참조에 대한 역참조입니다.
             return job.ToLower();
+#pragma warning restore CS8602 // null 가능 참조에 대한 역참조입니다.
         }
     }
 }
