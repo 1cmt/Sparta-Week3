@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.IO;
 using System.Text.Json;
 using Newtonsoft.Json;
-using System.Security.Cryptography.X509Certificates;
+//using System.Security.Cryptography.X509Certificates;
 using TextGame;
 
 
@@ -49,12 +49,12 @@ namespace TextGame
 
 
     //몬스터타입
-    public enum MonsterType
-    {
-        Minion,         //0.미니언
-        CannonMinion,   //1.대포 미니언
-        VoidBug        //2.공허충
-    }
+    //public enum MonsterType
+    //{
+    //    Minion,         //0.미니언
+    //    CannonMinion,   //1.대포 미니언
+    //    VoidBug        //2.공허충
+    //}
     //퀘스트 상태여부
 
     public class QuestManager
@@ -62,7 +62,7 @@ namespace TextGame
         public List<Quest> questList;
         public QuestManager()       //모든 퀘스트를 정의하는 함수
         {
-            List<Quest> quests = new List<Quest>
+            questList = new List<Quest>
         {   
             //1.미니언 5마리 잡기
             new Quest(
@@ -141,7 +141,8 @@ namespace TextGame
                     //5골드 지급
                     player.Gold += 5;
                 }),
-        };
+            };
+            QuestMenu();
         }
 
         public void SelectQuest(int index)   //퀘스트 선택하기
@@ -169,8 +170,7 @@ namespace TextGame
             for (int i = 0; i < questList.Count; i++) //QuestManager는 나중에 없애고 프로그램 클래스에서 quests를 가져갈 예정
             {
                 Console.Write($"{i + 1}. ");
-                Console.WriteLine(questList[i].Title + $"{questList[i + 1].ProgressStatus}");
-                break;
+                Console.WriteLine(questList[i].Title + $"{questList[i].ProgressStatus}");
             }
             ConsoleUtility.PrintTitle("");
             Console.WriteLine("0.나가기");

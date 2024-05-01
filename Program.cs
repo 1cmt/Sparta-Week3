@@ -31,6 +31,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
             string job = Player.InputJob();
             player = new Player(name, job);
             MainMenu();
+            
         }
 
         private void MainMenu()
@@ -39,7 +40,6 @@ namespace TextGame // Note: actual namespace depends on the project name.
             {
 
                 Console.Clear();
-
                 // 1. 선택 멘트를 줌
                 ConsoleUtility.PrintLine('■');
                 Console.WriteLine("B1A4 마을에 오신 여러분 환영합니다.");
