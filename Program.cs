@@ -1,5 +1,4 @@
-﻿using Sparta_week3;
-using System;
+﻿using System;
 using static System.Formats.Asn1.AsnWriter;
 using System.Numerics;
 
@@ -7,7 +6,8 @@ namespace TextGame // Note: actual namespace depends on the project name.
 {
     public class GameManager
     {
-        QuestManager questManager;
+        public static GameManager instance = new GameManager();
+        public QuestManager questManager;
         Inventory inventory;
         Store store;
         Player player;
@@ -30,6 +30,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
             string job = Player.InputJob();
             player = new Player(name, job);
             MainMenu();
+            
         }
 
         private void MainMenu()
@@ -38,7 +39,6 @@ namespace TextGame // Note: actual namespace depends on the project name.
             {
 
                 Console.Clear();
-
                 // 1. 선택 멘트를 줌
                 ConsoleUtility.PrintLine('■');
                 Console.WriteLine("B1A4 마을에 오신 여러분 환영합니다.");
@@ -78,8 +78,8 @@ namespace TextGame // Note: actual namespace depends on the project name.
 
         public static void Main()
         {
-            GameManager gamemanager = new GameManager();
-            gamemanager.StartGame();
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            instance.StartGame();
         }
     }
 }
