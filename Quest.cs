@@ -25,12 +25,9 @@ using System.Security.Cryptography.X509Certificates;
 //몬스터타입
 public enum MonsterType
 {
-    Minion,         //ex)0.미니언
-    Monster2,
-    Monster3,
-    Monster4,
-    Monster5,
-    Monster6
+    Minion,         //0.미니언
+    CannonMinion,   //1.대포 미니언
+    VoidBug        //2.공허충
 }
 //퀘스트 상태여부
 
@@ -112,7 +109,7 @@ internal class Quest
                 "쓸만한 방패 x 1\n5G",
                 player => //클리어 조건: 미니언 5마리 잡기
                 {
-                    if(player.KillCount[MonsterType.Minion] >= 5)    //미니언을 5마리 이상 잡았으면
+                    if(true)    //player.KillCount[MonsterType.Minion] >= 5 미니언을 5마리 이상 잡았으면
                     {
                         //미니언 (5/5) (완료)
                         //Console.Write(미니언 (5/5) (완료)")
@@ -142,11 +139,11 @@ internal class Quest
 
                     if(true)    //방패를 장착했으면 (SslmanhanBangpae.isEquipped)
                     {
-                        Console.WriteLine("쓸만한 방패 장착 (진행중)");
+                        Console.WriteLine("쓸만한 방패 장착 (완료)");
                     }
                     else //방패를 장착 안했으면
                     {
-                        Console.WriteLine("쓸만한 방패 장착 (완료)");
+                        Console.WriteLine("쓸만한 방패 장착 (진행중)");
                     }
                 },
                 player => //보상
