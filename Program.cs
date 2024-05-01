@@ -7,7 +7,8 @@ namespace TextGame // Note: actual namespace depends on the project name.
 {
     public class GameManager
     {
-        QuestManager questManager;
+        public static GameManager instance = new GameManager();
+        public QuestManager questManager;
         Inventory inventory;
         Store store;
         Player player;
@@ -78,8 +79,8 @@ namespace TextGame // Note: actual namespace depends on the project name.
 
         public static void Main()
         {
-            GameManager gamemanager = new GameManager();
-            gamemanager.StartGame();
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            instance.StartGame();
         }
     }
 }
