@@ -11,6 +11,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
          }
         public void InitializeGame()
         {
+            
             //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
@@ -23,6 +24,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
         private void MainMenu()
         {
             //프로그램 진행과정 
+            
         }
 
         public static void Main()
