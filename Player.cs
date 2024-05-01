@@ -60,15 +60,6 @@ namespace TextGame
         }
         public static string InputName()
         {
-            Console.Clear();
-            ConsoleUtility.PrintLine('=');
-            Console.WriteLine("스파르타 던전 생성중...");
-            Thread.Sleep(1000);
-            Console.WriteLine("몬스터 생성중...");
-            Thread.Sleep(1000);
-            Console.WriteLine("장비 제작중...");
-            Thread.Sleep(1000);
-            ConsoleUtility.PrintLine('=');
             Console.Write("B1A4던전에 오신 것을 환영합니다 이름을 적어주세요 : ");
             string? Name = Console.ReadLine();
 #pragma warning disable CS8603 // 가능한 null 참조 반환입니다.
@@ -79,15 +70,37 @@ namespace TextGame
         internal static string InputJob()
         {
             Console.WriteLine("직업을 선택해주세요");
+
             ConsoleUtility.PrintLine('=');
-            string @as = "Assassin"; string wa = "Warrior"; string wi = "Wizard"; string ar = "Archer";
+            string @as = "ASSASSIN"; string wa = "WARRIOR"; string wi = "WIZARD"; string ar = "ARCHER";
             Console.Write("       "+@as.PadRight(27)+ wa.PadRight(27)+wi.PadRight(27)+ ar.PadRight(22)+"\n");
             Console.Write("상대의 급소를 노려         "+"강인한 육체의 소유자로     "+"강력한 스킬을 사용합니다   "+"강력한 팔힘으로            "+"\n");
             Console.Write("치명적인 일격을 가합니다   "+"생존능력이 높습니다        "+"                           "+"높은 데미지를 입힙니다     "+"\n");
+            ConsoleUtility.PrintLine('=');
+
             string? job = Console.ReadLine();
-#pragma warning disable CS8602 // null 가능 참조에 대한 역참조입니다.
-            return job.ToLower();
-#pragma warning restore CS8602 // null 가능 참조에 대한 역참조입니다.
+            job = job.ToUpper();
+            while(job != @as& job!= wa& job != wi & job != ar) 
+            {
+                Console.WriteLine("올바른 직업을 선택해주세요");
+                job = Console.ReadLine();
+                job = job.ToUpper();
+            }
+            return job;
+
+        }
+        internal void StatusMenu(Player player,Inventory inventory)
+        {
+            ConsoleUtility.PrintTitle(((Func<string, string>)(status => status.PadLeft(50)))("상태창"));
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "레벨 : ", player.Level.ToString(),"\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "이름 : ", player.Name);
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "(", player.Job,")\n");
+            float totalAtk = (Func<float,float>)(totalAtk =>inventory.IsEquipped?:)(player.Atk))
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "공격력 : ");
+
+
+
+            Thread.Sleep(10000);
         }
     }
 }
