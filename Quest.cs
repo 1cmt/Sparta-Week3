@@ -5,8 +5,8 @@ using System.Runtime.CompilerServices;
 using System.IO;
 using System.Text.Json;
 using Newtonsoft.Json;
-//using System.Security.Cryptography.X509Certificates;
 using TextGame;
+using System.ComponentModel;
 
 
 
@@ -73,7 +73,7 @@ namespace TextGame
             //1.미니언 5마리 잡기
             new Quest(
                 "마을을 위협하는 미니언 처치",
-                "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\\n모험가인 자네가 좀 처치해주게!",
+                "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",
                 "미니언 5마리 처치",
                 "쓸만한 방패 x 1\n5G",
                 player => //클리어 조건: 미니언 5마리 잡기
@@ -100,7 +100,7 @@ namespace TextGame
             //2.장비 장착하기
             new Quest(
                 "장비를 장착해보자",
-                "모험을 떠나기 전에 적절한 장비를 갖추는 건 중요하네.\n자네의 인벤토리에 방패를 장착해보게!",
+                "모험을 떠나기 전에 적절한 장비를 갖추는 건 중요하네.\n자네의 인벤토리에서 방패를 장착해보게!",
                 "쓸만한 방패 장착",
                 "100G",
                 player => //클리어 조건: 방패 장착하기
@@ -204,27 +204,27 @@ namespace TextGame
         {
             Console.Clear();
             while (true)
-            {
+            {   
                 Quest quest = questList[index];
-                Console.WriteLine("Quest!!");
-                Console.WriteLine("");
-                Console.WriteLine(quest.Title);
+
+                ConsoleUtility.PrintTitle(quest.Title);
                 Console.WriteLine("");
                 Console.WriteLine(quest.Description);
                 Console.WriteLine("");
-                Console.WriteLine($"{quest.ClearConditionText}");
+                Console.WriteLine($" -{quest.ClearConditionText}");
                 Console.WriteLine("");
-                Console.WriteLine("-보상-");
+                Console.WriteLine(" -보상-");
                 Console.WriteLine($"{quest.RewardText}");
                 ConsoleUtility.PrintTitle("");
 
-                int KeyInput = ConsoleUtility.PromptMenuChoice(0, 1);
+                
 
                 if (quest.ProgressStatus == (int)QuestStatus.Startable) //고른 퀘스트가 시작 가능할때
                 {
                     Console.WriteLine("0.나가기");
                     Console.WriteLine("1.퀘스트 수락");
 
+                    int KeyInput = ConsoleUtility.PromptMenuChoice(0, 1);
                     switch (KeyInput)
                     {
                         case 0:
@@ -240,10 +240,18 @@ namespace TextGame
                 {
                     //완료 가능할 때
                     //완료 불가능할 때
-                }
-                else if (quest.ProgressStatus == 3 ) //완료
-                {
-                    //이미 완료한 퀘스트입니다.
+                    Console.WriteLine("0.나가기");
+
+                    //bool isAbleToFinish = quest.CheckCondition(instance.player);
+                    //Player player = instance
+
+                    int KeyInput = ConsoleUtility.PromptMenuChoice(0, 0);
+                    switch (KeyInput)
+                    {
+                        case 0:
+                            QuestMenu(); //거절 -> 퀘스트메뉴로 이동
+                            break;
+                    }
                 }
 
                 
