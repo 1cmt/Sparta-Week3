@@ -55,9 +55,21 @@ namespace Sparta_week3
                 level++;
                 cexp = 0;
             }
-
-
-
+        }
+        public string InputName()
+        {
+            Console.Clear();
+            ConsoleUtility.PrintLine('=');
+            Console.WriteLine("스파르타 던전 생성중...");
+            Thread.Sleep(1000);
+            Console.WriteLine("몬스터 생성중...");
+            Thread.Sleep(1000);
+            Console.WriteLine("장비 제작중...");
+            Thread.Sleep(1000);
+            ConsoleUtility.PrintLine('=');
+            Console.Write("B1A4던전에 오신 것을 환영합니다 이름을 적어주세요 : ");
+            string Name = Console.ReadLine();
+            return Name;
         }
     }
 }

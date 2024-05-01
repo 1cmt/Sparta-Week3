@@ -82,7 +82,7 @@ namespace Sparta_week3
             return str.PadRight(str.Length + padding);
         }
 
-        private static void PrintLine(char ch,int i = 110)
+        public static void PrintLine(char ch,int i = 110)
         {
             for (i = 0; i < 110; i++)
             {
