@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace TextGame // Note: actual namespace depends on the project name.
 {
-    internal class GameManager
+    public class GameManager
     {
         List<Quest> quests;
         Inventory inventory;
@@ -65,7 +65,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
                     case 0:
                         return;
                     case 1:
-                        player.StatusMenu(player);
+                        player.StatusMenu(player,inventory);
                         break;
                     case 2:
                         inventory.InventoryMenu(player);

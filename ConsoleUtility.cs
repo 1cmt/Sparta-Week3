@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextGame
 {
-    internal class ConsoleUtility
+    public class ConsoleUtility
     {
         public static void PrintHead()
         {

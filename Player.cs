@@ -26,6 +26,8 @@ namespace TextGame
         public int Hp;
         public int Gold;
         public int Cexp=0;
+
+
         public int Texp { get; private set; }
         public string JobChange
         {
@@ -95,8 +97,13 @@ namespace TextGame
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "레벨 : ", player.Level.ToString(),"\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "이름 : ", player.Name);
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "(", player.Job,")\n");
-            float totalAtk = (Func<float,float>)(totalAtk =>inventory.IsEquipped?:)(player.Atk))
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "공격력 : ");
+            //float totalAtk = (Func<float,float>)(totalAtk =>inventory.IsEquipped?:)(player.Atk))
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "공격력 : ",player.Atk.ToString());
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "방어력 : ", player.Def.ToString());
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "체력 : ", player.Hp.ToString());
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "Gold : ", player.Gold.ToString(),"");
+
+
 
 
 
