@@ -231,19 +231,31 @@ namespace TextGame
                             QuestMenu(); //거절 -> 퀘스트메뉴로 이동
                             break;
                         case 1:
-                            quest.ProgressStatus = (int)QuestStatus.InPrograss;
-                            QuestMenu(); //수락 -> 퀘스트를 진행중 상태로 변경, 퀘스트 메뉴로 이동
+                            quest.ProgressStatus = (int)QuestStatus.InPrograss; //해당 퀘스트의 진행상태를 (진행가능)->(진행중)으로 변경
+                            QuestMenu(); //수락 -> 퀘스트 메뉴로 이동
                             break;
                     }
                 }
-                else if (quest.ProgressStatus == 2) //진행 중인 퀘스트를 선택했을 때
-                {
-                    //완료 가능할 때
-                    //완료 불가능할 때
+                else if (quest.ProgressStatus == (int)QuestStatus.InPrograss) //진행 중인 퀘스트를 선택했을 때
+                {   
                     Console.WriteLine("0.나가기");
+                    //완료가 가능한지 퀘스트의 진행상태를 체크
+                    //quest.CheckCondition(instance.player); // player를 매개변수를 받아서 함수(=퀘스트 클리어하는 조건을 체크하는 내용)를 실행
 
-                    //bool isAbleToFinish = quest.CheckCondition(instance.player);
-                    //Player player = instance
+                    //아직 완료 불가능이면
+                    //1.제목 뒤에 문자열 (진행중) 출력
+                    //2.해당 퀘스트의 모든 조건 진행도를 출력) (ex) 레벨 3 달성 (2/3), 미니언 5마리 처치 (4/5)
+                    //선택지
+                    //0.나가기
+
+                    //완료가 가능하면
+                    //1.제목 뒤에 문자열 (완료가능) 출력
+                    //2.해당 퀘스트의 모든 조건 진행도를 100% 조건으로 출력
+                    //3.(1.퀘스트 완료)를 누르면 보상 지급 후 퀘스트 메뉴로 이동
+
+                    //선택지
+                    //0.나가기
+                    //1.퀘스트 완료 (+ 해당 퀘스트의 진행상태를 QuestStatus.Finished(완료)로 변경
 
                     int KeyInput = ConsoleUtility.PromptMenuChoice(0, 0);
                     switch (KeyInput)
@@ -253,18 +265,7 @@ namespace TextGame
                             break;
                     }
                 }
-
-                
-                
-
             }
-            //1.클리어했으면 "이미 완료한 퀘스트입니다." 출력하고 재입력받기
-            //2.클리어를 안했으면 -> 퀘스트를 받았는지 체크
-            //2-1.퀘스트를 받았으면 퀘스트 제목,내용,조건,보상 출력 + (진행중) 상태 표시
-            //2-2.퀘스트를 안 받았으면 퀘스트 제목,내용,조건,보상 출력&보상 지급
-
-            //private Quest quest = quests[index];
-
         }
 
         //먼저 퀘스트 진행상태 저장리스트를 초기화
@@ -278,8 +279,8 @@ namespace TextGame
         public string ClearConditionText;       //클리어 조건 텍스트
         public string RewardText;               //퀘스트 보상 텍스트
 
-        internal Action<Player> CheckCondition;   //클리어 조건을 체크하는 함수. 조건에 따라 ClearConditionText의 텍스트 뒤에 어떻게 추가할지 직접 정의해야 함. (ex "\t미니언 (3 / 5)")
-        internal Action<Player> Reward;           //클리어 보상 함수
+        public Action<Player> CheckCondition;   //클리어 조건을 체크하는 함수. 조건에 따라 ClearConditionText의 문자열 뒤에 어떻게 추가할지 직접 정의해야 함. (ex "\t미니언 (3 / 5)")
+        public Action<Player> Reward;           //클리어 보상 함수
 
         public int ProgressStatus = (int)QuestStatus.Startable;          //클리어 여부를 저장하는 변수. 기본 진행 가능 상태
 
