@@ -56,6 +56,12 @@ namespace TextGame
     //    VoidBug        //2.공허충
     //}
     //퀘스트 상태여부
+    public enum QuestStatus
+    {
+        Startable,          //0.진행 가능
+        InPrograss,         //1.진행 중
+        Finished            //2.완료
+    }
 
     public class QuestManager
     {
@@ -144,9 +150,79 @@ namespace TextGame
             };
         }
 
+        public void QuestMenu()     //마을 -> 퀘스트 메뉴
+        {
+            while (true)
+            {
+                string ProgressStatusText; // 진행가능 or 진행중 or 완료
+
+                Console.Clear();
+                ConsoleUtility.PrintTitle("■ 퀘스트 메뉴 ■");
+                Console.WriteLine("진행 가능한 퀘스트들을 볼 수 있습니다.");
+                Console.WriteLine("");
+                Console.WriteLine("[퀘스트 목록]");
+
+                //quests 리스트 안에 담긴 퀘스트 수만큼 리스트를 보여주고, 선택지 생성
+                //퀘스트마다 각각 완료했는지
+                for (int i = 0; i < questList.Count; i++) //QuestManager는 나중에 없애고 프로그램 클래스에서 quests를 가져갈 예정
+                {
+                    if (questList[i].ProgressStatus == 0)
+                    {
+                        ProgressStatusText = " (진행가능)";
+                    }
+                    else
+                    {
+                        ProgressStatusText = (questList[i].ProgressStatus == 1) ? " (진행중)" : " (완료)";
+                    }
+                    Console.Write($"{i + 1}. ");
+                    Console.WriteLine(questList[i].Title + $"{ProgressStatusText}");
+                }
+                ConsoleUtility.PrintTitle("");
+                Console.WriteLine("0.나가기");
+
+                int KeyInput = ConsoleUtility.PromptMenuChoice(0, questList.Count);
+
+                switch (KeyInput)
+                {
+                    case 0:
+                        //MainMenu(); //메인메뉴 이동
+                        break;
+                    default:
+                        SelectQuest(KeyInput-1);
+                        break;
+                }
+            }
+        }
         public void SelectQuest(int index)   //퀘스트 선택하기
         {
             Console.Clear();
+            while (true)
+            {
+
+                Console.WriteLine("Quest!!");
+                Console.WriteLine("");
+                Console.WriteLine(questList[index].Title);
+                Console.WriteLine("");
+                Console.WriteLine(questList[index].Description);
+                Console.WriteLine("");
+                Console.WriteLine($"{questList[index].ClearConditionText}");
+                Console.WriteLine("");
+                Console.WriteLine("-보상-");
+                Console.WriteLine($"{questList[index].RewardText}");
+
+                int KeyInput = ConsoleUtility.PromptMenuChoice(0, questList.Count);
+
+                switch (KeyInput)
+                {
+                    case 0:
+                        QuestMenu(); //메인메뉴 이동
+                        break;
+                    default:
+                        SelectQuest(KeyInput - 1);
+                        break;
+                }
+
+            }
             //1.클리어했으면 "이미 완료한 퀘스트입니다." 출력하고 재입력받기
             //2.클리어를 안했으면 -> 퀘스트를 받았는지 체크
             //2-1.퀘스트를 받았으면 퀘스트 제목,내용,조건,보상 출력 + (진행중) 상태 표시
@@ -156,48 +232,8 @@ namespace TextGame
 
         }
 
-        public void QuestMenu()     //마을 -> 퀘스트 메뉴
-        {
-            Console.Clear();
-            ConsoleUtility.PrintTitle("■ 퀘스트 메뉴 ■");
-            Console.WriteLine("진행 가능한 퀘스트들을 볼 수 있습니다.");
-            Console.WriteLine("");
-            Console.WriteLine("[퀘스트 목록]");
-
-            //quests 리스트 안에 담긴 퀘스트 수만큼 리스트를 보여주고, 선택지 생성
-            //퀘스트마다 각각 완료했는지
-            for (int i = 0; i < questList.Count; i++) //QuestManager는 나중에 없애고 프로그램 클래스에서 quests를 가져갈 예정
-            {
-                Console.Write($"{i + 1}. ");
-                Console.WriteLine(questList[i].Title + $"{questList[i].ProgressStatus}");
-            }
-            ConsoleUtility.PrintTitle("");
-            Console.WriteLine("0.나가기");
-
-            int KeyInput = ConsoleUtility.PromptMenuChoice(0, questList.Count);
-
-            switch (KeyInput)
-            {
-                case 0:
-                    //MainMenu(); //메인메뉴 이동
-                    break;
-                default:
-                    SelectQuest(KeyInput - 1);
-                    break;
-            }
-
-        }
-
         //먼저 퀘스트 진행상태 저장리스트를 초기화
         //public static List<int> loadedStatuses = LoadQuestStatusFromFile();
-
-    }
-
-    public enum QuestStatus
-    {
-        Startable,          //0.진행 가능
-        InPrograss,         //1.진행 중
-        Finished            //2.완료
     }
 
     public class Quest
