@@ -18,7 +18,7 @@ namespace TextGame
         private string _job;
         public string Job { get { return _job; } set => _job = value; }
         public int Level;
-        public float Atk;
+        public int Atk;
         public int Def;
         public float Ctl = 0.15f;
         public int Mana=50;
@@ -49,7 +49,7 @@ namespace TextGame
             if (cexp == Texp)
             {
                 Texp += 20 + level * 5;
-                Atk += 0.5f;
+                Atk += 1;
                 Def ++;
                 level++;
                 cexp = 0;
@@ -128,20 +128,13 @@ namespace TextGame
                 Changejob(ref player.Gold, player.Job);
                 StatusMenu(player,inventory);
             }
-           
-
-            
-           
-
-
-
         }
 
 
 
         public void Attack(Monster monster)
         {
-            monster.Hp -= (int)Atk;
+            monster.Hp -= Atk;
             if (monster.Hp < 0) monster.Hp = 0;
         }
     }
