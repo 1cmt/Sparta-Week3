@@ -162,25 +162,32 @@ namespace TextGame
                 Console.WriteLine("");
                 Console.WriteLine("[퀘스트 목록]");
 
-                //quests 리스트 안에 담긴 퀘스트 수만큼 리스트를 보여주고, 선택지 생성
+                //quests 리스트 안에 담긴 (완료되지 않은)퀘스트 수만큼 리스트를 보여주고, 선택지 생성
                 //퀘스트마다 각각 완료했는지
-                for (int i = 0; i < questList.Count; i++) //QuestManager는 나중에 없애고 프로그램 클래스에서 quests를 가져갈 예정
+
+                List<int> selectableList = new List<int>();
+                selectableList.Add(-1); //0번째 배열은 안 쓴다는 의미
+
+                //완료되지 않은, 진행가능 or 진행중인 퀘스트들을 선별하기
+                for (int i = 0; i < questList.Count; i++)
                 {
-                    if (questList[i].ProgressStatus == 0)
+                    if (questList[i].ProgressStatus == (int)QuestStatus.Finished) //만약 체크한 퀘스트가 완료됐다면 continue
                     {
-                        ProgressStatusText = " (진행가능)";
+                        continue;
                     }
                     else
                     {
-                        ProgressStatusText = (questList[i].ProgressStatus == 1) ? " (진행중)" : " (완료)";
+                        ProgressStatusText = (questList[i].ProgressStatus == (int)QuestStatus.Startable) ? " (진행가능)" : " (진행중)";
+                        selectableList.Add(i); //i 값을 selectableList 리스트에 추가하기
+                        Console.Write($"{selectableList.Count - 1}. ");
+                        Console.WriteLine(questList[i].Title + $"{ProgressStatusText}");
                     }
-                    Console.Write($"{i + 1}. ");
-                    Console.WriteLine(questList[i].Title + $"{ProgressStatusText}");
                 }
+
                 ConsoleUtility.PrintTitle("");
                 Console.WriteLine("0.나가기");
 
-                int KeyInput = ConsoleUtility.PromptMenuChoice(0, questList.Count);
+                int KeyInput = ConsoleUtility.PromptMenuChoice(0, selectableList.Count);
 
                 switch (KeyInput)
                 {
@@ -198,29 +205,49 @@ namespace TextGame
             Console.Clear();
             while (true)
             {
-
+                Quest quest = questList[index];
                 Console.WriteLine("Quest!!");
                 Console.WriteLine("");
-                Console.WriteLine(questList[index].Title);
+                Console.WriteLine(quest.Title);
                 Console.WriteLine("");
-                Console.WriteLine(questList[index].Description);
+                Console.WriteLine(quest.Description);
                 Console.WriteLine("");
-                Console.WriteLine($"{questList[index].ClearConditionText}");
+                Console.WriteLine($"{quest.ClearConditionText}");
                 Console.WriteLine("");
                 Console.WriteLine("-보상-");
-                Console.WriteLine($"{questList[index].RewardText}");
+                Console.WriteLine($"{quest.RewardText}");
+                ConsoleUtility.PrintTitle("");
 
-                int KeyInput = ConsoleUtility.PromptMenuChoice(0, questList.Count);
+                int KeyInput = ConsoleUtility.PromptMenuChoice(0, 1);
 
-                switch (KeyInput)
+                if (quest.ProgressStatus == (int)QuestStatus.Startable) //고른 퀘스트가 시작 가능할때
                 {
-                    case 0:
-                        QuestMenu(); //메인메뉴 이동
-                        break;
-                    default:
-                        SelectQuest(KeyInput - 1);
-                        break;
+                    Console.WriteLine("0.나가기");
+                    Console.WriteLine("1.퀘스트 수락");
+
+                    switch (KeyInput)
+                    {
+                        case 0:
+                            QuestMenu(); //거절 -> 퀘스트메뉴로 이동
+                            break;
+                        case 1:
+                            quest.ProgressStatus = (int)QuestStatus.InPrograss;
+                            QuestMenu(); //수락 -> 퀘스트를 진행중 상태로 변경, 퀘스트 메뉴로 이동
+                            break;
+                    }
                 }
+                else if (quest.ProgressStatus == 2) //진행 중인 퀘스트를 선택했을 때
+                {
+                    //완료 가능할 때
+                    //완료 불가능할 때
+                }
+                else if (quest.ProgressStatus == 3 ) //완료
+                {
+                    //이미 완료한 퀘스트입니다.
+                }
+
+                
+                
 
             }
             //1.클리어했으면 "이미 완료한 퀘스트입니다." 출력하고 재입력받기
