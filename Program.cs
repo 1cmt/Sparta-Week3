@@ -1,41 +1,52 @@
 ﻿using Sparta_week3;
 using System;
+using static System.Formats.Asn1.AsnWriter;
+using System.Numerics;
 
 namespace TextGame // Note: actual namespace depends on the project name.
 {
     internal class GameManager
     {
+        List<Quest> quests;
+        Inventory inventory;
+        Store store;
+        Player player;
         public GameManager()
         {
             InitializeGame();
-        }
+         }
         public void InitializeGame()
         {
+
+            quests = Quest.GetInitialQuests();
+            inventory = new Inventory();
+            store     = new Store();
+
+
             //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
         {
             Console.Clear();
             ConsoleUtility.PrintHead();
+            string name = Player.InputName();
+            string job = Player.InputJob();
+            player = new Player(name, job);
             MainMenu();
         }
 
         private void MainMenu()
         {
-            //프로그램 진행과정 
-            Player player = new Player("Chad", "전사");
-            Store store = new Store();
-            Inventory inventory = new Inventory();
-
             while (true)
             {
+
                 Console.Clear();
 
                 // 1. 선택 멘트를 줌
-                Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-                Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
+                ConsoleUtility.PrintLine('■');
+                Console.WriteLine("B1A4 마을에 오신 여러분 환영합니다.");
                 Console.WriteLine("이곳에서 던전으로 들어가기 전 활동을 할 수 있습니다.");
-                Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+                ConsoleUtility.PrintLine('■');
                 Console.WriteLine("");
 
                 Console.WriteLine("1. 상태보기");
@@ -54,7 +65,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
                     case 0:
                         return;
                     case 1:
-                        //StatusMenu();
+                        player.StatusMenu(player);
                         break;
                     case 2:
                         inventory.InventoryMenu(player);
@@ -65,7 +76,6 @@ namespace TextGame // Note: actual namespace depends on the project name.
                 }
 
             }
-
 
         }
 
