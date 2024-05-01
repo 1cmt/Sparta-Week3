@@ -136,5 +136,13 @@ namespace TextGame
 
 
         }
+
+
+
+        public void Attack(Monster monster)
+        {
+            monster.Hp -= (int)Atk;
+            if (monster.Hp < 0) monster.Hp = 0;
+        }
     }
 }
