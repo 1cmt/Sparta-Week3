@@ -20,8 +20,7 @@ namespace Sparta_week3
         public int Level;
         public float Atk;
         public int Def;
-        public AtkItem? atkItem;
-        public DefItem? defItem;
+        public int MaxHp;
         public int Ctl;
         public int Mana;
         public int Hp;
@@ -38,9 +37,8 @@ namespace Sparta_week3
             _job = job;
             Level = level;
             Gold = gold;
+            MaxHp = hp;
             Hp = hp;
-            atkItem = null;
-            defItem = null;
             if(job == "Archer") Atk = (int)(atk * 1.2f); 
             else Atk = atk;
             Def = job == "Warrior" ? (int)(def * 1.2f) : def;
