@@ -12,7 +12,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
          }
         public void InitializeGame()
         {
-            quests = Quest.GetInitialQuests();
+            quests = Quest.GetInitialQuests(); //quest 리스트 가져오기
             //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
