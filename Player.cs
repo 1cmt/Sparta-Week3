@@ -21,14 +21,15 @@ namespace TextGame
         public int Atk;
         public int Def;
         public float Ctl = 0.15f;
-        public int Mana=50;
+        public int Mp;
         public int MaxHp;
         public int Hp;
+        public int MaxMp;
         public int Gold;
         public int Cexp=0;
         public int Texp { get; private set; }
 
-        public Player(string name, string job, int level = 1, int atk = 10, int def = 10, int hp = 100, int gold = 1000, int exp = 10)
+        public Player(string name, string job, int level = 1, int atk = 10, int def = 10, int hp = 100, int gold = 1000, int exp = 10,int mp =50,int maxmp=50)
         {
             _name = name;
             _job = job;
@@ -36,12 +37,13 @@ namespace TextGame
             Gold = gold;
             (MaxHp,Hp) = (hp,hp);
             Texp = exp;
+            Mp = mp; MaxMp = maxmp;
             if (job == "archer") Atk = (int)(atk * 1.2f);
             else Atk = atk;
             Def = job == "warrior" ? (int)(def * 1.2f)  : def;
             (Hp,MaxHp)  = job == "warrior" ? ((int)(hp * 1.2f), (int)(hp * 1.2f)) : (hp,hp);
             Ctl = job == "assassin"? (int)(Ctl * 1.2f)  : Ctl;
-            Mana= job == "wizard"  ? (int)(Mana * 1.2f) : Mana;
+            (Mp,MaxMp)= job == "wizard"  ? ((int)(Mana * 1.2f), (int)(Mana * 1.2f)) : (Mana,Mana);
         }
 
         public void Levelup(ref int level, ref int cexp)
