@@ -7,7 +7,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
     public class GameManager
     {
         public static GameManager instance = new GameManager();
-        public QuestManager questManager;
+        QuestManager questManager;
         Inventory inventory;
         Store store;
         Player player;
@@ -49,12 +49,13 @@ namespace TextGame // Note: actual namespace depends on the project name.
                 Console.WriteLine("1. 상태보기");
                 Console.WriteLine("2. 인벤토리");
                 Console.WriteLine("3. 상점");
+                Console.WriteLine("4. 퀘스트");
                 Console.WriteLine("");
                 Console.WriteLine("0. 나가기");
                 Console.WriteLine("");
 
                 // 2. 선택한 결과를 검증함
-                int choice = ConsoleUtility.PromptMenuChoice(0, 3);
+                int choice = ConsoleUtility.PromptMenuChoice(0, 4);
 
                 // 3. 선택한 결과에 따라 보내줌
                 switch (choice)
@@ -69,6 +70,11 @@ namespace TextGame // Note: actual namespace depends on the project name.
                         break;
                     case 3:
                         store.StoreMenu(player, inventory);
+                        break;
+                    case 4:
+                        questManager.QuestMenu(player, inventory);
+                        break;
+                    case 5:
                         break;
                 }
 
