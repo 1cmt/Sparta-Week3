@@ -59,7 +59,7 @@ namespace TextGame
     public enum QuestStatus
     {
         Startable,          //0.진행 가능
-        InPrograss,         //1.진행 중
+        InProgress,         //1.진행 중
         Finished            //2.완료
     }
 
@@ -231,12 +231,12 @@ namespace TextGame
                             QuestMenu(); //거절 -> 퀘스트메뉴로 이동
                             break;
                         case 1:
-                            quest.ProgressStatus = (int)QuestStatus.InPrograss; //해당 퀘스트의 진행상태를 (진행가능)->(진행중)으로 변경
+                            quest.ProgressStatus = (int)QuestStatus.InProgress; //해당 퀘스트의 진행상태를 (진행가능)->(진행중)으로 변경
                             QuestMenu(); //수락 -> 퀘스트 메뉴로 이동
                             break;
                     }
                 }
-                else if (quest.ProgressStatus == (int)QuestStatus.InPrograss) //진행 중인 퀘스트를 선택했을 때
+                else if (quest.ProgressStatus == (int)QuestStatus.InProgress) //진행 중인 퀘스트를 선택했을 때
                 {   
                     Console.WriteLine("0.나가기");
                     //완료가 가능한지 퀘스트의 진행상태를 체크
