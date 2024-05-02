@@ -9,8 +9,6 @@ namespace TextGame
         Armor,
         Helmet,
         Shield,
-        Glove,
-        Boots,
         Potion
     }
 
@@ -23,7 +21,7 @@ namespace TextGame
         EquipMenu
     }
 
-    internal class Item
+    public class Item
     {
         public string Name { get; }
         public string Desc { get; }
@@ -86,14 +84,18 @@ namespace TextGame
 
         public void PrintIncludeEquipInfo(bool withNumber = false, int idx = 0, bool hasPriceInfo = false)
         {
-            if (withNumber) ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.DarkMagenta, "", $"{idx} ");
+            if (withNumber)
+            {
+                string indexStr = idx < 10 ? $"{idx}  " : $"{idx} ";
+                ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.DarkMagenta, "", indexStr);
+            }
 
             if (IsEquipped)
             {
                 ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Cyan, "[", "E", "]");
-                Console.Write(ConsoleUtility.PadRightForMixedText(Name, 15));
+                Console.Write(ConsoleUtility.PadRightForMixedText(Name, 17));
             }
-            else Console.Write(ConsoleUtility.PadRightForMixedText(Name, 15));
+            else Console.Write(ConsoleUtility.PadRightForMixedText(Name, 20));
 
             PrintStat();
 
@@ -115,7 +117,8 @@ namespace TextGame
         {
             if (withNumber)
             {
-                ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.DarkMagenta, "", $"{idx} ");
+                string indexStr = idx < 10 ? $"{idx}  " : $"{idx} ";
+                ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.DarkMagenta, "", indexStr);
                 Console.Write(ConsoleUtility.PadRightForMixedText(Name, 15));
             }
             else Console.Write(ConsoleUtility.PadRightForMixedText(Name, 15));
@@ -144,17 +147,17 @@ namespace TextGame
 
         }
 
-        internal void ToggleEquipStatus()
+        public void ToggleEquipStatus()
         {
             IsEquipped = !IsEquipped;
         }
 
-        internal void Purchase()
+        public void Purchase()
         {
             IsPurchased = true;
         }
 
-        internal void Sell()
+        public void Sell()
         {
             IsPurchased = false;
         }
