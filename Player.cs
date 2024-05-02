@@ -29,11 +29,13 @@ namespace TextGame
         public int Cexp=0;
         public List<int> KillCount = new List<int> { 0, 0, 0, 0 };
         public int Texp { get; private set; }
+        public List<Skill> skillbook = new List<Skill>();
 
         public Player(string name, string job, int level = 1, int atk = 10, int def = 10, int hp = 100, int gold = 1000, int exp = 10,int mp =50,int maxmp=50)
         {
             _name = name;
             _job = job;
+            skillbook = Skill.Gainskill(job);
             Level = level;
             Gold = gold;
             (MaxHp,Hp) = (hp,hp);
@@ -123,7 +125,10 @@ namespace TextGame
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "방어력 : ", player.Def.ToString(),"\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "체력 : ", player.Hp.ToString(),"\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "Gold : ", player.Gold.ToString(),"\n\n");
-
+            for(int i =0; i<player.skillbook.Count; i++) 
+            {
+                player.skillbook[i].PrintSkillDescription(player);
+            }
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "0", ". 메뉴로 나가기\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "1", ". 직업변경 : 32767 G\n");
             ConsoleUtility.PrintLine('=');
