@@ -1,5 +1,4 @@
-﻿using Sparta_week3;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,11 +30,18 @@ namespace TextGame
         //private Monster _hollowworm;                
         private Player _player;
         private int _killCount;
+        private int _rewardGold;
+        private int _rewardExp;
 
-        //public Dungeon()
-        //{
-                     
-        //}
+        private string _minionStr;
+        private string _hollowwormStr;
+
+
+        public Dungeon()
+        {
+            _minionStr = ConsoleUtility.PadRightForMixedText("미니언", ConsoleUtility.GetPrintableLength("대포미니언"));
+            _hollowwormStr = ConsoleUtility.PadRightForMixedText("공허충", ConsoleUtility.GetPrintableLength("대포미니언"));
+        }
 
 
         public void EnterDungeon(Player player)
@@ -72,6 +78,8 @@ namespace TextGame
             {
                 case (int)DungeonChoice.Run:
                     _monsters = null;
+                    _rewardGold = 0;
+                    _rewardExp = 0;
                     return;//메인 선택지로                    
 
                 case (int)DungeonChoice.Battle:
@@ -140,7 +148,7 @@ namespace TextGame
                 //Console.WriteLine($"{_monsters[choice - 1].Name}을/를 공격했다!");
                 Console.Write(
                     $"{_player.Name}의 공격!\n" +
-                    $"Lv.{_monsters[choice - 1].Level} {_monsters[choice - 1].Name} 을(를) 맞췄습니다. [{_player.Atk}]\n\n");
+                    $"Lv.{_monsters[choice - 1].Level} {_monsters[choice - 1].Name} 을(를) 맞췄습니다.    [데미지 : {_player.Atk}]\n\n");
 
                 Thread.Sleep(1000);
 
@@ -158,7 +166,7 @@ namespace TextGame
 
                     if (_killCount == _monsters.Length)
                     {
-                        Console.WriteLine("\n전투에서 승리했습니다!");
+                        Console.WriteLine("\n전투에서 승리했습니다!\n");
                         Console.WriteLine("0. 다음");
                         ConsoleUtility.PromptMenuChoice(0, 0);
                         BattleResult();
@@ -184,25 +192,33 @@ namespace TextGame
         {
             int num = new Random().Next(1, 5);
             _monsters = new Monster[num];
-            _killCount = 0;
-                       
+            _killCount = 0;            
+            _rewardExp = 0;
+            _rewardGold = 0;
+            
             for (int i = 0; i < num; i++)
             {
                 switch (new Random().Next(1,4))
                 {
                     case (int)MonsterType.Minion:
-                        Monster _minion = new Monster("미니언", 2, 15, 15);
+                        Monster _minion = new Monster(_minionStr, 2, 15, 10, 300, 2);
                         _monsters[i] = _minion;
+                        _rewardGold += _minion.DropGold;
+                        _rewardExp += _minion.DropExp;
                         break;
 
                     case (int)MonsterType.CannonMinion:
-                        Monster _cannonMinion = new Monster("대포미니언", 5, 18, 25);
+                        Monster _cannonMinion = new Monster("대포미니언", 5, 18, 25, 1000, 5);
                         _monsters[i] = _cannonMinion;
+                        _rewardGold += _cannonMinion.DropGold;
+                        _rewardExp += _cannonMinion.DropExp;
                         break;
 
                     case (int)MonsterType.Hollowworm:
-                        Monster _hollowworm = new Monster("공허충", 3, 19, 10);
+                        Monster _hollowworm = new Monster(_hollowwormStr, 3, 19, 15, 600, 3);
                         _monsters[i] = _hollowworm;
+                        _rewardGold += _hollowworm.DropGold;
+                        _rewardExp += _hollowworm.DropExp;
                         break;
                 }
             }                      
@@ -273,18 +289,27 @@ namespace TextGame
             if (_player.Hp == 0)
             {
                 Console.WriteLine("You Lose\n");
-                Console.WriteLine("당신은 던전에서 패배했습니다.\n");
+                Console.WriteLine("" +
+                    "당신은 던전에서 패배했습니다." +
+                    "메인화면으로 돌아갑니다...\n");
+                _player.Hp = 1;
+
             }
             else 
             {
+                _player.Gold += _rewardGold;
+                _player.Cexp += _rewardExp;
+                _player.Levelup(ref _player.Level, ref _player.Cexp);
+
                 Console.WriteLine("Victory\n");
-                Console.WriteLine($"던전에서 몬스터 {_monsters.Length}마리를 잡았습니다.\n");
+                Console.WriteLine(
+                    $"던전에서 몬스터 {_monsters.Length}마리를 잡았습니다!\n\n" +
+                    $"[보상]\n" +
+                    $"Gold {_rewardGold}를 획득했습니다!\n" +
+                    $"경험치 {_rewardExp}를 획득했습니다!\n");
             }
 
-            PlayerStatus();
-
-            //플레이어 체력 회복 (임시)
-            _player.Hp = _player.MaxHp;
+            PlayerStatus(); 
             //MonsterRespawn();
             Console.WriteLine("0. 다음");
             ConsoleUtility.PromptMenuChoice(0, 0);           
@@ -296,7 +321,8 @@ namespace TextGame
             Console.WriteLine(
                 $"[내정보]\n" +
                 $"Lv.{_player.Level}  {_player.Name} ({_player.Job})\n" +
-                $"HP {_player.Hp}/{_player.MaxHp}  방어력 {_player.Def}" +
+                $"HP {_player.Hp}/{_player.MaxHp}  방어력 {_player.Def}\n" +
+                $"EXP {_player.Cexp}/{_player.Texp}  Gold {_player.Gold}\n" +
                 $"\n");
         }
 
