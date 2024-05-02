@@ -67,6 +67,9 @@ namespace TextGame
         public List<Quest> questList;
         public QuestManager()       //모든 퀘스트를 정의하는 함수
         {
+            //Inventory inventory = GameManager.instance.inventory;
+            //Player player = GameManager.instance.player;
+
             questList = new List<Quest>
         {   
             //1.미니언 5마리 잡기
@@ -77,23 +80,22 @@ namespace TextGame
                 "쓸만한 방패 x 1\n5G",
                 player => //클리어 조건: 미니언 5마리 잡기
                 {
-                    if(true)    //player.KillCount[MonsterType.Minion] >= 5 미니언을 5마리 이상 잡았으면
-                    {
-                        //미니언 (5/5) (완료)
-                        //Console.Write(미니언 (5/5) (완료)")
-                    }
-                    else //못잡았으면
-                    {   
-                        //미니언 (n/5) (진행중)
-                        //Console.Write($"미니언 ( {player.KillCount[MonsterType.Minion]} / 5 ) (진행중)") //변수를 이렇게 쓸지는 미정
-                    }
+                    //if(player.KillCount[MonsterType.Minion] >= 5)    //player.KillCount[MonsterType.Minion] >= 5 미니언을 5마리 이상 잡았으면
+                    //{   
+                    //    Console.WriteLine("미니언 (5/5) (완료)");
+                    //}
+                    //else //다 못잡았으면
+                    //{   
+                    //    Console.WriteLine($"미니언 ({player.KillCount[MonsterType.Minion]}/5) (진행중)");
+                    //    //Console.Write($"미니언 ( {player.KillCount[MonsterType.Minion]} / 5 ) (진행중)") //변수를 이렇게 쓸지는 미정
+                    //}
                 },
                 player => //보상
                 {
-                    //쓸만한 방패 x 1
-                    //inventory.Add(new item("쓸만한 방패", "쓸만한 방패다", ItemType.Shield, 0, 1, 0, 500));
-                    //5골드 지급
-                    player.Gold += 5;
+                    //Console.WriteLine("쓸만한 방패 x 1");
+                    //Console.WriteLine("5골드");
+                    //inventory.AddItem(new Item("쓸만한 방패", "쓸만한 방패입니다.", ItemType.Shield, 100, 0, 2, 0));
+                    //player.Gold += 5;
                 }),
 
             //2.장비 장착하기
@@ -103,21 +105,24 @@ namespace TextGame
                 "쓸만한 방패 장착",
                 "100G",
                 player => //클리어 조건: 방패 장착하기
-                {
+                {   
+                    ////쓸만한 방패를 장착했으면 shieldEquipped=true
+                    //Item shield = GameManager.instance.inventory.ItemList.FirstOrDefault(item => item.Name == "쓸만한 방패");
+                    //bool shieldEquipped = (shield != null) ? shield.IsEquipped : false; 
 
-                    if(true)    //방패를 장착했으면 (SslmanhanBangpae.isEquipped)
-                    {
-                        Console.WriteLine("쓸만한 방패 장착 (완료)");
-                    }
-                    else //방패를 장착 안했으면
-                    {
-                        Console.WriteLine("쓸만한 방패 장착 (진행중)");
-                    }
+                    //if(shieldEquipped)    //방패를 장착했으면
+                    //{
+                    //    Console.WriteLine("쓸만한 방패 장착 (완료)");
+                    //}
+                    //else //방패를 장착 안했으면
+                    //{
+                    //    Console.WriteLine("쓸만한 방패 장착 (진행중)");
+                    //}
                 },
                 player => //보상
                 {
                     //쓸만한 방패 x 1
-                    //inventory.Add(new item("쓸만한 방패", "쓸만한 방패다", ItemType.Shield, 0, 1, 0, 500));
+                    //inventory.Add(new item("쓸만한 방패", "쓸만한 방패입니다", ItemType.Shield, 0, 1, 0, 500));
                     //5골드 지급
                     player.Gold += 5;
                 }),
@@ -126,7 +131,7 @@ namespace TextGame
                 "강해지기",
                 "강한 모험가들도 처음에는 볼품없는 풋내기였지!\n당장 위험한 던전부터 들어갈 생각하지 말고 실력을 키워야만 하네.\n자네의 성장을 보여주게!",
                 "레벨 3 달성",
-                "쓸만한 방패 x 1\n5G",
+                "200G",
                 player => //클리어 조건: 미니언 5마리 잡기
                 {
 
@@ -144,13 +149,15 @@ namespace TextGame
                     //쓸만한 방패 x 1
                     //inventory.Add(new item("쓸만한 방패", "쓸만한 방패다", ItemType.Shield, 0, 1, 0, 500));
                     //5골드 지급
-                    player.Gold += 5;
+                    player.Gold += 200;
                 }),
             };
         }
 
         public void QuestMenu(Player player)     //마을 -> 퀘스트 메뉴
-        {
+        {   
+            //Player player = GameManager.instance.player;
+
             while (true)
             {
                 string ProgressStatusText; // 진행가능 or 진행중 or 완료
@@ -240,6 +247,8 @@ namespace TextGame
                     Console.WriteLine("0.나가기");
                     //완료가 가능한지 퀘스트의 진행상태를 체크
                     //quest.CheckCondition(instance.player); // player를 매개변수를 받아서 함수(=퀘스트 클리어하는 조건을 체크하는 내용)를 실행
+
+                    quest.CheckCondition(player);
 
                     //아직 완료 불가능이면
                     //1.제목 뒤에 문자열 (진행중) 출력
