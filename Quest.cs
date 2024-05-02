@@ -150,7 +150,7 @@ namespace TextGame
             };
         }
 
-        public void QuestMenu()     //마을 -> 퀘스트 메뉴
+        public void QuestMenu(Player player)     //마을 -> 퀘스트 메뉴
         {
             while (true)
             {
@@ -195,12 +195,12 @@ namespace TextGame
                         //MainMenu(); //메인메뉴 이동
                         break;
                     default:
-                        SelectQuest(KeyInput-1);
+                        SelectQuest(player, KeyInput-1);
                         break;
                 }
             }
         }
-        public void SelectQuest(int index)   //퀘스트 선택하기
+        public void SelectQuest(Player player, int index)   //퀘스트 선택하기
         {
             Console.Clear();
             while (true)
