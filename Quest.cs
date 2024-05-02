@@ -12,7 +12,6 @@ using System.ComponentModel;
 
 namespace TextGame
 {
-
     //1번째 퀘스트 : 5마리 잡기 + 5마리 중 몇 마리 잡았는지 체크
     //2번째 퀘스트 : 장비를 장착했는지 체크
     //3번째 퀘스트 : 강해졌는지 체크 (지금은 임의로 3레벨 달성했는지로 할게요)
@@ -65,8 +64,8 @@ namespace TextGame
     public class QuestManager
     {
         public List<Quest> questList;
-        private Player _player;
-        private Inventory _inventory;
+        Player _player;
+        Inventory _inventory;
 
         public QuestManager()       //퀘스트리스트 
         {
@@ -76,13 +75,15 @@ namespace TextGame
             new Quest(
                 "마을을 위협하는 미니언 처치",
                 "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",
-                "미니언 5마리 처치",
+                "1.미니언 5마리 처치",
                 "쓸만한 방패 x 1\n5G",
                 _player => //클리어 조건: 미니언 5마리 잡기
                 {
                     //if(player.KillCount[MonsterType.Minion] >= 5)    //player.KillCount[MonsterType.Minion] >= 5 미니언을 5마리 이상 잡았으면
+                    //
                     //{
                     //    Console.WriteLine("미니언 (5/5) (완료)");
+                    return false;
                     //}
                     //else //다 못잡았으면
                     //{
@@ -92,37 +93,40 @@ namespace TextGame
                 },
                 _player => //보상
                 {
-                    //Console.WriteLine("쓸만한 방패 x 1");
-                    //Console.WriteLine("5골드");
-                    //_inventory.AddItem(new Item("쓸만한 방패", "쓸만한 방패입니다.", ItemType.Shield, 100, 0, 2, 0));
-                    //player.Gold += 5;
+                    Console.WriteLine("쓸만한 방패 x 1");
+                    //ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Magenta,"","5","골드");
+                    Console.WriteLine("5골드");
+                    _inventory.AddItem(new Item("쓸만한 방패", "쓸만한 방패입니다.", ItemType.Shield, 100, 0, 2, 0));
+                    _player.Gold += 5;
                 }),
 
             //2.장비 장착하기
             new Quest(
                 "장비를 장착해보자",
                 "모험을 떠나기 전에 적절한 장비를 갖추는 건 중요하네.\n자네의 인벤토리에서 방패를 장착해보게!",
-                "쓸만한 방패 장착",
+                "1.쓸만한 방패 장착",
                 "100G",
                 player => //클리어 조건: 방패 장착하기
                 {   
-                    ////쓸만한 방패를 장착했으면 shieldEquipped=true
-                    //Item shield = GameManager.instance.inventory.ItemList.FirstOrDefault(item => item.Name == "쓸만한 방패");
-                    //bool shieldEquipped = (shield != null) ? shield.IsEquipped : false; 
+                    //쓸만한 방패를 장착했으면 shieldEquipped=true
+                    Item shield = _inventory.ItemList.FirstOrDefault(item => item.Name == "쓸만한 방패");
+                    bool shieldEquipped = (shield != null) ? shield.IsEquipped : false;
 
-                    //if(shieldEquipped)    //방패를 장착했으면
-                    //{
-                    //    Console.WriteLine("쓸만한 방패 장착 (완료)");
-                    //}
-                    //else //방패를 장착 안했으면
-                    //{
-                    //    Console.WriteLine("쓸만한 방패 장착 (진행중)");
-                    //}
+                    if(shieldEquipped)    //방패를 장착했으면
+                    {
+                        Console.WriteLine("쓸만한 방패 장착 (완료)");
+                        return true;
+                    }
+                    else //방패를 장착 안했으면
+                    {
+                        Console.WriteLine("쓸만한 방패 장착 (진행중)");
+                        return false;
+                    }
                 },
                 player => //보상
                 {
                     //쓸만한 방패 x 1
-                    //inventory.Add(new item("쓸만한 방패", "쓸만한 방패입니다", ItemType.Shield, 0, 2, 0, 500));
+                    _inventory.AddItem(new Item("쓸만한 방패", "쓸만한 방패입니다", ItemType.Shield, 0, 2, 0, 500));
                     //100골드 지급
                     player.Gold += 100;
                 }),
@@ -130,18 +134,20 @@ namespace TextGame
             new Quest(
                 "강해지기",
                 "강한 모험가들도 처음에는 볼품없는 풋내기였지!\n당장 위험한 던전부터 들어갈 생각하지 말고 실력을 키워야만 하네.\n자네의 성장을 보여주게!",
-                "레벨 3 달성",
+                "1.레벨 3 달성",
                 "200G",
                 player => //클리어 조건: 미니언 5마리 잡기
                 {
-
                     if(player.Level >= 3)    //레벨이 3 이상이면
                     {
                         Console.WriteLine("3레벨 달성 (완료)");
+                        return true;
                     }
                     else //레벨이 3 미만이면
                     {
+                        player.Level =3; //테스트
                         Console.WriteLine("3레벨 달성 (진행중)");
+                        return false;
                     }
                 },
                 player => //보상
@@ -176,7 +182,7 @@ namespace TextGame
                 //완료되지 않은, 진행가능 or 진행중인 퀘스트들을 선별하기
                 for (int i = 0; i < questList.Count; i++)
                 {
-                    if (questList[i].ProgressStatus == (int)QuestStatus.Finished) //만약 체크한 퀘스트가 완료됐다면 continue
+                    if (questList[i].ProgressStatus == (int)QuestStatus.Finished) //만약 체크한 퀘스트가 완료됐다면 continue로 퀘스트 넘기기 (안 보여주기)
                     {
                         continue;
                     }
@@ -197,10 +203,10 @@ namespace TextGame
                 switch (KeyInput)
                 {
                     case 0:
-                        //MainMenu(); //메인메뉴 이동
-                        break;
+                        //메인메뉴 이동
+                        return;
                     default:
-                        SelectQuest(player, KeyInput-1);
+                        SelectQuest(_player, KeyInput-1);
                         break;
                 }
             }
@@ -208,7 +214,6 @@ namespace TextGame
         public void SelectQuest(Player player, int index)   //퀘스트 선택하기
         {
             Console.Clear();
-            Console.WriteLine(player.Gold);
             while (true)
             {   
                 Quest quest = questList[index];
@@ -217,9 +222,10 @@ namespace TextGame
                 Console.WriteLine("");
                 Console.WriteLine(quest.Description);
                 Console.WriteLine("");
-                Console.WriteLine($" -{quest.ClearConditionText}");
+                Console.WriteLine(" - 완료 조건 -");
+                Console.WriteLine($"{quest.ClearConditionText}");
                 Console.WriteLine("");
-                Console.WriteLine(" -보상-");
+                Console.WriteLine(" - 보상 -");
                 Console.WriteLine($"{quest.RewardText}");
                 ConsoleUtility.PrintTitle("");
 
@@ -234,44 +240,65 @@ namespace TextGame
                     switch (KeyInput)
                     {
                         case 0:
-                            QuestMenu(_player, _inventory); //거절 -> 퀘스트메뉴로 이동
-                            break;
+                            return; //퀘스트메뉴로 돌아가기
                         case 1:
                             quest.ProgressStatus = (int)QuestStatus.InProgress; //해당 퀘스트의 진행상태를 (진행가능)->(진행중)으로 변경
-                            QuestMenu(_player, _inventory); //수락 -> 퀘스트 메뉴로 이동
-                            break;
+                            return; //퀘스트메뉴로 돌아가기
                     }
                 }
-                else if (quest.ProgressStatus == (int)QuestStatus.InProgress) //진행 중인 퀘스트를 선택했을 때
-                {   
-                    Console.WriteLine("0.나가기");
+                else if (quest.ProgressStatus == (int)QuestStatus.InProgress) //진행 중인 퀘스트를 선택했을 때 (진행가능 or 진행중인 퀘스트밖에 없어서 굳이 체크 안해도 됨)
+                {
+                    Console.WriteLine(" - 진행상황 -");
+                    bool _canFinish = quest.CheckCondition(player); // player를 매개변수를 받아서 함수(=클리어조건을 체크하는 내용 + 텍스트출력)를 실행
+                    Console.WriteLine("");
+
+                    if (_canFinish)
+                    {
+                        Console.WriteLine("0.나가기");
+                        Console.WriteLine("1.퀘스트 완료");
+
+                        int KeyInput = ConsoleUtility.PromptMenuChoice(0, 1);
+                        switch (KeyInput)
+                        {
+                            case 0:
+                                return;
+                            case 1:
+                                //퀘스트상태를 완료로 바꾸고 + 보상 지급
+                                quest.ProgressStatus = (int)QuestStatus.Finished;
+                                quest.Reward(player);
+                                return;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("0.나가기");
+
+                        int KeyInput = ConsoleUtility.PromptMenuChoice(0, 0);
+                        switch (KeyInput)
+                        {
+                            case 0:
+                                return;
+                        }
+                    }
                     //완료가 가능한지 퀘스트의 진행상태를 체크
-                    //quest.CheckCondition(instance.player); // player를 매개변수를 받아서 함수(=퀘스트 클리어하는 조건을 체크하는 내용)를 실행
-
-                    quest.CheckCondition(_player);
-
-                    //아직 완료 불가능이면
-                    //1.제목 뒤에 문자열 (진행중) 출력
-                    //2.해당 퀘스트의 모든 조건 진행도를 출력) (ex) 레벨 3 달성 (2/3), 미니언 5마리 처치 (4/5)
-                    //선택지
-                    //0.나가기
 
                     //완료가 가능하면
                     //1.제목 뒤에 문자열 (완료가능) 출력
-                    //2.해당 퀘스트의 모든 조건 진행도를 100% 조건으로 출력
+                    //2.해당 퀘스트의 모든 조건 진행도를 전부 완료된 상태로 출력
                     //3.(1.퀘스트 완료)를 누르면 보상 지급 후 퀘스트 메뉴로 이동
 
                     //선택지
                     //0.나가기
                     //1.퀘스트 완료 (+ 해당 퀘스트의 진행상태를 QuestStatus.Finished(완료)로 변경
 
-                    int KeyInput = ConsoleUtility.PromptMenuChoice(0, 0);
-                    switch (KeyInput)
-                    {
-                        case 0:
-                            QuestMenu(_player, _inventory); //거절 -> 퀘스트메뉴로 이동
-                            break;
-                    }
+                    //아직 완료 불가능이면
+                    //1.제목 뒤에 문자열 (진행중) 출력
+                    //2.해당 퀘스트의 모든 조건 진행도를 출력) (ex) 레벨 3 달성 (2/3), 미니언 5마리 처치 (4/5)
+
+                    //선택지
+                    //0.나가기
+
+                    
                 }
             }
         }
@@ -287,12 +314,12 @@ namespace TextGame
         public string ClearConditionText;       //클리어 조건 텍스트
         public string RewardText;               //퀘스트 보상 텍스트
 
-        public Action<Player> CheckCondition;   //클리어 조건을 체크하는 함수. 조건에 따라 ClearConditionText의 문자열 뒤에 어떻게 추가할지 직접 정의해야 함. (ex "\t미니언 (3 / 5)")
+        public Func<Player, bool> CheckCondition;   //클리어 조건을 체크하는 함수. 조건에 따라 ClearConditionText의 문자열 뒤에 어떻게 추가할지 직접 정의해야 함. (ex "\t미니언 (3 / 5)")
         public Action<Player> Reward;           //클리어 보상 함수
 
         public int ProgressStatus = (int)QuestStatus.Startable;          //클리어 여부를 저장하는 변수. 기본 진행 가능 상태
 
-        internal Quest(string title, string description, string clearConditionText, string rewardText, Action<Player> checkCondition, Action<Player> reward)
+        public Quest(string title, string description, string clearConditionText, string rewardText, Func<Player, bool> checkCondition, Action<Player> reward)
         {
             Title = title;
             Description = description;
