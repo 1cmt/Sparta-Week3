@@ -27,6 +27,7 @@ namespace TextGame
         public int MaxMp;
         public int Gold;
         public int Cexp=0;
+        public int killcount = 0;
         public int Texp { get; private set; }
 
         public Player(string name, string job, int level = 1, int atk = 10, int def = 10, int hp = 100, int gold = 1000, int exp = 10,int mp =50,int maxmp=50)
