@@ -88,13 +88,11 @@ namespace TextGame
                     //else //다 못잡았으면
                     //{
                     //    Console.WriteLine($"미니언 ({player.KillCount[MonsterType.Minion]}/5) (진행중)");
-                    //    //Console.Write($"미니언 ( {player.KillCount[MonsterType.Minion]} / 5 ) (진행중)") //변수를 이렇게 쓸지는 미정
                     //}
                 },
                 _player => //보상
                 {
                     Console.WriteLine("쓸만한 방패 x 1");
-                    //ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Magenta,"","5","골드");
                     Console.WriteLine("5골드");
                     _inventory.AddItem(new Item("쓸만한 방패", "쓸만한 방패입니다.", ItemType.Shield, 100, 0, 2, 0));
                     _player.Gold += 5;
@@ -165,7 +163,7 @@ namespace TextGame
 
             while (true)
             {
-                string ProgressStatusText; // 진행가능 or 진행중 or 완료
+                string ProgressStatusText; // 진행가능 or 진행중 (완료는 제외)
 
                 Console.Clear();
                 ConsoleUtility.PrintTitle("■ 퀘스트 메뉴 ■");
