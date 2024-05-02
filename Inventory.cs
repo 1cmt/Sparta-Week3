@@ -20,6 +20,7 @@ namespace TextGame
 
         public void RemoveItem(int idx)
         {
+            ItemList[idx].Sell();
             ItemList.RemoveAt(idx);
         }
 
