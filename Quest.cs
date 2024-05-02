@@ -7,6 +7,7 @@ using System.Text.Json;
 using Newtonsoft.Json;
 using TextGame;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 
 
 
@@ -180,9 +181,12 @@ namespace TextGame
                 //완료되지 않은, 진행가능 or 진행중인 퀘스트들을 선별하기
                 for (int i = 0; i < questList.Count; i++)
                 {
-                    if (questList[i].ProgressStatus == (int)QuestStatus.Finished) //만약 체크한 퀘스트가 완료됐다면 continue로 퀘스트 넘기기 (안 보여주기)
+                    if (questList[i].ProgressStatus == (int)QuestStatus.Finished) //만약 체크한 퀘스트가 완료됐다면 (완료됨)표시하기
                     {
-                        continue;
+                        ProgressStatusText = " (완료됨)";
+                        selectableList.Add(i); //i 값을 selectableList 리스트에 추가하기
+                        Console.Write($"{selectableList.Count - 1}. ");
+                        Console.WriteLine(questList[i].Title + $"{ProgressStatusText}");
                     }
                     else
                     {
@@ -212,11 +216,13 @@ namespace TextGame
         public void SelectQuest(Player player, int index)   //퀘스트 선택하기
         {
             Console.Clear();
+            player.Level = 3;
             while (true)
             {   
                 Quest quest = questList[index];
 
-                ConsoleUtility.PrintTitle(quest.Title);
+                string QuestTitle = quest.Title;
+                ConsoleUtility.PrintTitle(QuestTitle);
                 Console.WriteLine("");
                 Console.WriteLine(quest.Description);
                 Console.WriteLine("");
@@ -227,7 +233,6 @@ namespace TextGame
                 Console.WriteLine($"{quest.RewardText}");
                 ConsoleUtility.PrintTitle("");
 
-                
 
                 if (quest.ProgressStatus == (int)QuestStatus.Startable) //고른 퀘스트가 시작 가능할때
                 {
@@ -238,10 +243,10 @@ namespace TextGame
                     switch (KeyInput)
                     {
                         case 0:
-                            return; //퀘스트메뉴로 돌아가기
+                            return;
                         case 1:
                             quest.ProgressStatus = (int)QuestStatus.InProgress; //해당 퀘스트의 진행상태를 (진행가능)->(진행중)으로 변경
-                            return; //퀘스트메뉴로 돌아가기
+                            return;
                     }
                 }
                 else if (quest.ProgressStatus == (int)QuestStatus.InProgress) //진행 중인 퀘스트를 선택했을 때 (진행가능 or 진행중인 퀘스트밖에 없어서 굳이 체크 안해도 됨)
@@ -250,7 +255,7 @@ namespace TextGame
                     bool _canFinish = quest.CheckCondition(player); // player를 매개변수를 받아서 함수(=클리어조건을 체크하는 내용 + 텍스트출력)를 실행
                     Console.WriteLine("");
 
-                    if (_canFinish)
+                    if (_canFinish) //선택한 퀘스트를 완료 가능할떄
                     {
                         Console.WriteLine("0.나가기");
                         Console.WriteLine("1.퀘스트 완료");
@@ -267,7 +272,7 @@ namespace TextGame
                                 return;
                         }
                     }
-                    else
+                    else //선택한 퀘스트를 완료 불가능할때
                     {
                         Console.WriteLine("0.나가기");
 
@@ -278,26 +283,31 @@ namespace TextGame
                                 return;
                         }
                     }
-                    //완료가 가능한지 퀘스트의 진행상태를 체크
-
-                    //완료가 가능하면
-                    //1.제목 뒤에 문자열 (완료가능) 출력
-                    //2.해당 퀘스트의 모든 조건 진행도를 전부 완료된 상태로 출력
-                    //3.(1.퀘스트 완료)를 누르면 보상 지급 후 퀘스트 메뉴로 이동
-
-                    //선택지
-                    //0.나가기
-                    //1.퀘스트 완료 (+ 해당 퀘스트의 진행상태를 QuestStatus.Finished(완료)로 변경
-
-                    //아직 완료 불가능이면
-                    //1.제목 뒤에 문자열 (진행중) 출력
-                    //2.해당 퀘스트의 모든 조건 진행도를 출력) (ex) 레벨 3 달성 (2/3), 미니언 5마리 처치 (4/5)
-
-                    //선택지
-                    //0.나가기
-
-                    
                 }
+                else if (quest.ProgressStatus == (int)QuestStatus.Finished) //완료된 퀘스트를 선택했을 때
+                {
+                    Console.Clear();
+                    ConsoleUtility.PrintTitle($"{QuestTitle} (완료됨)");
+                    Console.WriteLine("");
+                    Console.WriteLine(quest.Description);
+                    Console.WriteLine("");
+                    Console.WriteLine(" - 완료 조건 -");
+                    Console.WriteLine($"{quest.ClearConditionText}");
+                    Console.WriteLine("");
+                    Console.WriteLine(" - 보상 -");
+                    Console.WriteLine($"{quest.RewardText}");
+                    ConsoleUtility.PrintTitle("");
+                    Console.WriteLine("0.나가기");
+
+                    int KeyInput = ConsoleUtility.PromptMenuChoice(0, 0);
+                    switch (KeyInput)
+                    {
+                        case 0:
+                            return;
+                    }
+                }
+                    
+                
             }
         }
 
