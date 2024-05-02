@@ -24,7 +24,7 @@ namespace TextGame
         public void PrintSkillDescription(Player player)
         {
             Console.Write("-");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "",ConsoleUtility.PadRightForMixedText(Skillname,12), ConsoleUtility.PadRightForMixedText(Skilldes,30));
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "",ConsoleUtility.PadRightForMixedText(Skillname,12), ConsoleUtility.PadRightForMixedText(Skilldes,43));
             Console.Write("|Damage:"+(int)(Damage * player.Atk/10)+"|MP:"+Mplose+"\n");
         }
         public int SkillUse(int index, Player player) //index번째 스킬 사용할지와 player객체 받는다.
