@@ -48,13 +48,14 @@ namespace TextGame
 
         public void Levelup(ref int level, ref int cexp)
         {
-            if (cexp == Texp)
+            if (cexp >= Texp)
             {
+                cexp -= Texp;
                 Texp += 20 + level * 5;
                 Atk += 1;
                 Def ++;
                 level++;
-                cexp = 0;
+                ;
             }
         }
         public static string CheckJob()
