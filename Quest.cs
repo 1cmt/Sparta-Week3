@@ -65,12 +65,12 @@ namespace TextGame
     public class QuestManager
     {
         public List<Quest> questList;
-        public QuestManager()       //모든 퀘스트를 정의하는 함수
-        {
-            //Inventory inventory = GameManager.instance.inventory;
-            //Player player = GameManager.instance.player;
+        private Player _player;
+        private Inventory _inventory;
 
-            questList = new List<Quest>
+        public QuestManager()       //퀘스트리스트 
+        {
+            questList = new List<Quest> //모든 퀘스트를 정의하는 함수
         {   
             //1.미니언 5마리 잡기
             new Quest(
@@ -78,23 +78,23 @@ namespace TextGame
                 "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",
                 "미니언 5마리 처치",
                 "쓸만한 방패 x 1\n5G",
-                player => //클리어 조건: 미니언 5마리 잡기
+                _player => //클리어 조건: 미니언 5마리 잡기
                 {
                     //if(player.KillCount[MonsterType.Minion] >= 5)    //player.KillCount[MonsterType.Minion] >= 5 미니언을 5마리 이상 잡았으면
-                    //{   
+                    //{
                     //    Console.WriteLine("미니언 (5/5) (완료)");
                     //}
                     //else //다 못잡았으면
-                    //{   
+                    //{
                     //    Console.WriteLine($"미니언 ({player.KillCount[MonsterType.Minion]}/5) (진행중)");
                     //    //Console.Write($"미니언 ( {player.KillCount[MonsterType.Minion]} / 5 ) (진행중)") //변수를 이렇게 쓸지는 미정
                     //}
                 },
-                player => //보상
+                _player => //보상
                 {
                     //Console.WriteLine("쓸만한 방패 x 1");
                     //Console.WriteLine("5골드");
-                    //inventory.AddItem(new Item("쓸만한 방패", "쓸만한 방패입니다.", ItemType.Shield, 100, 0, 2, 0));
+                    //_inventory.AddItem(new Item("쓸만한 방패", "쓸만한 방패입니다.", ItemType.Shield, 100, 0, 2, 0));
                     //player.Gold += 5;
                 }),
 
@@ -122,9 +122,9 @@ namespace TextGame
                 player => //보상
                 {
                     //쓸만한 방패 x 1
-                    //inventory.Add(new item("쓸만한 방패", "쓸만한 방패입니다", ItemType.Shield, 0, 1, 0, 500));
-                    //5골드 지급
-                    player.Gold += 5;
+                    //inventory.Add(new item("쓸만한 방패", "쓸만한 방패입니다", ItemType.Shield, 0, 2, 0, 500));
+                    //100골드 지급
+                    player.Gold += 100;
                 }),
             //3.강해지기
             new Quest(
@@ -146,17 +146,16 @@ namespace TextGame
                 },
                 player => //보상
                 {
-                    //쓸만한 방패 x 1
-                    //inventory.Add(new item("쓸만한 방패", "쓸만한 방패다", ItemType.Shield, 0, 1, 0, 500));
-                    //5골드 지급
+                    //200골드 지급
                     player.Gold += 200;
                 }),
             };
         }
 
-        public void QuestMenu(Player player)     //마을 -> 퀘스트 메뉴
-        {   
-            //Player player = GameManager.instance.player;
+        public void QuestMenu(Player player, Inventory inventory)     //마을 -> 퀘스트 메뉴
+        {
+            _player = player;
+            _inventory = inventory;
 
             while (true)
             {
@@ -168,8 +167,8 @@ namespace TextGame
                 Console.WriteLine("");
                 Console.WriteLine("[퀘스트 목록]");
 
-                //quests 리스트 안에 담긴 (완료되지 않은)퀘스트 수만큼 리스트를 보여주고, 선택지 생성
-                //퀘스트마다 각각 완료했는지
+                //questList 리스트 안에 담긴 (완료되지 않은)퀘스트 수만큼 리스트를 보여주고, 선택지 생성
+                //퀘스트 제목 끝에 (진행가능 or 진행중) 설정
 
                 List<int> selectableList = new List<int>();
                 selectableList.Add(-1); //0번째 배열은 안 쓴다는 의미
@@ -209,6 +208,7 @@ namespace TextGame
         public void SelectQuest(Player player, int index)   //퀘스트 선택하기
         {
             Console.Clear();
+            Console.WriteLine(player.Gold);
             while (true)
             {   
                 Quest quest = questList[index];
@@ -234,11 +234,11 @@ namespace TextGame
                     switch (KeyInput)
                     {
                         case 0:
-                            QuestMenu(player); //거절 -> 퀘스트메뉴로 이동
+                            QuestMenu(_player, _inventory); //거절 -> 퀘스트메뉴로 이동
                             break;
                         case 1:
                             quest.ProgressStatus = (int)QuestStatus.InProgress; //해당 퀘스트의 진행상태를 (진행가능)->(진행중)으로 변경
-                            QuestMenu(player); //수락 -> 퀘스트 메뉴로 이동
+                            QuestMenu(_player, _inventory); //수락 -> 퀘스트 메뉴로 이동
                             break;
                     }
                 }
@@ -248,7 +248,7 @@ namespace TextGame
                     //완료가 가능한지 퀘스트의 진행상태를 체크
                     //quest.CheckCondition(instance.player); // player를 매개변수를 받아서 함수(=퀘스트 클리어하는 조건을 체크하는 내용)를 실행
 
-                    quest.CheckCondition(player);
+                    quest.CheckCondition(_player);
 
                     //아직 완료 불가능이면
                     //1.제목 뒤에 문자열 (진행중) 출력
@@ -269,7 +269,7 @@ namespace TextGame
                     switch (KeyInput)
                     {
                         case 0:
-                            QuestMenu(player); //거절 -> 퀘스트메뉴로 이동
+                            QuestMenu(_player, _inventory); //거절 -> 퀘스트메뉴로 이동
                             break;
                     }
                 }
