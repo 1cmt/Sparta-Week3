@@ -72,7 +72,9 @@ namespace TextGame // Note: actual namespace depends on the project name.
                         store.StoreMenu(player, inventory);
                         break;
                     case 4:
-                        questManager.QuestMenu(player);
+                        questManager.QuestMenu(player, inventory);
+                        break;
+                    case 5:
                         break;
                 }
 
