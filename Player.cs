@@ -43,7 +43,7 @@ namespace TextGame
             Def = job == "warrior" ? (int)(def * 1.2f)  : def;
             (Hp,MaxHp)  = job == "warrior" ? ((int)(hp * 1.2f), (int)(hp * 1.2f)) : (hp,hp);
             Ctl = job == "assassin"? (int)(Ctl * 1.2f)  : Ctl;
-            (Mp,MaxMp)= job == "wizard"  ? ((int)(Mana * 1.2f), (int)(Mana * 1.2f)) : (Mana,Mana);
+            (Mp,MaxMp)= job == "wizard"  ? ((int)(Mp * 1.2f), (int)(Mp * 1.2f)) : (Mp,Mp);
         }
 
         public void Levelup(ref int level, ref int cexp)
