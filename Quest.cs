@@ -228,11 +228,11 @@ namespace TextGame
                     switch (KeyInput)
                     {
                         case 0:
-                            QuestMenu(); //거절 -> 퀘스트메뉴로 이동
+                            QuestMenu(player); //거절 -> 퀘스트메뉴로 이동
                             break;
                         case 1:
                             quest.ProgressStatus = (int)QuestStatus.InProgress; //해당 퀘스트의 진행상태를 (진행가능)->(진행중)으로 변경
-                            QuestMenu(); //수락 -> 퀘스트 메뉴로 이동
+                            QuestMenu(player); //수락 -> 퀘스트 메뉴로 이동
                             break;
                     }
                 }
@@ -261,7 +261,7 @@ namespace TextGame
                     switch (KeyInput)
                     {
                         case 0:
-                            QuestMenu(); //거절 -> 퀘스트메뉴로 이동
+                            QuestMenu(player); //거절 -> 퀘스트메뉴로 이동
                             break;
                     }
                 }
