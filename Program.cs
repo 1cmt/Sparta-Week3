@@ -11,6 +11,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
         Inventory inventory;
         Store store;
         Player player;
+        Dungeon dungeon;
         public GameManager()
         {
             InitializeGame();
@@ -20,6 +21,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
             inventory = new Inventory();
             store     = new Store();
             questManager = new QuestManager();
+            dungeon = new Dungeon();
             //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
@@ -50,6 +52,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
                 Console.WriteLine("2. 인벤토리");
                 Console.WriteLine("3. 상점");
                 Console.WriteLine("4. 퀘스트");
+                Console.WriteLine("5. 던전입장");
                 Console.WriteLine("");
                 Console.WriteLine("0. 나가기");
                 Console.WriteLine("");
@@ -75,6 +78,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
                         questManager.QuestMenu(player, inventory);
                         break;
                     case 5:
+                        dungeon.EnterDungeon(player);
                         break;
                 }
 
