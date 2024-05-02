@@ -1,7 +1,7 @@
 
 namespace TextGame
 {
-    internal class Inventory
+    public class Inventory
     {
         public List<Item> ItemList { get; set; }
 
