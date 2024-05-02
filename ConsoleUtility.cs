@@ -59,7 +59,7 @@ namespace TextGame
         public static void PrintTextHighlightsColor(ConsoleColor color, string s1, string s2, string s3 = "")
         {
             Console.Write(s1);
-            Console.ForegroundColor = color ;
+            Console.ForegroundColor = color;
             Console.Write(s2);
             Console.ResetColor();
             Console.Write(s3);
@@ -91,7 +91,14 @@ namespace TextGame
             return str.PadRight(str.Length + padding);
         }
 
-        public static void PrintLine(char ch,int i = 110)
+        public static string PadCenterForMixedText(string str, int totalLength)
+        {
+            int currentLength = GetPrintableLength(str);
+            int padding = (totalLength - currentLength) / 2;
+            return str.PadLeft(str.Length + padding).PadRight(padding);
+        }
+
+        public static void PrintLine(char ch, int i = 110)
         {
             for (i = 0; i < 110; i++)
             {

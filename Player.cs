@@ -21,12 +21,12 @@ namespace TextGame
         public float Atk;
         public int Def;
         public float Ctl = 0.15f;
-        public int Mana=50;
+        public int Mana=50; 
         public int MaxHp;
         public int Hp;
         public int Gold;
         public int Cexp=0;
-
+        public Item?[] EquipItems { get; set; } //배열의 index가 장착 부위를 의미 (ItemType을 int로 형변환 하여 접근)
 
         public int Texp { get; private set; }
         public string JobChange
@@ -34,7 +34,7 @@ namespace TextGame
             set => _job = value;
         }
 
-        public Player(string name, string job, int level = 1, int atk = 10, int def = 10, int hp = 100, int gold = 1000, int exp = 10)
+        public Player(string name, string job, int level = 1, int atk = 10, int def = 10, int hp = 100, int gold = 10000, int exp = 10)
         {
             _name = name;
             _job = job;
@@ -48,6 +48,7 @@ namespace TextGame
             (Hp,MaxHp)  = job == "warrior" ? ((int)(hp * 1.2f), (int)(hp * 1.2f)) : (hp,hp);
             Ctl = job == "assassin"? (int)(Ctl * 1.2f)  : Ctl;
             Mana= job == "wizard"  ? (int)(Mana * 1.2f) : Mana;
+            EquipItems = new Item?[10];
         }
         public void Levelup(ref int level, ref int cexp)
         {
@@ -91,21 +92,31 @@ namespace TextGame
             return job;
 
         }
-        internal void StatusMenu(Player player,Inventory inventory)
+
+        internal void StatusMenu(Inventory inventory)
         {
-            ConsoleUtility.PrintTitle(((Func<string, string>)(status => status.PadLeft(50)))("상태창"));
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "레벨 : ", player.Level.ToString(),"\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "이름 : ", player.Name);
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "(", player.Job,")\n");
-            //float totalAtk = (Func<float,float>)(totalAtk =>inventory.IsEquipped?:)(player.Atk))
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "공격력 : ",player.Atk.ToString());
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "방어력 : ", player.Def.ToString());
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "체력 : ", player.Hp.ToString());
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "Gold : ", player.Gold.ToString(),"");
+            Console.Clear();
 
+            ConsoleUtility.PrintTitle(((Func<string, string>)(status => status.PadLeft(50)))("상태창".PadLeft(50)));
+            //ConsoleUtility.PrintTitle("상태창".PadLeft(50));
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "레벨 : ", Level.ToString(),"\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "이름 : ", Name);
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "(", Job,")\n");
 
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "공격력 : ", (Atk + inventory.BonusAtk).ToString().PadRight(6), inventory.BonusAtk > 0 ? $" (+{inventory.BonusAtk})\n" : "\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "방어력 : ", (Def + inventory.BonusDef).ToString().PadRight(6), inventory.BonusDef > 0 ? $" (+{inventory.BonusDef})\n" : "\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "체  력 : ", (Hp + inventory.BonusHp).ToString().PadRight(6), inventory.BonusHp > 0 ? $" (+{inventory.BonusHp})\n" : "\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "Gold : ", Gold.ToString(),"\n");
 
+            Console.WriteLine("");
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine("");            
 
+            switch (ConsoleUtility.PromptMenuChoice(0, 0))
+            {
+                case 0:
+                    return;
+            }
 
             Thread.Sleep(10000);
         }
