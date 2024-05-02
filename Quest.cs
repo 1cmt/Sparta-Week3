@@ -77,25 +77,26 @@ namespace TextGame
                 "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",
                 "1.미니언 5마리 처치",
                 "쓸만한 방패 x 1\n5G",
-                _player => //클리어 조건: 미니언 5마리 잡기
+                player => //클리어 조건: 미니언 5마리 잡기
                 {
-                    //if(player.KillCount[MonsterType.Minion] >= 5)    //player.KillCount[MonsterType.Minion] >= 5 미니언을 5마리 이상 잡았으면
-                    //
-                    //{
-                    //    Console.WriteLine("미니언 (5/5) (완료)");
-                    return false;
-                    //}
-                    //else //다 못잡았으면
-                    //{
-                    //    Console.WriteLine($"미니언 ({player.KillCount[MonsterType.Minion]}/5) (진행중)");
-                    //}
+                    if(player.KillCount[(int)MonsterType.Minion] >= 5)    //player.KillCount[MonsterType.Minion] >= 5 미니언을 5마리 이상 잡았으면
+                    
+                    {
+                        Console.WriteLine("미니언 (5/5) (완료)");
+                        return true;
+                    }
+                    else //다 못잡았으면
+                    {
+                        Console.WriteLine($"미니언 ({player.KillCount[(int)MonsterType.Minion]}/5) (진행중)");
+                        return false;
+                    }
                 },
-                _player => //보상
+                player => //보상
                 {
                     Console.WriteLine("쓸만한 방패 x 1");
                     Console.WriteLine("5골드");
                     _inventory.AddItem(new Item("쓸만한 방패", "쓸만한 방패입니다.", ItemType.Shield, 100, 0, 2, 0));
-                    _player.Gold += 5;
+                    player.Gold += 5;
                 }),
 
             //2.장비 장착하기
@@ -143,7 +144,6 @@ namespace TextGame
                     }
                     else //레벨이 3 미만이면
                     {
-                        player.Level =3; //테스트
                         Console.WriteLine("3레벨 달성 (진행중)");
                         return false;
                     }
