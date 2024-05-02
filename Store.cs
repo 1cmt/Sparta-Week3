@@ -140,8 +140,9 @@ namespace TextGame
                                 SellMenu(player, inventory);
                                 break;
                             case 1:
-                                //장착 중인 아이템 판매 : 플레이어가 보유한 장착 아이템 슬롯 비워주기 / 장착 해제로 아이템 상태 변경/ 보너스 능력치 삭제
+                                //장착 중인 아이템 판매 : 판매금 주기/ 플레이어가 보유한 장착 아이템 슬롯 비워주기 / 장착 해제로 아이템 상태 변경/ 보너스 능력치 삭제
                                 //판매이기에 인벤토리에서도 삭제 후 다시 판매메뉴를 불러온다.
+                                player.Gold += inventory.GetSellPrice(keyInput - 1);
                                 player.EquipItems[(int)inventory.GetItemType(keyInput - 1)] = null;
                                 inventory.ToggleItemEquipStatus(keyInput - 1);
                                 inventory.ManageBonusValue(false, keyInput - 1);
@@ -154,7 +155,6 @@ namespace TextGame
                     else
                     {
                         player.Gold += inventory.GetSellPrice(keyInput - 1);
-                        StoreInventory[keyInput - 1].Sell();
                         inventory.RemoveItem(keyInput - 1);
                         SellMenu(player, inventory);
                     }
