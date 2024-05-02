@@ -296,17 +296,22 @@ namespace TextGame
 
             }
             else 
-            {
-                _player.Gold += _rewardGold;
-                _player.Cexp += _rewardExp;
-                _player.Levelup(ref _player.Level, ref _player.Cexp);
-
+            {                               
                 Console.WriteLine("Victory\n");
                 Console.WriteLine(
                     $"던전에서 몬스터 {_monsters.Length}마리를 잡았습니다!\n\n" +
                     $"[보상]\n" +
                     $"Gold {_rewardGold}를 획득했습니다!\n" +
                     $"경험치 {_rewardExp}를 획득했습니다!\n");
+
+                _player.Gold += _rewardGold;
+                _player.Cexp += _rewardExp;
+
+                if (_player.Cexp >= _player.Texp)
+                {
+                    _player.Levelup(ref _player.Level, ref _player.Cexp);
+                    Console.WriteLine($"{_player.Name}의 Lv이 올랐습니다!\n");
+                }
             }
 
             PlayerStatus(); 
