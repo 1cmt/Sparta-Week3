@@ -2,54 +2,72 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Reflection.Emit;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Newtonsoft.Json;
 
 namespace TextGame
 {
+    enum jobClass 
+    {
+        ARCHER,
+        WIZARD,
+        ASSASSIN
+    }
     [Serializable]
     public class Player
     {
-        [JsonProperty("privateField")]
+        [JsonProperty("_name")]
         private string _name;
-        public string Name { get { return _name; } }
+
+        [JsonProperty("_job")]
         private string _job;
-        public string Job { get { return _job; } set => _job = value; }
+        public string Name { get { return _name; } }
+        public string Job
+        { 
+            get { return _job; }
+            set
+            {
+                UncheckJob();
+                CheckJob(value);
+                _job = value;
+            }
+        }
         public int Level;
-        public int Atk;
-        public int Def;
         public float Ctl = 0.15f;
-        public int Mp;
-        public int MaxHp;
-        public int Hp;
-        public int MaxMp;
+        public int Atk, totalAtk, levelAtk=0;
+        public int Def, totalDef, levelDef=0;
+        public int Mp,totalMp,jobMp;
+        public int MaxMp, totalMaxMp, jobMaxMp;
+        public int Hp, totalHp, jobHp;
+        public int MaxHp,totalMaxHp, jobMaxHp;
         public int Gold;
         public int Cexp = 0;
+
         public List<int> KillCount = new List<int> { 0, 0, 0, 0 };
         public int Texp { get; set; }
         public Skill[] skillbook = new Skill[2];
         public Item?[] EquipItems { get; set; } //배열의 index가 장착 부위를 의미 (ItemType을 int로 형변환 하여 접근)
 
-        public Player(string name, string job, int level = 1, int atk = 10, int def = 10, int hp = 100, int gold = 1000, int exp = 10, int mp = 50, int maxmp = 50)
+        public Player(string name, string job, int level = 1, int atk = 10, int def = 10, int gold = 1000,  int exp = 10, int hp = 100, int mp = 50)
         {
             _name = name;
             _job = job;
             skillbook = Skill.Gainskill(job);
             Level = level;
             Gold = gold;
-            (MaxHp, Hp) = (hp, hp);
             Texp = exp;
-            Mp = mp; MaxMp = maxmp;
-            if (job == "archer") Atk = (int)(atk * 1.2f);
-            else if(name == "coder") Atk =atk*10;
-            else Atk = atk;
-            Def = job == "warrior" ? (int)(def * 1.2f) : def;
-            (Hp, MaxHp) = job == "warrior" ? ((int)(hp * 1.2f), (int)(hp * 1.2f)) : (hp, hp);
-            Ctl = job == "assassin" ? (int)(Ctl * 1.2f) : Ctl;
-            (Mp, MaxMp) = job == "wizard" ? ((int)(Mp * 1.2f), (int)(Mp * 1.2f)) : (Mp, Mp);
+            Hp    = job == "WARRIOR"  ?hp = 120 :hp;
+            MaxHp = job == "WARRIOR"  ?hp = 120:hp;
+            Mp    = job == "WIZARD"   ?mp = 60:mp; 
+            MaxMp = job == "WIZARD"   ?mp=  60:mp;
+            Atk   = job == "ARCHER"   ?atk = 12 : atk;
+            Def   = job == "WARRIOR"  ?def = 12:def;
+            Ctl   = job == "ASSASSIN" ?Ctl = 0.3f : Ctl;
             EquipItems = new Item?[10];
         }
 
@@ -59,25 +77,12 @@ namespace TextGame
             {
                 cexp -= Texp;
                 Texp += 20 + level * 5;
-                Atk += 1;
-                Def++;
+                levelAtk += 1;
+                levelDef++;
                 level++;
                 ;
             }
         }
-
-        public static string CheckJob()
-        {
-            string @as = "ASSASSIN"; string wa = "WARRIOR"; string wi = "WIZARD"; string ar = "ARCHER";
-            string? job = Console.ReadLine().ToUpper();
-            while (job != @as & job != wa & job != wi & job != ar)
-            {
-                Console.WriteLine("올바른 직업을 선택해주세요");
-                job = Console.ReadLine().ToUpper();
-            }
-            return job;
-        }
-
         public static string InputName()
         {
             Console.Write("B1A4던전에 오신 것을 환영합니다 이름을 적어주세요 : ");
@@ -86,6 +91,80 @@ namespace TextGame
             return Name;
         }
 
+        public void Attack(Monster monster)
+        {
+            monster.Hp -= totalAtk;
+            if (monster.Hp < 0) monster.Hp = 0;
+        }
+        //summaery//
+        /*<스탯관련입니다>*/
+        //summaery//
+        public static int Multiple(float multimpler, int multiplecand)
+        {
+            return (int)(multimpler * multiplecand);
+        }
+        public void CheckStat(Inventory inventory)
+        {
+            totalAtk = Atk +levelAtk+ inventory.BonusAtk;
+            totalDef = Def +levelDef+ inventory.BonusDef;
+            totalHp = Hp + inventory.BonusHp;
+            totalMaxHp = MaxHp + inventory.BonusHp;
+        }
+        public void UncheckJob()
+        {
+            switch (_job)
+            {
+                case "ARCHER":
+                    Atk = Multiple(0.83334f, Atk);
+                    break;
+                case "WARRIOR":
+               
+                    Def = Multiple(0.83334f, Def);
+                    Hp = Multiple(0.83334f, Hp);
+                    MaxHp = Multiple(0.83334f, MaxHp);
+                    break;
+              
+                case "WIZARD":
+                    MaxMp = Multiple(0.83334f, MaxMp);
+                    Mp = Multiple(0.83334f, Mp);
+                    break;
+                case "ASSASSIN":
+                    Ctl = Multiple(0.5f, (int)Ctl);
+                    break;
+            }
+        }
+
+        public void CheckJob(string name) 
+        { 
+            switch (name)
+            {
+                case "ARCHER":
+                    Atk = Multiple(1.2f, Atk );
+                    break;
+                case "WARRIOR":
+
+                    Def = Multiple(1.2f, Def );
+                    Hp = Multiple(1.2f, Hp);
+                    MaxHp = Multiple(1.2f, MaxHp);
+                    break;
+
+                case "WIZARD":
+                    MaxMp = Multiple(0.8f, MaxMp);
+                    Mp = Multiple(1.2f, Mp);
+                    break;
+                case "ASSASSIN":
+                    Ctl = Multiple(2f, (int)Ctl);
+                    break;
+            }
+        }
+        //summaery//
+        /*</스탯관련입니다>*/
+        //summaery//
+
+
+        //summaery//
+        /* <직업관련 메소드입니다>*/
+        //summary//
         public static string InputJob()
         {
             Console.WriteLine("직업을 선택해주세요");
@@ -99,9 +178,20 @@ namespace TextGame
 
             string Tempjob = CheckJob();
             return Tempjob;
-
         }
-        public void Changejob(ref int gold, ref string job)
+        public static string CheckJob()
+        {
+            string @as = "ASSASSIN"; string wa = "WARRIOR"; string wi = "WIZARD"; string ar = "ARCHER";
+            string? job = Console.ReadLine().ToUpper();
+            while (job != @as & job != wa & job != wi & job != ar)
+            {
+                Console.WriteLine("올바른 직업을 선택해주세요");
+                job = Console.ReadLine().ToUpper();
+            }
+            return job;
+        }
+
+        public void Changejob(ref int gold, string job)
         {
             gold = 34000;
             if (gold >= 32747)
@@ -111,8 +201,9 @@ namespace TextGame
                 if (job == TempJob) { Console.WriteLine("똑같은 직업입니다."); }
                 else
                 {
-                    job = TempJob;
+                    Job = TempJob;
                     gold -= 32747;
+                    
                     Console.WriteLine(TempJob + "직업으로 변경완료");
                 }
             }
@@ -122,8 +213,13 @@ namespace TextGame
             Console.WriteLine("아무 키나 눌러서 진행");
             Console.ReadKey();
         }
+
+        /// <summary>
+        /* </직업관련 메소드입니다>*/
+        /// </summary>
         public void StatusMenu(Inventory inventory)
         {
+            
             Console.Clear();
 
             ConsoleUtility.PrintTitle(((Func<string, string>)(status => status.PadLeft(50)))("상태창".PadLeft(50)));
@@ -131,9 +227,9 @@ namespace TextGame
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Blue,Cexp.ToString()+"/", Texp.ToString(), ")\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "이름 : ", Name);
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "(", Job, ")\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "공격력 : ", (Atk + inventory.BonusAtk).ToString().PadRight(6), inventory.BonusAtk > 0 ? $" (+{inventory.BonusAtk})\n" : "\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "방어력 : ", (Def + inventory.BonusDef).ToString().PadRight(6), inventory.BonusDef > 0 ? $" (+{inventory.BonusDef})\n" : "\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "체  력 : ", (Hp + inventory.BonusHp).ToString().PadRight(6), inventory.BonusHp > 0 ? $" (+{inventory.BonusHp})\n" : "\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "공격력 : ", (totalAtk).ToString().PadRight(6), inventory.BonusAtk > 0 ? $" (+{inventory.BonusAtk})\n" : "\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "방어력 : ", (totalDef).ToString().PadRight(6), inventory.BonusDef > 0 ? $" (+{inventory.BonusDef})\n" : "\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "체  력 : ", (totalHp).ToString().PadRight(6), inventory.BonusHp > 0 ? $" (+{inventory.BonusHp})\n" : "\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "Gold : ", Gold.ToString(), "\n");
 
             for (int i = 0; i < skillbook.Length; i++)
@@ -147,14 +243,13 @@ namespace TextGame
             if (choice == 0) return;
             else
             {
-                Changejob(ref Gold, ref _job);
+                Changejob(ref Gold,Job);
+                CheckStat(inventory);
                 StatusMenu(inventory);
             }
         }
-        public void Attack(Monster monster)
-        {
-            monster.Hp -= Atk;
-            if (monster.Hp < 0) monster.Hp = 0;
-        }
+
+
+        
     }
 }
