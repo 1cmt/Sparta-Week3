@@ -23,7 +23,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
             store     = new Store();
             questManager = new QuestManager();
             dungeon = new Dungeon();
-            skill = new Skill();
+            //skill = new Skill();
             //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
