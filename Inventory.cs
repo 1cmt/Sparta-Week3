@@ -1,6 +1,7 @@
 
 namespace TextGame
 {
+    [Serializable]
     public class Inventory
     {
         public List<Item> ItemList { get; } = new List<Item>();
@@ -48,21 +49,15 @@ namespace TextGame
         {
             Item item = ItemList[idx];
 
-            if (isAdd)
-            {
-                if (item.Atk != 0) BonusAtk += item.Atk;
-                if (item.Def != 0) BonusDef += item.Def;
-                if (item.Hp != 0) BonusHp += item.Hp;
-            }
-            else
-            {
-                if (item.Atk != 0) BonusAtk -= item.Atk;
-                if (item.Def != 0) BonusDef -= item.Def;
-                if (item.Hp != 0) BonusHp -= item.Hp;
-            }
+            CalBonus(isAdd, item);
         }
 
         public void ManageBonusValue(bool isAdd, Item item)
+        {
+            CalBonus(isAdd, item);
+        }
+
+        public void CalBonus(bool isAdd, Item item)
         {
             if (isAdd)
             {
