@@ -76,7 +76,7 @@ namespace TextGame
             new Quest(
                 "마을을 위협하는 미니언 처치",
                 "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",
-                "1.미니언 5마리 처치",
+                "1.미니언 5마리 처치하기",
                 "쓸만한 방패 x 1\n5G",
                 player => //클리어 조건: 미니언 5마리 잡기
                 {
@@ -104,22 +104,22 @@ namespace TextGame
             new Quest(
                 "장비를 장착해보자",
                 "모험을 떠나기 전에 적절한 장비를 갖추는 건 중요하네.\n자네의 인벤토리에서 방패를 장착해보게!",
-                "1.쓸만한 방패 장착",
+                "1.아무 방패 장착하기",
                 "100G",
                 player => //클리어 조건: 방패 장착하기
                 {   
                     //쓸만한 방패를 장착했으면 shieldEquipped=true
-                    Item shield = _inventory.ItemList.FirstOrDefault(item => item.Name == "쓸만한 방패");
+                    Item shield = _inventory.ItemList.FirstOrDefault(item => item.IsEquipped);
                     bool shieldEquipped = (shield != null) ? shield.IsEquipped : false;
 
                     if(shieldEquipped)    //방패를 장착했으면
                     {
-                        Console.WriteLine("쓸만한 방패 장착 (완료)");
+                        Console.WriteLine("방패 장착 (완료)");
                         return true;
                     }
                     else //방패를 장착 안했으면
                     {
-                        Console.WriteLine("쓸만한 방패 장착 (진행중)");
+                        Console.WriteLine("방패 장착 (진행중)");
                         return false;
                     }
                 },
