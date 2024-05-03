@@ -84,6 +84,14 @@ namespace TextGame // Note: actual namespace depends on the project name.
         {
             while (true)
             {
+                string statusFile = JsonConvert.SerializeObject(player);
+                File.WriteAllText(filePathPlayer, statusFile);
+                string inventoryFile = JsonConvert.SerializeObject(inventory);
+                File.WriteAllText(filePathInventory, inventoryFile);
+                string storeFile = JsonConvert.SerializeObject(store);
+                File.WriteAllText(filePathStore, storeFile);
+                string questFile = JsonConvert.SerializeObject(questManager);
+                File.WriteAllText(filePathQuest, questFile);
 
                 Console.Clear();
                 // 1. 선택 멘트를 줌
