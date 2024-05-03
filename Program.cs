@@ -1,6 +1,7 @@
 ﻿using System;
 using static System.Formats.Asn1.AsnWriter;
 using System.Numerics;
+using Newtonsoft.Json;
 
 namespace TextGame // Note: actual namespace depends on the project name.
 {
@@ -12,7 +13,11 @@ namespace TextGame // Note: actual namespace depends on the project name.
         Store store;
         Player player;
         Dungeon dungeon;
-        
+        string folderpath;
+        string filePathPlayer;
+        string filePathInventory;
+        string filePathStore;
+        string filePathQuest;
         public GameManager()
         {
             InitializeGame();
@@ -30,11 +35,50 @@ namespace TextGame // Note: actual namespace depends on the project name.
             Console.Clear();
             ConsoleUtility.PrintHead();
             string name = Player.InputName();
-            string job = Player.InputJob();
-            player = new Player(name, job);
+            bool isfirst = LoadGame(name);
+            if (isfirst == true)
+            { 
+                string job = Player.InputJob(); 
+                player = new Player(name, job);
+            }
             MainMenu();
-            
         }
+        public bool LoadGame(string nameinput)
+        {
+            string name = nameinput;
+            SetFilePath(nameinput);
+            if (!Directory.Exists(folderpath))
+            {
+                Directory.CreateDirectory(folderpath);
+                Console.WriteLine($"캐릭터 {name}이 생성 되었습니다");
+                bool isMake = true;
+                return isMake;
+            }
+            else
+            {
+                Console.WriteLine($"캐릭터 {name}이 로드 되었습니다");
+
+                string statusFile = File.ReadAllText(filePathPlayer);
+                player = JsonConvert.DeserializeObject<Player>(statusFile);
+                string inventoryFile = File.ReadAllText(filePathInventory);
+                inventory = JsonConvert.DeserializeObject<Inventory>(inventoryFile);
+                string storeFile = File.ReadAllText(filePathStore);
+                store = JsonConvert.DeserializeObject<Store>(storeFile);
+                string questFile = File.ReadAllText(filePathQuest);
+                questManager = JsonConvert.DeserializeObject<QuestManager>(questFile);
+                bool isMake = false;
+                return isMake;
+            }
+        }
+        public void SetFilePath(string name)
+        {
+            folderpath = $@"..\{name}";
+            filePathPlayer = Path.Combine(folderpath, $"{name}player.json");
+            filePathInventory = Path.Combine(folderpath, $"{name}inventory.json");
+            filePathStore = Path.Combine(folderpath, $"{name}store.json");
+            filePathQuest = Path.Combine(folderpath, $"{name}quest.json");
+        }
+
 
         private void MainMenu()
         {
