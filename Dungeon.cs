@@ -418,14 +418,14 @@ namespace TextGame
 
                 //스킬 출력
                 Console.WriteLine("[스킬정보]");
-                for (int i = 0; i < _player.skillbook.Count; i++)
+                for (int i = 0; i < _player.skillbook.Length; i++)
                 {
                     Console.Write($"{i+1}");
                     _player.skillbook[i].PrintSkillDescription(_player);                
                 }
                 Console.WriteLine("0. 뒤로가기\n");
 
-                int choiceSkill = ConsoleUtility.PromptMenuChoice(0, _player.skillbook.Count);
+                int choiceSkill = ConsoleUtility.PromptMenuChoice(0, _player.skillbook.Length);
 
                 if (choiceSkill == 0)
                 {

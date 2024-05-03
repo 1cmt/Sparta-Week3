@@ -32,7 +32,7 @@ namespace TextGame
         public int SkillUse(int index, Player player) //index번째 스킬 사용할지와 player객체 받는다.
         {
             int totaldamage;
-            totaldamage = (int)((player.skill[index-1].Damage)*player.Atk / 10);
+            totaldamage = (int)((player.skillbook[index-1].Damage)*player.Atk / 10);
             return totaldamage;
         }
         public static Skill[] Gainskill(string job)
