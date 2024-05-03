@@ -312,8 +312,11 @@ namespace TextGame
         public string ClearConditionText;       //클리어 조건 텍스트
         public string RewardText;               //퀘스트 보상 텍스트
 
+        [NonSerialized]
         public Func<Player, bool> CheckCondition;   //클리어 조건을 체크하는 함수. 조건에 따라 ClearConditionText의 문자열 뒤에 어떻게 추가할지 직접 정의해야 함. (ex "\t미니언 (3 / 5)")
+        [NonSerialized]
         public Action<Player> Reward;           //클리어 보상 함수
+
 
         public int ProgressStatus = (int)QuestStatus.Startable;          //클리어 여부를 저장하는 변수. 기본 진행 가능 상태
 

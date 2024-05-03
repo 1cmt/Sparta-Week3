@@ -22,13 +22,9 @@ namespace TextGame
         Battle
     }
 
-
     public class Dungeon
     {
-        private Monster[] _monsters;
-        //private Monster _minion;
-        //private Monster _cannonMinion;
-        //private Monster _hollowworm;                
+        private Monster[] _monsters;              
         private Player _player;
         private QuestManager _questManager;
         private Skill _skill;
@@ -418,14 +414,14 @@ namespace TextGame
 
                 //스킬 출력
                 Console.WriteLine("[스킬정보]");
-                for (int i = 0; i < _player.skillbook.Count; i++)
+                for (int i = 0; i < _player.skillbook.Length; i++)
                 {
                     Console.Write($"{i+1}");
                     _player.skillbook[i].PrintSkillDescription(_player);                
                 }
                 Console.WriteLine("0. 뒤로가기\n");
 
-                int choiceSkill = ConsoleUtility.PromptMenuChoice(0, _player.skillbook.Count);
+                int choiceSkill = ConsoleUtility.PromptMenuChoice(0, _player.skillbook.Length);
 
                 if (choiceSkill == 0)
                 {
@@ -462,9 +458,7 @@ namespace TextGame
 
                     _monsters[monsterIndex].Hp -= _player.skillbook[choiceSkill - 1].SkillUse(choiceSkill, _player);
                     _player.Mp -= _player.skillbook[choiceSkill - 1].Mplose;
-
                    
-
                     if (_monsters[monsterIndex].Hp <= 0)
                     {
                         Console.WriteLine("Dead");
@@ -509,16 +503,5 @@ namespace TextGame
                 }              
             }
         }
-
-        //public void MonsterRespawn()
-        //{
-        //    foreach (Monster monster in _monsters)
-        //    {
-        //        monster.Respawn();
-        //    }
-        //}
-
-
-
     }
 }
