@@ -46,15 +46,6 @@ namespace TextGame
     //    }
     //}
 
-
-    //몬스터타입
-    //public enum MonsterType
-    //{
-    //    Minion,         //0.미니언
-    //    CannonMinion,   //1.대포 미니언
-    //    VoidBug        //2.공허충
-    //}
-    //퀘스트 상태여부
     public enum QuestStatus
     {
         Startable,          //0.진행 가능
