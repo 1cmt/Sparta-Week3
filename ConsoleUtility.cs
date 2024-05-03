@@ -98,18 +98,9 @@ namespace TextGame
             return str.PadLeft(str.Length + padding) + new string(' ', padding - 1);
         }
 
-        public static void PrintLine(char ch, int i = 110)
+        public static void PrintLine(char ch, int size = 110)
         {
-            for (i = 0; i < 110; i++)
-            {
-                Console.Write(ch);
-            }
-            Console.Write("\n");
-        }
-
-        public static void PrintLongLine(char ch, int i = 150)
-        {
-            for (i = 0; i < 160; i++)
+            for (int i = 0; i < size; i++)
             {
                 Console.Write(ch);
             }
