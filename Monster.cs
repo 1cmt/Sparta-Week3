@@ -13,7 +13,7 @@ namespace TextGame
         public int Atk { get; }
         public int Hp { get; set; }
         public int MaxHp { get; private set;}
-        public string Type { get; }
+        //public string Type { get; }
         public bool IsLife { get; private set; }
         public int DropGold { get; }
         public int DropExp { get; }
@@ -26,7 +26,7 @@ namespace TextGame
             Hp = hp;
             MaxHp = hp;
             IsLife = true;
-            Type = name;
+            //Type = name;
             DropGold = dropGold;
             DropExp = dropExp;
         }
