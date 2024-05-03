@@ -94,14 +94,13 @@ namespace TextGame
         public static string PadCenterForMixedText(string str, int totalLength)
         {
             int currentLength = GetPrintableLength(str);
-            int leftPadding = (totalLength - currentLength) / 2;
-            int rightPadding = totalLength - leftPadding;
-            return str.PadLeft(str.Length + leftPadding) + new string(' ', rightPadding);
+            int padding = (totalLength - currentLength) / 2 + 1;
+            return str.PadLeft(str.Length + padding) + new string(' ', padding - 1);
         }
 
-        public static void PrintLine(char ch, int i = 110)
+        public static void PrintLine(char ch, int size = 110)
         {
-            for (i = 0; i < 110; i++)
+            for (int i = 0; i < size; i++)
             {
                 Console.Write(ch);
             }

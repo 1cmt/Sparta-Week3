@@ -32,7 +32,6 @@ namespace TextGame
         public List<Skill> skillbook = new List<Skill>();
         public Item?[] EquipItems { get; set; } //배열의 index가 장착 부위를 의미 (ItemType을 int로 형변환 하여 접근)
 
-
         public Player(string name, string job, int level = 1, int atk = 10, int def = 10, int hp = 100, int gold = 1000, int exp = 10, int mp = 50, int maxmp = 50)
         {
             _name = name;
@@ -64,6 +63,7 @@ namespace TextGame
                 ;
             }
         }
+
         public static string CheckJob()
         {
             string @as = "ASSASSIN"; string wa = "WARRIOR"; string wi = "WIZARD"; string ar = "ARCHER";
@@ -75,6 +75,7 @@ namespace TextGame
             }
             return job;
         }
+
         public static string InputName()
         {
             Console.Write("B1A4던전에 오신 것을 환영합니다 이름을 적어주세요 : ");
@@ -82,7 +83,7 @@ namespace TextGame
             return Name;
         }
 
-        internal static string InputJob()
+        public static string InputJob()
         {
             Console.WriteLine("직업을 선택해주세요");
 
@@ -118,20 +119,22 @@ namespace TextGame
             Console.WriteLine("아무 키나 눌러서 진행");
             Console.ReadKey();
         }
-        internal void StatusMenu(Player player, Inventory inventory)
+        public void StatusMenu(Inventory inventory)
         {
             Console.Clear();
-            ConsoleUtility.PrintTitle(((Func<string, string>)(status => status.PadLeft(50)))("상태창"));
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "레벨 : ", player.Level.ToString(), "\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "이름 : ", player.Name);
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "(", player.Job, ")\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "공격력 : ", player.Atk.ToString(), "\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "방어력 : ", player.Def.ToString(), "\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "체력 : ", player.Hp.ToString(), "\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "Gold : ", player.Gold.ToString(), "\n\n");
-            for (int i = 0; i < player.skillbook.Count; i++)
+
+            ConsoleUtility.PrintTitle(((Func<string, string>)(status => status.PadLeft(50)))("상태창".PadLeft(50)));
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "레벨 : ", Level.ToString(), "\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "이름 : ", Name);
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "(", Job, ")\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "공격력 : ", (Atk + inventory.BonusAtk).ToString().PadRight(6), inventory.BonusAtk > 0 ? $" (+{inventory.BonusAtk})\n" : "\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "방어력 : ", (Def + inventory.BonusDef).ToString().PadRight(6), inventory.BonusDef > 0 ? $" (+{inventory.BonusDef})\n" : "\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "체  력 : ", (Hp + inventory.BonusHp).ToString().PadRight(6), inventory.BonusHp > 0 ? $" (+{inventory.BonusHp})\n" : "\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "Gold : ", Gold.ToString(), "\n");
+
+            for (int i = 0; i < skillbook.Count; i++)
             {
-                player.skillbook[i].PrintSkillDescription(player);
+                skillbook[i].PrintSkillDescription(this);
             }
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "0", ". 메뉴로 나가기\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "1", ". 직업변경 : 32767 G\n");
@@ -140,13 +143,10 @@ namespace TextGame
             if (choice == 0) return;
             else
             {
-                Changejob(ref player.Gold, ref player._job);
-                StatusMenu(player, inventory);
+                Changejob(ref Gold, ref _job);
+                StatusMenu(inventory);
             }
         }
-
-
-
         public void Attack(Monster monster)
         {
             monster.Hp -= Atk;

@@ -184,29 +184,33 @@ namespace TextGame
             string armorName = player.EquipItems[(int)ItemType.Armor] != null ? ConsoleUtility.PadCenterForMixedText(player.EquipItems[(int)ItemType.Armor]!.Name, 12) : new string(' ', 12);
             string helemtName = player.EquipItems[(int)ItemType.Helmet] != null ? ConsoleUtility.PadCenterForMixedText(player.EquipItems[(int)ItemType.Helmet]!.Name, 12) : new string(' ', 12);
             string shieldName = player.EquipItems[(int)ItemType.Shield] != null ? ConsoleUtility.PadCenterForMixedText(player.EquipItems[(int)ItemType.Shield]!.Name, 12) : new string(' ', 12);
-
-            Console.WriteLine("                                                                         .=**++**+.                                                                     ");
-            Console.WriteLine("                                             @============@             **:      .*#.                                         =                         ");
-            Console.WriteLine("                                             @            @           .%-          :%.                                       #%*                        ");
-            Console.WriteLine("                                             @    투 구   @           *+            =#                                      #+ +#                       ");
-            Console.WriteLine("                                             @            @===========%#=======     :%                                     *%***@*                      ");
-            Console.WriteLine("                                             @{0}@           =%            *+                                     ++   ++                      ", helemtName);
-            Console.WriteLine("                                             @            @            +#.         **                                      ++   ++        @============@");
-            Console.WriteLine("                                             @============@             :#*-.  .-+#-                                       ++   ++        @            @");
-            Console.WriteLine("                            .-=++++++-.                            .#%++++++++++++++++*@:                                  ++   ++        @   무  기   @");
-            Console.WriteLine("                          =#+:::-=--::+#+                         +##*                :@+#:                                ++ ==%%========@            @");
-            Console.WriteLine("  @=============@       -%-.+#+-:.:-=**.-#=                     +#- +*                :@ .**.                              ++   ++        @{0}@", weaponName);
-            Console.WriteLine("  @             @      +# +#:         .*+ **                  =#-   +*                :@   :**.                            ++   ++        @            @");
-            Console.WriteLine("  @    방  패   @     :@ +#             ** %-                 -**=: +*                :@ .-**=.    @=============@         ++   ++        @============@");
-            Console.WriteLine("  @             @=====#%=@*=======      .@ +*                    .=*%*                :@*+-        @             @         ++   ++");
-            Console.WriteLine("  @{0} @     +#.%=             :@ +*                       +*                :@           @    갑  옷   @         **...**", shieldName);
-            Console.WriteLine("  @             @     .@::@.            %- @.                       +*       ==========@===========@             @       #=========#");
-            Console.WriteLine("  @=============@      :%::#=         =#:.%-                        +*                :@           @             @       #=========#");
-            Console.WriteLine("                        .**::+*++=++++-.+#:                         +*                :@           @{0} @          =# %=", armorName);
-            Console.WriteLine("                          .=**=:::::-+*+.                           +*                :@           @             @          =# %-");
-            Console.WriteLine("                              :--=--:                               +*                :@           @=============@          =% %-");
-            Console.WriteLine("                                                                    +*                :@                                     :::");
-            Console.WriteLine("                                                                    +#:::::::::::::::::@");
+            
+            ConsoleUtility.PrintLine('■', 153);
+            Console.WriteLine("");
+            Console.WriteLine("                                                                        .=**++**+.                                                                     ");
+            Console.WriteLine("                                            @============@             **:      .*#.                                        =                         ");
+            Console.WriteLine("                                            @            @           .%-          :%.                                      #%*                        ");
+            Console.WriteLine("                                            @    투 구   @           *+            =#                                     #+ +#                       ");
+            Console.WriteLine("                                            @            @===========%#=======     :%                                    *%***@*                      ");
+            Console.WriteLine("                                            @{0}@           =%            *+                                    ++   ++                      ", helemtName);
+            Console.WriteLine("                                            @            @            +#.         **                                     ++   ++        @============@");
+            Console.WriteLine("                                            @============@             :#*-.  .-+#-                                      ++   ++        @            @");
+            Console.WriteLine("                           .-=++++++-.                            .#%++++++++++++++++*@:                                 ++   ++        @    무 기   @");
+            Console.WriteLine("                         =#+:::-=--::+#+                         +##*                :@+#:                               ++ ==%%========@            @");
+            Console.WriteLine("  @============@       -%-.+#+-:.:-=**.-#=                     +#- +*                :@ .**.                             ++   ++        @{0}@", weaponName);
+            Console.WriteLine("  @            @      +# +#:         .*+ **                  =#-   +*                :@   :**.                           ++   ++        @            @");
+            Console.WriteLine("  @    방 패   @     :@ +#             ** %-                 -**=: +*                :@ .-**=.    @============@         ++   ++        @============@");
+            Console.WriteLine("  @            @=====#%=@*=======      .@ +*                    .=*%*                :@*+-        @            @         ++   ++");
+            Console.WriteLine("  @{0}@     +#.%=             :@ +*                       +*                :@           @    갑 옷   @         **...**", shieldName);
+            Console.WriteLine("  @            @     .@::@.            %- @.                       +*       ==========@===========@            @       #=========#");
+            Console.WriteLine("  @============@      :%::#=         =#:.%-                        +*                :@           @{0}@       #=========#", armorName);
+            Console.WriteLine("                       .**::+*++=++++-.+#:                         +*                :@           @            @          =# %=");
+            Console.WriteLine("                         .=**=:::::-+*+.                           +*                :@           @            @          =# %-");
+            Console.WriteLine("                             :--=--:                               +*                :@           @============@          =% %-");
+            Console.WriteLine("                                                                   +*                :@                                    :::");
+            Console.WriteLine("                                                                   +#:::::::::::::::::@");
+            Console.WriteLine("");
+            ConsoleUtility.PrintLine('■', 153);
             Console.WriteLine("");
         }
     }
