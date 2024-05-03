@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,6 +30,8 @@ namespace TextGame
         //private Monster _cannonMinion;
         //private Monster _hollowworm;                
         private Player _player;
+        private QuestManager _questManager;
+
         private int _killCount;
         private int _rewardGold;
         private int _rewardExp;
@@ -44,9 +47,10 @@ namespace TextGame
         }
 
 
-        public void EnterDungeon(Player player)
+        public void EnterDungeon(Player player, QuestManager questManager)
         {
             _player = player;
+            _questManager = questManager;
             MonsterAppear();
 
             // 구성
@@ -144,6 +148,7 @@ namespace TextGame
 
                 Console.Clear();
                 Console.WriteLine("Battle!\n");
+
                 //플레이어의 공격
                 //Console.WriteLine($"{_monsters[choice - 1].Name}을/를 공격했다!");
                 Console.Write(
@@ -163,6 +168,18 @@ namespace TextGame
                     
                     _killCount++;
                     _monsters[choice - 1].Dead();
+
+                    //퀘스트 수락시 몬스터 카운트 증가
+                    if (_questManager.questList[0].ProgressStatus == 1 && _monsters[choice - 1].Name == _minionStr && _player.KillCount[(int)MonsterType.Minion] < 6)
+                    {
+                        _player.KillCount[(int)MonsterType.Minion] += 1;
+                        Console.WriteLine(
+                        $"\n[퀘스트 진행도]\n" +
+                        $"미니언 처치!    [{_player.KillCount[(int)MonsterType.Minion]}/5]\n");
+
+                        if (_player.KillCount[(int)MonsterType.Minion] == 5) Console.WriteLine("퀘스트를 완료 했습니다!\n");
+
+                    }
 
                     if (_killCount == _monsters.Length)
                     {
@@ -236,7 +253,7 @@ namespace TextGame
                 if (_monsters[i].Atk < _player.Def)
                 {
                     Console.WriteLine($"{_player.Name}의 방어력이 높아 {_monsters[i].Name}의 공격이 실패 합니다!");
-                    Thread.Sleep(1000);
+                    //Thread.Sleep(1000);
                 }
                 else
                 {
@@ -245,7 +262,7 @@ namespace TextGame
                     $"{_player.Name} 을(를) 맞췄습니다.    [데미지 : ");
                     if (_player.Def > 0) Console.WriteLine($"{_monsters[i].Atk} - ({_player.Def})]\n");
                     else Console.WriteLine($"{_monsters[i].Atk}]\n");
-                    Thread.Sleep(1000);
+                    //Thread.Sleep(1000);
                 }
                 
                 Console.Write(
