@@ -24,11 +24,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
         }
         public void InitializeGame()
         {
-            inventory = new Inventory();
-            store     = new Store();
-            questManager = new QuestManager();
             dungeon = new Dungeon();            
-            //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
         {
@@ -52,6 +48,9 @@ namespace TextGame // Note: actual namespace depends on the project name.
                 Directory.CreateDirectory(folderpath);
                 Console.WriteLine($"캐릭터 {name}이 생성 되었습니다");
                 bool isMake = true;
+                inventory = new Inventory();
+                store = new Store();
+                questManager = new QuestManager();
                 return isMake;
             }
             else
@@ -72,7 +71,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
         }
         public void SetFilePath(string name)
         {
-            folderpath = $@"..\{name}";
+            folderpath = $@".\{name}";
             filePathPlayer = Path.Combine(folderpath, $"{name}player.json");
             filePathInventory = Path.Combine(folderpath, $"{name}inventory.json");
             filePathStore = Path.Combine(folderpath, $"{name}store.json");
@@ -84,15 +83,17 @@ namespace TextGame // Note: actual namespace depends on the project name.
         {
             while (true)
             {
-                string statusFile = JsonConvert.SerializeObject(player);
-                File.WriteAllText(filePathPlayer, statusFile);
-                string inventoryFile = JsonConvert.SerializeObject(inventory);
-                File.WriteAllText(filePathInventory, inventoryFile);
-                string storeFile = JsonConvert.SerializeObject(store);
-                File.WriteAllText(filePathStore, storeFile);
-                string questFile = JsonConvert.SerializeObject(questManager);
-                File.WriteAllText(filePathQuest, questFile);
-
+                {
+                    string statusFile = JsonConvert.SerializeObject(player);
+                    File.WriteAllText(filePathPlayer, statusFile);
+                    string inventoryFile = JsonConvert.SerializeObject(inventory);
+                    File.WriteAllText(filePathInventory, inventoryFile);
+                    string storeFile = JsonConvert.SerializeObject(store);
+                    File.WriteAllText(filePathStore, storeFile);
+                    string questFile = JsonConvert.SerializeObject(questManager);
+                    File.WriteAllText(filePathQuest, questFile);
+                }
+                player.CheckStat(inventory);
                 Console.Clear();
                 // 1. 선택 멘트를 줌
                 ConsoleUtility.PrintLine('■');

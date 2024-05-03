@@ -1,12 +1,13 @@
 
 namespace TextGame
 {
+    [Serializable]
     public class Inventory
     {
         public List<Item> ItemList { get; } = new List<Item>();
-        public int BonusAtk { get; private set; } = 0;
-        public int BonusDef { get; private set; } = 0;
-        public int BonusHp { get; private set; } = 0;
+        public int BonusAtk { get;  set; } = 0;
+        public int BonusDef { get; set; } = 0;
+        public int BonusHp { get;  set; } = 0;
 
         public int Count()
         {
@@ -48,21 +49,15 @@ namespace TextGame
         {
             Item item = ItemList[idx];
 
-            if (isAdd)
-            {
-                if (item.Atk != 0) BonusAtk += item.Atk;
-                if (item.Def != 0) BonusDef += item.Def;
-                if (item.Hp != 0) BonusHp += item.Hp;
-            }
-            else
-            {
-                if (item.Atk != 0) BonusAtk -= item.Atk;
-                if (item.Def != 0) BonusDef -= item.Def;
-                if (item.Hp != 0) BonusHp -= item.Hp;
-            }
+            CalBonus(isAdd, item);
         }
 
         public void ManageBonusValue(bool isAdd, Item item)
+        {
+            CalBonus(isAdd, item);
+        }
+
+        public void CalBonus(bool isAdd, Item item)
         {
             if (isAdd)
             {
@@ -93,6 +88,7 @@ namespace TextGame
             Console.WriteLine("[아이템 목록]");
             PrintMyItemList(MenuType.InventoryMenu);
             Console.WriteLine("1. 장착관리");
+
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
 
