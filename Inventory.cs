@@ -184,7 +184,10 @@ namespace TextGame
             string armorName = player.EquipItems[(int)ItemType.Armor] != null ? ConsoleUtility.PadCenterForMixedText(player.EquipItems[(int)ItemType.Armor]!.Name, 12) : new string(' ', 12);
             string helemtName = player.EquipItems[(int)ItemType.Helmet] != null ? ConsoleUtility.PadCenterForMixedText(player.EquipItems[(int)ItemType.Helmet]!.Name, 12) : new string(' ', 12);
             string shieldName = player.EquipItems[(int)ItemType.Shield] != null ? ConsoleUtility.PadCenterForMixedText(player.EquipItems[(int)ItemType.Shield]!.Name, 12) : new string(' ', 12);
-
+            
+            Console.WriteLine("");
+            ConsoleUtility.PrintLongLine('■');
+            Console.WriteLine("");
             Console.WriteLine("                                                                         .=**++**+.                                                                     ");
             Console.WriteLine("                                             @============@             **:      .*#.                                         =                         ");
             Console.WriteLine("                                             @            @           .%-          :%.                                       #%*                        ");
@@ -207,6 +210,8 @@ namespace TextGame
             Console.WriteLine("                              :--=--:                               +*                :@           @=============@          =% %-");
             Console.WriteLine("                                                                    +*                :@                                     :::");
             Console.WriteLine("                                                                    +#:::::::::::::::::@");
+            Console.WriteLine("");
+            ConsoleUtility.PrintLongLine('■');
             Console.WriteLine("");
         }
     }
