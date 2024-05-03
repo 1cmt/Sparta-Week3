@@ -27,12 +27,12 @@ namespace TextGame
         {
             Console.Write("-");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "",ConsoleUtility.PadRightForMixedText(Skillname,12), ConsoleUtility.PadRightForMixedText(Skilldes,43));
-            Console.Write("|Damage:"+(int)(Damage * player.Atk/10)+"|MP:"+Mplose+"\n");
+            Console.Write("|Damage:"+(int)(Damage * player.totalAtk /10)+"|MP:"+Mplose+"\n");
         }
         public int SkillUse(int index, Player player) //index번째 스킬 사용할지와 player객체 받는다.
         {
             int totaldamage;
-            totaldamage = (int)((player.skillbook[index-1].Damage)*player.Atk / 10);
+            totaldamage = (int)((player.skillbook[index-1].Damage)*player.totalAtk / 10);
             return totaldamage;
         }
         public static Skill[] Gainskill(string job)

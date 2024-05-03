@@ -337,7 +337,7 @@ namespace TextGame
                 //Console.WriteLine($"{_monsters[choice - 1].Name}을/를 공격했다!");
                 Console.Write(
                     $"{_player.Name}의 공격!\n" +
-                    $"Lv.{_monsters[monsterIndex].Level} {_monsters[monsterIndex].Name} 을(를) 맞췄습니다.    [데미지 : {_player.Atk}]\n\n");
+                    $"Lv.{_monsters[monsterIndex].Level} {_monsters[monsterIndex].Name} 을(를) 맞췄습니다.    [데미지 : {_player.totalAtk}]\n\n");
 
                 Thread.Sleep(1000);
 
