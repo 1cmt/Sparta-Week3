@@ -31,6 +31,7 @@ namespace TextGame
         //private Monster _hollowworm;                
         private Player _player;
         private QuestManager _questManager;
+        private Skill _skill;
 
         private int _killCount;
         private int _rewardGold;
@@ -67,7 +68,7 @@ namespace TextGame
             {
                 Console.WriteLine($"Lv.{monster.Level} {monster.Name} Hp {monster.Hp}/{monster.MaxHp}");
             }
-            Console.WriteLine("\n");
+            Console.WriteLine("");
 
             //플레이어 정보 불러오기
             PlayerStatus();
@@ -145,67 +146,16 @@ namespace TextGame
                     return;
                 }
 
+                //스킬사용, 일반 공격 선택
+                HowAttack();
 
-                Console.Clear();
-                Console.WriteLine("Battle!\n");
 
-                //플레이어의 공격
-                //Console.WriteLine($"{_monsters[choice - 1].Name}을/를 공격했다!");
-                Console.Write(
-                    $"{_player.Name}의 공격!\n" +
-                    $"Lv.{_monsters[choice - 1].Level} {_monsters[choice - 1].Name} 을(를) 맞췄습니다.    [데미지 : {_player.Atk}]\n\n");
-
-                Thread.Sleep(1000);
-
-                Console.Write($"Lv.{_monsters[choice - 1].Level} {_monsters[choice - 1].Name}" +
-                    $"Hp {_monsters[choice - 1].Hp} -> ");
-
-                _player.Attack(_monsters[choice - 1]);
-
-                if (_monsters[choice - 1].Hp <= 0)
-                {
-                    Console.WriteLine("Dead");
-                    
-                    _killCount++;
-                    _monsters[choice - 1].Dead();
-
-                    //퀘스트 수락시 몬스터 카운트 증가
-                    if (_questManager.questList[0].ProgressStatus == 1 && _monsters[choice - 1].Name == _minionStr && _player.KillCount[(int)MonsterType.Minion] < 6)
-                    {
-                        _player.KillCount[(int)MonsterType.Minion] += 1;
-                        Console.WriteLine(
-                        $"\n[퀘스트 진행도]\n" +
-                        $"미니언 처치!    [{_player.KillCount[(int)MonsterType.Minion]}/5]\n");
-
-                        if (_player.KillCount[(int)MonsterType.Minion] == 5) Console.WriteLine("퀘스트를 완료 했습니다!\n");
-
-                    }
-
-                    if (_killCount == _monsters.Length)
-                    {
-                        Console.WriteLine("\n전투에서 승리했습니다!\n");
-                        Console.WriteLine("0. 다음");
-                        ConsoleUtility.PromptMenuChoice(0, 0);
-                        BattleResult();
-                        return;
-                    }
-                }
-                else 
-                {
-                    Console.WriteLine($"{_monsters[choice - 1].Hp}");
-                }
-
-                Console.WriteLine("\n0. 다음");
-                ConsoleUtility.PromptMenuChoice(0, 0);
-
-                
-                //몬스터 공격
-                MonsterTurn();              
+                      
             }
         }
 
 
-        public void MonsterAppear()
+        private void MonsterAppear()
         {
             int num = new Random().Next(1, 5);
             _monsters = new Monster[num];
@@ -241,7 +191,7 @@ namespace TextGame
             }                      
         }
 
-        public void MonsterTurn()
+        private void MonsterTurn()
         {
             Console.Clear();
             Console.WriteLine("Battle!\n");
@@ -296,7 +246,7 @@ namespace TextGame
             if (choice0_2 == 0) Battle();
         }
 
-        public void BattleResult()
+        private void BattleResult()
         {
             Console.Clear();
             // 1. 전투 선택 멘트를 줌            
@@ -338,14 +288,223 @@ namespace TextGame
         }
 
 
-        public void PlayerStatus()
+        private void PlayerStatus()
         {            
             Console.WriteLine(
                 $"[내정보]\n" +
                 $"Lv.{_player.Level}  {_player.Name} ({_player.Job})\n" +
                 $"HP {_player.Hp}/{_player.MaxHp}  방어력 {_player.Def}\n" +
-                $"EXP {_player.Cexp}/{_player.Texp}  Gold {_player.Gold}\n" +
-                $"\n");
+                $"EXP {_player.Cexp}/{_player.Texp}  Gold {_player.Gold}\n");
+        }
+
+        private void HowAttack()
+        {
+            // 구성
+            // 0. 화면 정리
+            Console.Clear();
+            // 1. 전투 선택 멘트를 줌            
+            Console.WriteLine("Battle!\n");
+
+            for (int i = 0; i < _monsters.Length; i++)
+            {
+                if (_monsters[i].Hp <= 0)
+                {
+                    Console.WriteLine($"[{i + 1}] Lv.{_monsters[i].Level} {_monsters[i].Name} 공격력 {_monsters[i].Atk} Dead");
+                }
+                else
+                {
+                    Console.WriteLine($"[{i + 1}] Lv.{_monsters[i].Level} {_monsters[i].Name} 공격력 {_monsters[i].Atk} Hp {_monsters[i].Hp}/{_monsters[i].MaxHp}");
+                }
+            }
+            Console.WriteLine("");
+
+            PlayerStatus();
+
+            Console.WriteLine(
+                "공격 방식을 선택해 주세요\n" +
+                "1. 기본 공격\n" +
+                "2. 스킬 사용\n");
+
+            int choice = ConsoleUtility.PromptMenuChoice(1, 2);
+
+            if (choice == 1)
+            {
+                //기본 공격
+
+                Console.Clear();
+                Console.WriteLine("Battle!\n");
+
+                //플레이어의 공격
+                //Console.WriteLine($"{_monsters[choice - 1].Name}을/를 공격했다!");
+                Console.Write(
+                    $"{_player.Name}의 공격!\n" +
+                    $"Lv.{_monsters[choice - 1].Level} {_monsters[choice - 1].Name} 을(를) 맞췄습니다.    [데미지 : {_player.Atk}]\n\n");
+
+                Thread.Sleep(1000);
+
+                Console.Write($"Lv.{_monsters[choice - 1].Level} {_monsters[choice - 1].Name}" +
+                    $"Hp {_monsters[choice - 1].Hp} -> ");
+
+                _player.Attack(_monsters[choice - 1]);
+
+                if (_monsters[choice - 1].Hp <= 0)
+                {
+                    Console.WriteLine("Dead");
+
+                    _killCount++;
+                    _monsters[choice - 1].Dead();
+
+                    //퀘스트 수락시 몬스터 카운트 증가
+                    if (_questManager.questList[0].ProgressStatus == 1 && _monsters[choice - 1].Name == _minionStr && _player.KillCount[(int)MonsterType.Minion] < 6)
+                    {
+                        _player.KillCount[(int)MonsterType.Minion] += 1;
+                        Console.WriteLine(
+                        $"\n[퀘스트 진행도]\n" +
+                        $"미니언 처치!    [{_player.KillCount[(int)MonsterType.Minion]}/5]\n");
+
+                        if (_player.KillCount[(int)MonsterType.Minion] == 5) Console.WriteLine("퀘스트를 완료 했습니다!\n");
+
+                    }
+
+                    if (_killCount == _monsters.Length)
+                    {
+                        Console.WriteLine("\n전투에서 승리했습니다!\n");
+                        Console.WriteLine("0. 다음");
+                        ConsoleUtility.PromptMenuChoice(0, 0);
+                        BattleResult();
+                        return;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"{_monsters[choice - 1].Hp}");
+                }
+
+                Console.WriteLine("\n0. 다음");
+                ConsoleUtility.PromptMenuChoice(0, 0);
+
+
+                //몬스터 공격
+                MonsterTurn();
+
+            }
+            else if (choice == 2)
+            {
+                //스킬 선택지
+
+                // 구성
+                // 0. 화면 정리
+                Console.Clear();
+                // 1. 전투 선택 멘트를 줌            
+                Console.WriteLine("Battle!\n");
+
+                for (int i = 0; i < _monsters.Length; i++)
+                {
+                    if (_monsters[i].Hp <= 0)
+                    {
+                        Console.WriteLine($"[{i + 1}] Lv.{_monsters[i].Level} {_monsters[i].Name} 공격력 {_monsters[i].Atk} Dead");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"[{i + 1}] Lv.{_monsters[i].Level} {_monsters[i].Name} 공격력 {_monsters[i].Atk} Hp {_monsters[i].Hp}/{_monsters[i].MaxHp}");
+                    }
+                }
+                Console.WriteLine("");
+
+                PlayerStatus();
+
+                //스킬 출력
+                for (int i = 0; i < _player.skillbook.Count; i++)
+                {
+                    Console.Write($"[{i+1}]");
+                    _player.skillbook[i].PrintSkillDescription(_player);                
+                }
+                Console.WriteLine("0. 뒤로가기");
+
+                int choiceSkill = ConsoleUtility.PromptMenuChoice(0, _player.skillbook.Count);
+
+                if (choiceSkill == 0)
+                {
+                    HowAttack();
+                    return;
+                }
+                else 
+                {
+                    //마나 부족
+                    if (_player.Mp < _player.skillbook[choiceSkill - 1].Mplose)
+                    {
+                        Console.WriteLine("Mp가 부족합니다. 다른 공격방식을 선택해 주세요.");
+                        Thread.Sleep(1500);
+
+                        HowAttack();
+                    }
+
+                    //스킬 사용
+
+                    Console.Clear();
+                    Console.WriteLine("Battle!\n");
+
+                    //플레이어의 공격
+                    //Console.WriteLine($"{_monsters[choice - 1].Name}을/를 공격했다!");
+                    Console.Write(
+                        $"{_player.Name}은(는) {_player.skillbook[choiceSkill - 1].Skillname}을(를) 사용했다!\n" +
+                        $"Lv.{_monsters[choice - 1].Level} {_player.skillbook[choiceSkill - 1].Skillname} 을(를) 맞췄습니다.    [데미지 : {_player.skillbook[choiceSkill - 1].SkillUse(choiceSkill - 1, _player)}]\n\n");
+
+                    Thread.Sleep(1000);
+
+                    //스킬 명중
+                    Console.Write($"Lv.{_monsters[choice - 1].Level} {_monsters[choice - 1].Name}" +
+                    $"Hp {_monsters[choice - 1].Hp} -> ");
+
+                    _player.Attack(_monsters[choice - 1]);
+
+                    if (_monsters[choice - 1].Hp <= 0)
+                    {
+                        Console.WriteLine("Dead");
+
+                        _killCount++;
+                        _monsters[choice - 1].Dead();
+
+                        //퀘스트 수락시 몬스터 카운트 증가
+                        if (_questManager.questList[0].ProgressStatus == 1 && _monsters[choice - 1].Name == _minionStr && _player.KillCount[(int)MonsterType.Minion] < 6)
+                        {
+                            _player.KillCount[(int)MonsterType.Minion] += 1;
+                            Console.WriteLine(
+                            $"\n[퀘스트 진행도]\n" +
+                            $"미니언 처치!    [{_player.KillCount[(int)MonsterType.Minion]}/5]\n");
+
+                            if (_player.KillCount[(int)MonsterType.Minion] == 5) Console.WriteLine("퀘스트를 완료 했습니다!\n");
+
+                        }
+
+                        if (_killCount == _monsters.Length)
+                        {
+                            Console.WriteLine("\n전투에서 승리했습니다!\n");
+                            Console.WriteLine("0. 다음");
+                            ConsoleUtility.PromptMenuChoice(0, 0);
+                            BattleResult();
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{_monsters[choice - 1].Hp}");
+                    }
+
+                    Console.WriteLine("\n0. 다음");
+                    ConsoleUtility.PromptMenuChoice(0, 0);
+
+
+                    //몬스터 공격
+                    MonsterTurn();
+
+                }
+
+                
+
+
+
+            }
         }
 
         //public void MonsterRespawn()
