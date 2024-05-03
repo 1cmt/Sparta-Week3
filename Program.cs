@@ -54,12 +54,13 @@ namespace TextGame // Note: actual namespace depends on the project name.
                 Console.WriteLine("3. 상점");
                 Console.WriteLine("4. 퀘스트");
                 Console.WriteLine("5. 던전입장");
+                Console.WriteLine("6. 여관");
                 Console.WriteLine("");
                 Console.WriteLine("0. 나가기");
                 Console.WriteLine("");
 
                 // 2. 선택한 결과를 검증함
-                int choice = ConsoleUtility.PromptMenuChoice(0, 5);
+                int choice = ConsoleUtility.PromptMenuChoice(0, 6);
 
                 // 3. 선택한 결과에 따라 보내줌
                 switch (choice)
@@ -80,6 +81,37 @@ namespace TextGame // Note: actual namespace depends on the project name.
                         break;
                     case 5:
                         dungeon.EnterDungeon(player, questManager);
+                        break;
+                    case 6:
+                        Console.Clear();
+                        Console.WriteLine(
+                            "여관에서 휴식을 취하면 Hp와 Mp를 회복할 수 있습니다.\n\n" +
+                            "1. 휴식을 취한다 (300Gold)\n" +
+                            "0. 나간다\n");
+
+                        int choice2 = ConsoleUtility.PromptMenuChoice(0, 1);
+
+                        //if (choice2 == 0) break;
+                        if (choice2 == 1)
+                        {   
+                            if (player.Gold < 300) 
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Golid가 부족합니다. ");
+                                Console.WriteLine("\n아무키나 입력해서 넘어가 주세요.");
+                                Console.ReadKey();
+                                break;
+                            }
+                            Console.Clear();
+                            Console.WriteLine("휴식을 취하는 중...");
+                            Thread.Sleep(1700);
+                            Console.WriteLine($"{player.Name}은(는) 기운을 차렸다!");
+                            Thread.Sleep(1000);
+
+                            player.Hp = player.MaxHp;
+                            player.Mp = player.MaxMp;
+                            player.Gold -= 300;
+                        }
                         break;
                 }
 
