@@ -83,7 +83,7 @@ namespace TextGame
             return Name;
         }
 
-        internal static string InputJob()
+        public static string InputJob()
         {
             Console.WriteLine("직업을 선택해주세요");
 
@@ -119,7 +119,8 @@ namespace TextGame
             Console.WriteLine("아무 키나 눌러서 진행");
             Console.ReadKey();
         }
-        internal void StatusMenu(Inventory inventory)
+
+        public void StatusMenu(Inventory inventory)
         {
             Console.Clear();
 
