@@ -12,6 +12,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
         Store store;
         Player player;
         Dungeon dungeon;
+        Skill skill;
         public GameManager()
         {
             InitializeGame();
@@ -22,6 +23,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
             store     = new Store();
             questManager = new QuestManager();
             dungeon = new Dungeon();
+            skill = new Skill();
             //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
@@ -58,7 +60,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
                 Console.WriteLine("");
 
                 // 2. 선택한 결과를 검증함
-                int choice = ConsoleUtility.PromptMenuChoice(0, 4);
+                int choice = ConsoleUtility.PromptMenuChoice(0, 5);
 
                 // 3. 선택한 결과에 따라 보내줌
                 switch (choice)
@@ -78,7 +80,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
                         questManager.QuestMenu(player, inventory);
                         break;
                     case 5:
-                        dungeon.EnterDungeon(player);
+                        dungeon.EnterDungeon(player , questManager);
                         break;
                 }
 
