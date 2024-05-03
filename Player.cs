@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 namespace TextGame
 {
+    [Serializable]
     public class Player
     {
         [JsonProperty("privateField")]
@@ -29,7 +30,7 @@ namespace TextGame
         public int Cexp = 0;
         public List<int> KillCount = new List<int> { 0, 0, 0, 0 };
         public int Texp { get; private set; }
-        public List<Skill> skillbook = new List<Skill>();
+        public Skill[] skillbook = new Skill[2];
         public Item?[] EquipItems { get; set; } //배열의 index가 장착 부위를 의미 (ItemType을 int로 형변환 하여 접근)
 
         public Player(string name, string job, int level = 1, int atk = 10, int def = 10, int hp = 100, int gold = 1000, int exp = 10, int mp = 50, int maxmp = 50)
@@ -132,7 +133,7 @@ namespace TextGame
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "체  력 : ", (Hp + inventory.BonusHp).ToString().PadRight(6), inventory.BonusHp > 0 ? $" (+{inventory.BonusHp})\n" : "\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "Gold : ", Gold.ToString(), "\n");
 
-            for (int i = 0; i < skillbook.Count; i++)
+            for (int i = 0; i < skillbook.Length; i++)
             {
                 skillbook[i].PrintSkillDescription(this);
             }
