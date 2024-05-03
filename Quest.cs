@@ -109,7 +109,7 @@ namespace TextGame
                 player => //클리어 조건: 방패 장착하기
                 {   
                     //쓸만한 방패를 장착했으면 shieldEquipped=true
-                    Item shield = _inventory.ItemList.FirstOrDefault(item => item.IsEquipped);
+                    Item shield = _inventory.ItemList.FirstOrDefault(item => item.Type == ItemType.Shield && item.IsEquipped);
                     bool shieldEquipped = (shield != null) ? shield.IsEquipped : false;
 
                     if(shieldEquipped)    //방패를 장착했으면
