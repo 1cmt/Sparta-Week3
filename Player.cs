@@ -12,12 +12,6 @@ using Newtonsoft.Json;
 
 namespace TextGame
 {
-    enum jobClass 
-    {
-        ARCHER,
-        WIZARD,
-        ASSASSIN
-    }
     [Serializable]
     public class Player
     {
