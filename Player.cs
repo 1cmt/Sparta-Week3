@@ -29,7 +29,7 @@ namespace TextGame
         public int Gold;
         public int Cexp = 0;
         public List<int> KillCount = new List<int> { 0, 0, 0, 0 };
-        public int Texp { get; private set; }
+        public int Texp { get; set; }
         public Skill[] skillbook = new Skill[2];
         public Item?[] EquipItems { get; set; } //배열의 index가 장착 부위를 의미 (ItemType을 int로 형변환 하여 접근)
 
@@ -44,6 +44,7 @@ namespace TextGame
             Texp = exp;
             Mp = mp; MaxMp = maxmp;
             if (job == "archer") Atk = (int)(atk * 1.2f);
+            else if(name == "coder") Atk =atk*10;
             else Atk = atk;
             Def = job == "warrior" ? (int)(def * 1.2f) : def;
             (Hp, MaxHp) = job == "warrior" ? ((int)(hp * 1.2f), (int)(hp * 1.2f)) : (hp, hp);
@@ -125,9 +126,10 @@ namespace TextGame
             Console.Clear();
 
             ConsoleUtility.PrintTitle(((Func<string, string>)(status => status.PadLeft(50)))("상태창".PadLeft(50)));
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "레벨 : ", Level.ToString(), "\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "레벨 : ", Level.ToString(), "(");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Blue,Cexp.ToString()+"/", Texp.ToString(), ")\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "이름 : ", Name);
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "(", Job, ")\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "(", Job, ")\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "공격력 : ", (Atk + inventory.BonusAtk).ToString().PadRight(6), inventory.BonusAtk > 0 ? $" (+{inventory.BonusAtk})\n" : "\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "방어력 : ", (Def + inventory.BonusDef).ToString().PadRight(6), inventory.BonusDef > 0 ? $" (+{inventory.BonusDef})\n" : "\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "체  력 : ", (Hp + inventory.BonusHp).ToString().PadRight(6), inventory.BonusHp > 0 ? $" (+{inventory.BonusHp})\n" : "\n");
