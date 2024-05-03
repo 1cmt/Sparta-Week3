@@ -2,6 +2,7 @@ using System.Runtime.InteropServices.Marshalling;
 
 namespace TextGame
 {
+    [Serializable]
     public class Store
     {
         public Item[] StoreInventory { get; set; }
