@@ -216,7 +216,6 @@ namespace TextGame
         public void SelectQuest(Player player, int index)   //퀘스트 선택하기
         {
             Console.Clear();
-            player.Level = 3;
             while (true)
             {   
                 Quest quest = questList[index];
