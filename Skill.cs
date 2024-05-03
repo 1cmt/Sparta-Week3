@@ -9,10 +9,10 @@ namespace TextGame
 {
     public class Skill
     {
-        string Skillname;
+        public string Skillname;
         string Skilldes;
         int Damage;
-        int Mplose;
+        public int Mplose;
 
         public Skill(string name, string des, int damage, int mplose)
         {
