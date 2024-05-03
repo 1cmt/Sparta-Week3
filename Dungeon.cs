@@ -60,10 +60,12 @@ namespace TextGame
             // 1. 전투 선택 멘트를 줌
 
             Console.WriteLine("던전 탐색중...");
-            Thread.Sleep(1000);
+            Thread.Sleep(1700);
 
-            Console.WriteLine($"\n{_monsters.Length}마리의 몬스터가 등장 했다!\n");
+            Console.Clear();
+            Console.WriteLine($"{_monsters.Length}마리의 몬스터가 등장 했다!\n");
 
+            Console.WriteLine("[몬스터정보]");
             foreach (Monster monster in _monsters)
             {
                 Console.WriteLine($"Lv.{monster.Level} {monster.Name} Hp {monster.Hp}/{monster.MaxHp}");
@@ -100,8 +102,9 @@ namespace TextGame
             // 0. 화면 정리
             Console.Clear();
             // 1. 전투 선택 멘트를 줌            
-            Console.WriteLine("Battle!\n");            
+            Console.WriteLine("Battle!\n");
 
+            Console.WriteLine("[몬스터정보]");
             for (int i = 0; i < _monsters.Length; i++)
             {
                 if (_monsters[i].Hp <= 0)
@@ -119,7 +122,7 @@ namespace TextGame
 
             Console.WriteLine(
                 "번호를 입력해 공격할 몬스터를 선택해 주세요\n" +
-                "0. 턴 종료");
+                "0. 턴 종료\n");
             
             int choice = ConsoleUtility.PromptMenuChoice(0, _monsters.Length);
 
@@ -147,10 +150,7 @@ namespace TextGame
                 }
 
                 //스킬사용, 일반 공격 선택
-                HowAttack();
-
-
-                      
+                HowAttack(choice - 1);                      
             }
         }
 
@@ -230,20 +230,22 @@ namespace TextGame
                 //플레이어 체력이 0이 되면 패매 메인메뉴로 돌아간다
                 if (_player.Hp == 0)
                 {
-                    Console.WriteLine(
-                        "플레이어의 체력이 0이되어 전투를 종료합니다.\n" +
-                        "0. 다음");
-                    int choice0 = ConsoleUtility.PromptMenuChoice(0, 0);
-                    if (choice0 == 0)
-                    {
-                        BattleResult();
-                        return;
-                    }                    
+                    Console.WriteLine("플레이어의 체력이 0이되어 전투를 종료합니다.\n");
+                    Console.WriteLine("\n아무키나 입력해서 넘어가 주세요.");
+                    Console.ReadKey();
+
+                    BattleResult();
+                    return;
                 }
             }
-            Console.WriteLine("0. 다음");
-            int choice0_2 = ConsoleUtility.PromptMenuChoice(0, 0);
-            if (choice0_2 == 0) Battle();
+
+            Console.WriteLine("\n아무키나 입력해서 넘어가 주세요.");
+            Console.ReadKey();
+            Battle();
+
+            //Console.WriteLine("0. 다음");
+            //int choice0_2 = ConsoleUtility.PromptMenuChoice(0, 0);
+            //if (choice0_2 == 0) Battle();
         }
 
         private void BattleResult()
@@ -281,10 +283,10 @@ namespace TextGame
                 }
             }
 
-            PlayerStatus(); 
+            PlayerStatus();
             //MonsterRespawn();
-            Console.WriteLine("0. 다음");
-            ConsoleUtility.PromptMenuChoice(0, 0);           
+            Console.WriteLine("\n아무키나 입력해서 넘어가 주세요.");
+            Console.ReadKey();
         }
 
 
@@ -293,11 +295,11 @@ namespace TextGame
             Console.WriteLine(
                 $"[내정보]\n" +
                 $"Lv.{_player.Level}  {_player.Name} ({_player.Job})\n" +
-                $"HP {_player.Hp}/{_player.MaxHp}  방어력 {_player.Def}\n" +
+                $"HP {_player.Hp}/{_player.MaxHp}  Mp {_player.Mp}/{_player.MaxMp}  방어력 {_player.Def}\n" +
                 $"EXP {_player.Cexp}/{_player.Texp}  Gold {_player.Gold}\n");
         }
 
-        private void HowAttack()
+        private void HowAttack(int monsterIndex)
         {
             // 구성
             // 0. 화면 정리
@@ -305,6 +307,7 @@ namespace TextGame
             // 1. 전투 선택 멘트를 줌            
             Console.WriteLine("Battle!\n");
 
+            Console.WriteLine("[몬스터정보]");
             for (int i = 0; i < _monsters.Length; i++)
             {
                 if (_monsters[i].Hp <= 0)
@@ -338,24 +341,24 @@ namespace TextGame
                 //Console.WriteLine($"{_monsters[choice - 1].Name}을/를 공격했다!");
                 Console.Write(
                     $"{_player.Name}의 공격!\n" +
-                    $"Lv.{_monsters[choice - 1].Level} {_monsters[choice - 1].Name} 을(를) 맞췄습니다.    [데미지 : {_player.Atk}]\n\n");
+                    $"Lv.{_monsters[monsterIndex].Level} {_monsters[monsterIndex].Name} 을(를) 맞췄습니다.    [데미지 : {_player.Atk}]\n\n");
 
                 Thread.Sleep(1000);
 
-                Console.Write($"Lv.{_monsters[choice - 1].Level} {_monsters[choice - 1].Name}" +
+                Console.Write($"Lv.{_monsters[monsterIndex].Level} {_monsters[monsterIndex].Name}" +
                     $"Hp {_monsters[choice - 1].Hp} -> ");
 
-                _player.Attack(_monsters[choice - 1]);
+                _player.Attack(_monsters[monsterIndex]);
 
-                if (_monsters[choice - 1].Hp <= 0)
+                if (_monsters[monsterIndex].Hp <= 0)
                 {
                     Console.WriteLine("Dead");
 
                     _killCount++;
-                    _monsters[choice - 1].Dead();
+                    _monsters[monsterIndex].Dead();
 
                     //퀘스트 수락시 몬스터 카운트 증가
-                    if (_questManager.questList[0].ProgressStatus == 1 && _monsters[choice - 1].Name == _minionStr && _player.KillCount[(int)MonsterType.Minion] < 6)
+                    if (_questManager.questList[0].ProgressStatus == 1 && _monsters[monsterIndex].Name == _minionStr && _player.KillCount[(int)MonsterType.Minion] < 6)
                     {
                         _player.KillCount[(int)MonsterType.Minion] += 1;
                         Console.WriteLine(
@@ -369,20 +372,19 @@ namespace TextGame
                     if (_killCount == _monsters.Length)
                     {
                         Console.WriteLine("\n전투에서 승리했습니다!\n");
-                        Console.WriteLine("0. 다음");
-                        ConsoleUtility.PromptMenuChoice(0, 0);
+                        Console.WriteLine("\n아무키나 입력해서 넘어가 주세요.");
+                        Console.ReadKey();
                         BattleResult();
                         return;
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"{_monsters[choice - 1].Hp}");
+                    Console.WriteLine($"{_monsters[monsterIndex].Hp}");
                 }
 
-                Console.WriteLine("\n0. 다음");
-                ConsoleUtility.PromptMenuChoice(0, 0);
-
+                Console.WriteLine("\n아무키나 입력해서 넘어가 주세요.");
+                Console.ReadKey();
 
                 //몬스터 공격
                 MonsterTurn();
@@ -398,6 +400,7 @@ namespace TextGame
                 // 1. 전투 선택 멘트를 줌            
                 Console.WriteLine("Battle!\n");
 
+                Console.WriteLine("[몬스터정보]");
                 for (int i = 0; i < _monsters.Length; i++)
                 {
                     if (_monsters[i].Hp <= 0)
@@ -414,18 +417,19 @@ namespace TextGame
                 PlayerStatus();
 
                 //스킬 출력
+                Console.WriteLine("[스킬정보]");
                 for (int i = 0; i < _player.skillbook.Count; i++)
                 {
-                    Console.Write($"[{i+1}]");
+                    Console.Write($"{i+1}");
                     _player.skillbook[i].PrintSkillDescription(_player);                
                 }
-                Console.WriteLine("0. 뒤로가기");
+                Console.WriteLine("0. 뒤로가기\n");
 
                 int choiceSkill = ConsoleUtility.PromptMenuChoice(0, _player.skillbook.Count);
 
                 if (choiceSkill == 0)
                 {
-                    HowAttack();
+                    HowAttack(monsterIndex);
                     return;
                 }
                 else 
@@ -433,10 +437,11 @@ namespace TextGame
                     //마나 부족
                     if (_player.Mp < _player.skillbook[choiceSkill - 1].Mplose)
                     {
+                        Console.Clear();
                         Console.WriteLine("Mp가 부족합니다. 다른 공격방식을 선택해 주세요.");
-                        Thread.Sleep(1500);
+                        Thread.Sleep(1700);
 
-                        HowAttack();
+                        HowAttack(monsterIndex);
                     }
 
                     //스킬 사용
@@ -448,25 +453,28 @@ namespace TextGame
                     //Console.WriteLine($"{_monsters[choice - 1].Name}을/를 공격했다!");
                     Console.Write(
                         $"{_player.Name}은(는) {_player.skillbook[choiceSkill - 1].Skillname}을(를) 사용했다!\n" +
-                        $"Lv.{_monsters[choice - 1].Level} {_player.skillbook[choiceSkill - 1].Skillname} 을(를) 맞췄습니다.    [데미지 : {_player.skillbook[choiceSkill - 1].SkillUse(choiceSkill - 1, _player)}]\n\n");
+                        $"Lv.{_monsters[monsterIndex].Level} {_monsters[monsterIndex].Name}을(를) 맞췄습니다.    [데미지 : {_player.skillbook[choiceSkill - 1].SkillUse(choiceSkill, _player)}]\n\n");
 
                     Thread.Sleep(1000);
+                    
+                    Console.Write($"Lv.{_monsters[monsterIndex].Level} {_monsters[monsterIndex].Name}" +
+                    $"Hp {_monsters[monsterIndex].Hp} -> ");
 
-                    //스킬 명중
-                    Console.Write($"Lv.{_monsters[choice - 1].Level} {_monsters[choice - 1].Name}" +
-                    $"Hp {_monsters[choice - 1].Hp} -> ");
+                    _monsters[monsterIndex].Hp -= _player.skillbook[choiceSkill - 1].SkillUse(choiceSkill, _player);
+                    _player.Mp -= _player.skillbook[choiceSkill - 1].Mplose;
 
-                    _player.Attack(_monsters[choice - 1]);
+                   
 
-                    if (_monsters[choice - 1].Hp <= 0)
+                    if (_monsters[monsterIndex].Hp <= 0)
                     {
                         Console.WriteLine("Dead");
 
+                        _monsters[monsterIndex].Hp = 0;
                         _killCount++;
-                        _monsters[choice - 1].Dead();
+                        _monsters[monsterIndex].Dead();
 
                         //퀘스트 수락시 몬스터 카운트 증가
-                        if (_questManager.questList[0].ProgressStatus == 1 && _monsters[choice - 1].Name == _minionStr && _player.KillCount[(int)MonsterType.Minion] < 6)
+                        if (_questManager.questList[0].ProgressStatus == 1 && _monsters[monsterIndex].Name == _minionStr && _player.KillCount[(int)MonsterType.Minion] < 6)
                         {
                             _player.KillCount[(int)MonsterType.Minion] += 1;
                             Console.WriteLine(
@@ -480,30 +488,25 @@ namespace TextGame
                         if (_killCount == _monsters.Length)
                         {
                             Console.WriteLine("\n전투에서 승리했습니다!\n");
-                            Console.WriteLine("0. 다음");
-                            ConsoleUtility.PromptMenuChoice(0, 0);
+                            Console.WriteLine("\n아무키나 입력해서 넘어가 주세요.");
+                            Console.ReadKey();
+
                             BattleResult();
                             return;
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"{_monsters[choice - 1].Hp}");
+                        Console.WriteLine($"{_monsters[monsterIndex].Hp}");
                     }
 
-                    Console.WriteLine("\n0. 다음");
-                    ConsoleUtility.PromptMenuChoice(0, 0);
-
+                    Console.WriteLine("\n아무키나 입력해서 넘어가 주세요.");
+                    Console.ReadKey();
 
                     //몬스터 공격
                     MonsterTurn();
 
-                }
-
-                
-
-
-
+                }              
             }
         }
 
