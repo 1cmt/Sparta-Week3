@@ -82,6 +82,7 @@ namespace TextGame
         {
             Console.Write("B1A4던전에 오신 것을 환영합니다 이름을 적어주세요 : ");
             string? Name = Console.ReadLine();
+            if (Name == null) InputName();
             return Name;
         }
 

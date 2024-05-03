@@ -24,11 +24,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
         }
         public void InitializeGame()
         {
-            inventory = new Inventory();
-            store     = new Store();
-            questManager = new QuestManager();
             dungeon = new Dungeon();            
-            //저장한 데이터를 불러오는 과정
         }
         public void StartGame()
         {
@@ -52,6 +48,9 @@ namespace TextGame // Note: actual namespace depends on the project name.
                 Directory.CreateDirectory(folderpath);
                 Console.WriteLine($"캐릭터 {name}이 생성 되었습니다");
                 bool isMake = true;
+                inventory = new Inventory();
+                store = new Store();
+                questManager = new QuestManager();
                 return isMake;
             }
             else

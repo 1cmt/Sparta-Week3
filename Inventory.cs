@@ -4,9 +4,9 @@ namespace TextGame
     public class Inventory
     {
         public List<Item> ItemList { get; } = new List<Item>();
-        public int BonusAtk { get; private set; } = 0;
-        public int BonusDef { get; private set; } = 0;
-        public int BonusHp { get; private set; } = 0;
+        public int BonusAtk { get;  set; } = 0;
+        public int BonusDef { get; set; } = 0;
+        public int BonusHp { get;  set; } = 0;
 
         public int Count()
         {
@@ -93,6 +93,7 @@ namespace TextGame
             Console.WriteLine("[아이템 목록]");
             PrintMyItemList(MenuType.InventoryMenu);
             Console.WriteLine("1. 장착관리");
+
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
 

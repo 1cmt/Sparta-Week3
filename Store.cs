@@ -4,8 +4,8 @@ namespace TextGame
 {
     public class Store
     {
-        public Item[] StoreInventory { get; }
-
+        public Item[] StoreInventory { get; set; }
+        
         public Store()
         {
             StoreInventory = new Item[16];

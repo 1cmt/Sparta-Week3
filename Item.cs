@@ -34,8 +34,8 @@ namespace TextGame
         public int Def { get; }
         public int Hp { get; }
 
-        public bool IsPurchased { get; private set; } = false;
-        public bool IsEquipped { get; private set; } = false;
+        public bool IsPurchased { get; set; } = false;
+        public bool IsEquipped { get; set; } = false;
 
         public Item(string name, string desc, ItemType type, int price, int atk, int def, int hp)
         {
