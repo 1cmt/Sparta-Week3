@@ -195,8 +195,8 @@ namespace TextGame
                 else
                 {
                     Job = TempJob;
+                    skillbook = Skill.Gainskill(Job);
                     gold -= 32747;
-                    
                     Console.WriteLine(TempJob + "직업으로 변경완료");
                 }
             }
