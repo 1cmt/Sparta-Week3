@@ -438,6 +438,7 @@ namespace TextGame
                         Thread.Sleep(1700);
 
                         HowAttack(monsterIndex);
+                        return;
                     }
 
                     //스킬 사용
