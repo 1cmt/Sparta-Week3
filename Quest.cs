@@ -20,32 +20,6 @@ namespace TextGame
     //퀘스트 진행상태 저장기능 (1.진행 가능 2.진행 중{+진행 중인 세부 내용} 3.완료)
     //퀘스트 저장 목록에 몬스터 킬카운트 필요합니다 <<<<<<퀘스트 조건체크용이라서 진행상태에 몇마리 잡았는지 기록 가능하면 불필요해요
 
-    //public static class QuestService
-    //{
-    //    // 퀘스트 리스트를 JSON 파일로 저장하는 메서드
-    //    public static void SaveQuestsToFile(List<Quest> quests, string filePath)
-    //    {
-    //        string json = JsonConvert.SerializeObject(quests, Formatting.Indented);
-    //        File.WriteAllText(filePath, json);
-    //        Console.WriteLine("Quests have been saved to file.");
-    //    }
-
-    //    // JSON 파일에서 퀘스트 리스트를 불러오는 메서드
-    //    public static List<Quest> LoadQuestsFromFile(string filePath)
-    //    {
-    //        if (!File.Exists(filePath))
-    //        {
-    //            Console.WriteLine("File does not exist.");
-    //            return new List<Quest>(); // 파일이 존재하지 않으면 빈 리스트 반환
-    //        }
-
-    //        string json = File.ReadAllText(filePath);
-    //        List<Quest> quests = JsonConvert.DeserializeObject<List<Quest>>(json);
-    //        Console.WriteLine("Quests have been loaded from file.");
-    //        return quests;
-    //    }
-    //}
-
     public enum QuestStatus
     {
         Startable,          //0.진행 가능
@@ -55,13 +29,13 @@ namespace TextGame
 
     public class QuestManager
     {
-        public List<Quest> questList;
+        public Quest[] questList;
         Player _player;
         Inventory _inventory;
 
         public QuestManager()       //퀘스트리스트 
         {
-            questList = new List<Quest> //모든 퀘스트를 정의하는 함수
+            questList = new Quest[] //모든 퀘스트를 정의하는 함수
         {   
             //1.미니언 5마리 잡기
             new Quest(
@@ -170,7 +144,7 @@ namespace TextGame
                 selectableList.Add(-1); //0번째 배열은 안 쓴다는 의미
 
                 //완료되지 않은, 진행가능 or 진행중인 퀘스트들을 선별하기
-                for (int i = 0; i < questList.Count; i++)
+                for (int i = 0; i < questList.Length; i++)
                 {
                     if (questList[i].ProgressStatus == (int)QuestStatus.Finished) //만약 체크한 퀘스트가 완료됐다면 (완료됨)표시하기
                     {
