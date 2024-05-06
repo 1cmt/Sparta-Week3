@@ -80,12 +80,15 @@ namespace TextGame
         public static string InputName()
         {
             Console.Write("B1A4던전에 오신 것을 환영합니다 이름을 적어주세요 : ");
-            string? Name = Console.ReadLine();
-            if (Name == null) InputName();
+            string Name = Console.ReadLine();
+            if (string.IsNullOrEmpty(Name)) // 빈 문자열인지 확인
+            {
+                Console.WriteLine("이름을 입력해주세요.");
+                return InputName(); //
+            }
             return Name;
         }
-
-        public void Attack(Monster monster)
+            public void Attack(Monster monster)
         {
             monster.Hp -= totalAtk;
             if (monster.Hp < 0) monster.Hp = 0;
