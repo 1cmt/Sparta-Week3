@@ -35,10 +35,10 @@ namespace TextGame
         public float Ctl = 0.15f;
         public int Atk, totalAtk, levelAtk=0;
         public int Def, totalDef, levelDef=0;
-        public int Mp,totalMp,jobMp;
-        public int MaxMp, totalMaxMp, jobMaxMp;
-        public int Hp, totalHp, jobHp;
-        public int MaxHp,totalMaxHp, jobMaxHp;
+        public int Mp,totalMp;
+        public int MaxMp, totalMaxMp;
+        public int Hp, totalHp;
+        public int MaxHp,totalMaxHp;
         public int Gold;
         public int Cexp = 0;
 
@@ -226,6 +226,7 @@ namespace TextGame
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "공격력 : ", (totalAtk).ToString().PadRight(6), inventory.BonusAtk > 0 ? $" (+{inventory.BonusAtk})\n" : "\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "방어력 : ", (totalDef).ToString().PadRight(6), inventory.BonusDef > 0 ? $" (+{inventory.BonusDef})\n" : "\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "체  력 : ", (totalHp).ToString().PadRight(6), inventory.BonusHp > 0 ? $" (+{inventory.BonusHp})\n" : "\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Green, "마  나 : ", (Mp).ToString().PadRight(6), "\n");
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "Gold : ", Gold.ToString(), "\n");
 
             for (int i = 0; i < skillbook.Length; i++)
