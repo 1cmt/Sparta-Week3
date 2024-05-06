@@ -148,6 +148,7 @@ namespace TextGame
                                 inventory.ToggleItemEquipStatus(keyInput - 1);
                                 inventory.ManageBonusValue(false, keyInput - 1);
                                 inventory.RemoveItem(keyInput - 1);
+                                StoreInventory[keyInput - 1].Purchase();
                                 SellMenu(player, inventory);
                                 break;
                         }
