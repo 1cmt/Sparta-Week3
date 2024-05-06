@@ -71,11 +71,11 @@ namespace TextGame // Note: actual namespace depends on the project name.
         }
         public void SetFilePath(string name)
         {
-            folderpath = $@".\{name}";
-            filePathPlayer = Path.Combine(folderpath, $"{name}player.json");
-            filePathInventory = Path.Combine(folderpath, $"{name}inventory.json");
-            filePathStore = Path.Combine(folderpath, $"{name}store.json");
-            filePathQuest = Path.Combine(folderpath, $"{name}quest.json");
+            folderpath = ".";
+            filePathPlayer = Path.Combine(folderpath, name);
+            filePathInventory = Path.Combine(folderpath,name);
+            filePathStore = Path.Combine(folderpath,name);
+            filePathQuest = Path.Combine(folderpath,name);
         }
 
 

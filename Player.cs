@@ -187,7 +187,6 @@ namespace TextGame
 
         public void Changejob(ref int gold, string job)
         {
-            gold = 34000;
             if (gold >= 32747)
             {
                 Console.Write("변경하실 직업을 입력해주세요: ");
