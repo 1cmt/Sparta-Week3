@@ -71,11 +71,11 @@ namespace TextGame // Note: actual namespace depends on the project name.
         }
         public void SetFilePath(string name)
         {
-            folderpath = ".";
-            filePathPlayer = Path.Combine(folderpath, name);
-            filePathInventory = Path.Combine(folderpath,name);
-            filePathStore = Path.Combine(folderpath,name);
-            filePathQuest = Path.Combine(folderpath,name);
+            folderpath = $@".\{name}";
+            filePathPlayer = Path.Combine(folderpath, $"{name}player.json");
+            filePathInventory = Path.Combine(folderpath, $"{name}inventory.json");
+            filePathStore = Path.Combine(folderpath, $"{name}store.json");
+            filePathQuest = Path.Combine(folderpath, $"{name}quest.json");
         }
 
 
@@ -150,7 +150,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
                             if (player.Gold < 300) 
                             {
                                 Console.Clear();
-                                Console.WriteLine("Golid가 부족합니다. ");
+                                Console.WriteLine("Gold가 부족합니다. ");
                                 Console.WriteLine("\n아무키나 입력해서 넘어가 주세요.");
                                 Console.ReadKey();
                                 break;

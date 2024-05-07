@@ -45,15 +45,7 @@ namespace TextGame
             player.Hp -= (Atk - player.Def);
 
             if(player.Hp < 0) player.Hp = 0;        
-        }
-
-        //public void Respawn()
-        //{
-        //    IsLife = true;
-        //    Hp = MaxHp;
-        //}
-
-
+        }    
 
     }
 }
