@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 
 namespace TextGame // Note: actual namespace depends on the project name.
 {
+    //The Main function is on Line 177
     public class GameManager
     {
         public static GameManager instance = new GameManager();
