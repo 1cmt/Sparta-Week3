@@ -187,7 +187,7 @@ namespace TextGame
             {
                 if (!_monsters[i].IsLife) continue;
 
-                if (_monsters[i].Atk < _player.Def)
+                if (_monsters[i].Atk < _player.totalDef)
                 {
                     Console.WriteLine($"{_player.Name}의 방어력이 높아 {_monsters[i].Name}의 공격이 실패 합니다!");
                     
@@ -197,7 +197,7 @@ namespace TextGame
                     Console.Write(
                     $"Lv.{_monsters[i].Level} {_monsters[i].Name} 의 공격!\n" +
                     $"{_player.Name} 을(를) 맞췄습니다.    [데미지 : ");
-                    if (_player.Def > 0) Console.WriteLine($"{_monsters[i].Atk} - ({_player.Def})]\n");
+                    if (_player.totalDef > 0) Console.WriteLine($"{_monsters[i].Atk} - ({_player.totalDef})]\n");
                     else Console.WriteLine($"{_monsters[i].Atk}]\n");
                    
                 }
@@ -276,7 +276,7 @@ namespace TextGame
             Console.WriteLine(
                 $"[내정보]\n" +
                 $"Lv.{_player.Level}  {_player.Name} ({_player.Job})\n" +
-                $"HP {_player.Hp}/{_player.MaxHp}  Mp {_player.Mp}/{_player.MaxMp}  방어력 {_player.Def}\n" +
+                $"HP {_player.Hp}/{_player.MaxHp}  Mp {_player.Mp}/{_player.MaxMp}  방어력 {_player.totalDef}\n" +
                 $"EXP {_player.Cexp}/{_player.Texp}  Gold {_player.Gold}\n");
         }
 

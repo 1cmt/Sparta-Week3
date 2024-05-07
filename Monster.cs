@@ -40,9 +40,9 @@ namespace TextGame
         public void Attack(Player player)
         {
 
-            if (Atk <= player.Def) return;            
+            if (Atk <= player.totalDef) return;            
 
-            player.Hp -= (Atk - player.Def);
+            player.Hp -= (Atk - player.totalDef);
 
             if(player.Hp < 0) player.Hp = 0;        
         }    

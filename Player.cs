@@ -191,7 +191,7 @@ namespace TextGame
 
         public void Changejob(ref int gold, string job)
         {
-            if (gold >= 1600)
+            if (gold >= 1000)
             {
                 Console.Write("변경하실 직업을 입력해주세요: ");
                 string? TempJob = InputJob();
@@ -200,11 +200,11 @@ namespace TextGame
                 {
                     Job = TempJob;
                     skillbook = Skill.Gainskill(Job);
-                    gold -= 1600;
+                    gold -= 1000;
                     Console.WriteLine(TempJob + "직업으로 변경완료");
                 }
             }
-            else { Console.WriteLine($"골드가 {1600 - gold}만큼 부족합니다"); }
+            else { Console.WriteLine($"골드가 {1000 - gold}만큼 부족합니다"); }
 
             ConsoleUtility.PrintLine('=');
             Console.WriteLine("아무 키나 눌러서 진행");
@@ -235,8 +235,9 @@ namespace TextGame
                 skillbook[i].PrintSkillDescription(this);
             }
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "0", ". 메뉴로 나가기\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "1", ". 직업변경 : 1600 G\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "1", ". 직업변경 : 1000 G\n");
             ConsoleUtility.PrintLine('=');
+
             int choice = ConsoleUtility.PromptMenuChoice(0, 1);
             if (choice == 0) return;
             else
