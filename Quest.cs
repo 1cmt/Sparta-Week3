@@ -80,7 +80,7 @@ namespace TextGame
                 },
                 player =>
                 {
-                    _inventory.AddItem(new Item("쓸만한 방패", "쓸만한 방패입니다", ItemType.Shield, 0, 2, 0, 500));
+                    Console.WriteLine("100골드");
                     player.Gold += 100;
                 }),
             new Quest(
@@ -103,19 +103,108 @@ namespace TextGame
                 },
                 player =>
                 {
+                    Console.WriteLine("200골드");
                     player.Gold += 200;
                 }),
             };
         }
+
+        void CheckResetConditionReward() //json 파일에 저장되지 않은 퀘스트의 클리어 조건과 클리어 보상을 정의
+        {
+            if (questList[0].CheckCondition != null) return;
+
+            Func<Player, bool> Quest1_CheckCondition;
+            Func<Player, bool> Quest2_CheckCondition;
+            Func<Player, bool> Quest3_CheckCondition;
+            Action<Player> Quest1_Reward;
+            Action<Player> Quest2_Reward;
+            Action<Player> Quest3_Reward;
+
+            Quest1_CheckCondition = (player) =>
+            {
+                if (player.KillCount[(int)MonsterType.Minion] >= 5)
+
+                {
+                    Console.WriteLine("미니언 (5/5) (완료)");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine($"미니언 ({player.KillCount[(int)MonsterType.Minion]}/5) (진행중)");
+                    return false;
+                }
+            };
+
+            Quest2_CheckCondition = (player) =>
+            {
+                Item shield = _inventory.ItemList.FirstOrDefault(item => item.Type == ItemType.Shield && item.IsEquipped);
+                bool shieldEquipped = (shield != null) ? shield.IsEquipped : false;
+
+                if (shieldEquipped)
+                {
+                    Console.WriteLine("방패 장착 (완료)");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("방패 장착 (진행중)");
+                    return false;
+                }
+            };
+
+            Quest3_CheckCondition = (player) =>
+            {
+                if (player.Level >= 3)
+                {
+                    Console.WriteLine("3레벨 달성 (완료)");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("3레벨 달성 (진행중)");
+                    return false;
+                }
+            };
+
+            Quest1_Reward = (player) =>
+            {
+                Console.WriteLine("쓸만한 방패 x 1");
+                Console.WriteLine("5골드");
+                _inventory.AddItem(new Item("쓸만한 방패", "쓸만한 방패입니다.", ItemType.Shield, 100, 0, 2, 0));
+                player.Gold += 5;
+            };
+
+            Quest2_Reward = (player) =>
+            {
+                Console.WriteLine("100골드");
+                player.Gold += 100;
+            };
+
+            Quest3_Reward = (player) =>
+            {
+                Console.WriteLine("200골드");
+                player.Gold += 200;
+            };
+
+            questList[0].CheckCondition = Quest1_CheckCondition;
+            questList[1].CheckCondition = Quest1_CheckCondition;
+            questList[2].CheckCondition = Quest1_CheckCondition;
+            questList[0].Reward = Quest1_Reward;
+            questList[1].Reward = Quest2_Reward;
+            questList[2].Reward = Quest3_Reward;
+        }
+
         public void QuestMenu(Player player, Inventory inventory)
         {
             _player = player;
             _inventory = inventory;
 
+            CheckResetConditionReward();
+
             while (true)
             {
                 string ProgressStatusText;
-
+                
                 Console.Clear();
                 ConsoleUtility.PrintTitle("■ 퀘스트 메뉴 ■");
                 Console.WriteLine("진행 가능한 퀘스트들을 볼 수 있습니다.");
