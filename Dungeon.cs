@@ -315,7 +315,7 @@ namespace TextGame
 
                 Console.Clear();
                 Console.WriteLine("Battle!\n");
-                
+
                 Console.Write(
                     $"{_player.Name}의 공격!\n" +
                     $"Lv.{_monsters[monsterIndex].Level} {_monsters[monsterIndex].Name} 을(를) 맞췄습니다.    [데미지 : {_player.totalAtk}]\n\n");
@@ -323,7 +323,7 @@ namespace TextGame
                 Thread.Sleep(1000);
 
                 Console.Write($"Lv.{_monsters[monsterIndex].Level} {_monsters[monsterIndex].Name}" +
-                    $"Hp {_monsters[choice - 1].Hp} -> ");
+                    $"Hp {_monsters[monsterIndex].Hp} -> ");
 
                 _player.Attack(_monsters[monsterIndex]);
 
