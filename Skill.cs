@@ -57,8 +57,8 @@ namespace TextGame
                     return ArcherBook;
                 case "WARRIOR":
                     Skill[] WarriorBook = new Skill[2] {
-                    new Skill("숄더차지", "|어깨로 적을 강하게 밀어붙입니다", 15, 20),
-                    new Skill("리프 어택", "|전방으로 높이 점프한후 적을 깔아뭉갭니다", 20, 30) };
+                    new Skill("숄더차지", "|어깨로 돌진하여 적을 넘어뜨립니다", 15, 20),
+                    new Skill("리프 어택", "|전방으로 높이 점프한후 적을 깔아뭉갭니다", 25, 30) };
                     return WarriorBook;
                 default:
                     return null;

@@ -150,7 +150,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
                             if (player.Gold < 300) 
                             {
                                 Console.Clear();
-                                Console.WriteLine("Golid가 부족합니다. ");
+                                Console.WriteLine("Gold가 부족합니다. ");
                                 Console.WriteLine("\n아무키나 입력해서 넘어가 주세요.");
                                 Console.ReadKey();
                                 break;

@@ -47,7 +47,7 @@ namespace TextGame
         public Skill[] skillbook = new Skill[2];
         public Item?[] EquipItems { get; set; } //배열의 index가 장착 부위를 의미 (ItemType을 int로 형변환 하여 접근)
 
-        public Player(string name, string job, int level = 1, int atk = 10, int def = 10, int gold = 1000,  int exp = 10, int hp = 100, int mp = 50)
+        public Player(string name, string job, int level = 1, int atk = 10, int def = 10, int gold = 1700,  int exp = 10, int hp = 100, int mp = 50)
         {
             _name = name;
             _job = job;
@@ -81,12 +81,13 @@ namespace TextGame
         {
             Console.Write("B1A4던전에 오신 것을 환영합니다 이름을 적어주세요 : ");
             string Name = Console.ReadLine();
+            
             if (string.IsNullOrEmpty(Name)) // 빈 문자열인지 확인
             {
                 Console.WriteLine("이름을 입력해주세요.");
                 return InputName(); //
             }
-            return Name;
+            return Name.Trim();
         }
             public void Attack(Monster monster)
         {
@@ -190,7 +191,7 @@ namespace TextGame
 
         public void Changejob(ref int gold, string job)
         {
-            if (gold >= 32747)
+            if (gold >= 1600)
             {
                 Console.Write("변경하실 직업을 입력해주세요: ");
                 string? TempJob = InputJob();
@@ -199,11 +200,11 @@ namespace TextGame
                 {
                     Job = TempJob;
                     skillbook = Skill.Gainskill(Job);
-                    gold -= 32747;
+                    gold -= 1600;
                     Console.WriteLine(TempJob + "직업으로 변경완료");
                 }
             }
-            else { Console.WriteLine($"골드가 {32747 - gold}만큼 부족합니다"); }
+            else { Console.WriteLine($"골드가 {1600 - gold}만큼 부족합니다"); }
 
             ConsoleUtility.PrintLine('=');
             Console.WriteLine("아무 키나 눌러서 진행");
