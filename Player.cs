@@ -235,7 +235,7 @@ namespace TextGame
                 skillbook[i].PrintSkillDescription(this);
             }
             ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "0", ". 메뉴로 나가기\n");
-            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "1", ". 직업변경 : 32767 G\n");
+            ConsoleUtility.PrintTextHighlightsColor(ConsoleColor.Yellow, "", "1", ". 직업변경 : 1600 G\n");
             ConsoleUtility.PrintLine('=');
             int choice = ConsoleUtility.PromptMenuChoice(0, 1);
             if (choice == 0) return;
