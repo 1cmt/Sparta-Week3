@@ -187,8 +187,8 @@ namespace TextGame
             };
 
             questList[0].CheckCondition = Quest1_CheckCondition;
-            questList[1].CheckCondition = Quest1_CheckCondition;
-            questList[2].CheckCondition = Quest1_CheckCondition;
+            questList[1].CheckCondition = Quest2_CheckCondition;
+            questList[2].CheckCondition = Quest3_CheckCondition;
             questList[0].Reward = Quest1_Reward;
             questList[1].Reward = Quest2_Reward;
             questList[2].Reward = Quest3_Reward;
