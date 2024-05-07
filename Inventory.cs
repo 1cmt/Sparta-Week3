@@ -173,8 +173,7 @@ namespace TextGame
 
         public void printInventory(Player player)
         {
-            //Pad 함수에 대한 이해를 위해 제작
-            ////박스 가로 길이를 12로 잡고 만일 부위에 아이템이 있다면 가운데 정렬, 없다면 그냥 공백 12칸
+            //텍스트 Padding 에 대한 이해를 위해 제작, 가운데 정렬을 위한 PadCenterForMixedText를 콘솔유틸리티에 추가해 제작, 박스 가로길이를 12로 설정
 
             string weaponName = player.EquipItems[(int)ItemType.Weapon] != null ? ConsoleUtility.PadCenterForMixedText(player.EquipItems[(int)ItemType.Weapon]!.Name, 12) : new string(' ', 12);
             string armorName = player.EquipItems[(int)ItemType.Armor] != null ? ConsoleUtility.PadCenterForMixedText(player.EquipItems[(int)ItemType.Armor]!.Name, 12) : new string(' ', 12);

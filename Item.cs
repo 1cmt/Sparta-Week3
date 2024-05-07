@@ -163,13 +163,3 @@ namespace TextGame
         }
     }
 }
-
-// internal class HpItem : Item
-// {
-//     public int Hp { get; }
-
-//     public HpItem(string name, string info, int price, int hp) : base(name, info, price)
-//     {
-//         Hp = hp;
-//     }
-// }
