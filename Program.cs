@@ -51,6 +51,7 @@ namespace TextGame // Note: actual namespace depends on the project name.
                 inventory = new Inventory();
                 store = new Store();
                 questManager = new QuestManager();
+                questManager.CheckResetConditionReward();
                 return isMake;
             }
             else

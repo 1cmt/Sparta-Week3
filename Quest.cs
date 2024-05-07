@@ -30,7 +30,7 @@ namespace TextGame
         public QuestManager()
         {
             questList = new Quest[]
-        {   
+            {   
             new Quest(
                 "마을을 위협하는 미니언 처치",
                 "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",
@@ -109,7 +109,7 @@ namespace TextGame
             };
         }
 
-        void CheckResetConditionReward() //json 파일에 저장되지 않은 퀘스트의 클리어 조건과 클리어 보상을 정의
+        public void CheckResetConditionReward() //json 파일에 저장되지 않은 퀘스트의 클리어 조건과 클리어 보상을 정의
         {
             if (questList[0].CheckCondition != null) return;
 
@@ -198,8 +198,6 @@ namespace TextGame
         {
             _player = player;
             _inventory = inventory;
-
-            CheckResetConditionReward();
 
             while (true)
             {
